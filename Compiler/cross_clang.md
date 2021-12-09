@@ -38,6 +38,10 @@ TODO: Windows
 
 TODO
 
+### macOS
+
+The built-in apple clang comes crippled: it only ships with x86_64 and arm64 support (but still supports ELF). It is recommended to get clang from [homebrew](https://brew.sh/), as you need the LLVM linker (lld) to do anything meaningful done either way. It is also worth noting that proper cross-compilation GCC tools are also in the homebrew repositories (under the names x86_64-elf-binutils and x86_64-elf-gcc).
+
 ## Enabling cross-compilation
 
 TODO
