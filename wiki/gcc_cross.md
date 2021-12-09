@@ -1,9 +1,8 @@
 # GCC Cross-Compiler
 
-## Enviroment
-### Requirements
+## Requirements
 `gcc`, `g++`, `make`, `bison`, `flex`, `gmp`, `mpc`, `mpfr`, and `texinfo` are needed to properly build GCC and BINUTILS.
-### Constants
+## Variables
 It is reccomended to set constants later used when configuring.  
 `$PREFIX` holds the location to install to. This can be whatever you want (It is reccomended to build GCC and BINUTILS to the same directory).  
 `$TARGET` is the target architecture. This can be any valid target.  
