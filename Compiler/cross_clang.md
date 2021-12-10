@@ -34,9 +34,9 @@ Install the latest release from the [LLVM GitHub release page](https://github.co
 
 TODO: Windows
 
-### OpenBSD
+### *BSD
 
-TODO
+Clang is the default compiler for OpenBSD, NetBSD and FreeBSD so it should be preinstalled
 
 ### macOS
 
