@@ -1,1 +1,5 @@
-theme: jekyll-theme-architect
+title: "OSDev Wiki"
+remote_theme: pmarsceill/just-the-docs
+logo: "/Assets/logo.svg"
+plugins:
+  - jekyll-feed
