@@ -1,5 +1,8 @@
 # Stivale Barebones
 
+What is Stivale?
+----------------
+
 **stivale** means "boot" in Italian. It is a boot protocol designed to
 overcome shortcomings of common boot protocols used by hobbyist OS
 developers, such as [Multiboot](https://wiki.osdev.org/Multiboot).
