@@ -22,7 +22,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v2.5.0
       - name: Install Antora
-        run: npm install -g @antora/cli@3.0.0-beta.5 @antora/site-generator-default@3.0.0-beta.5
+        run: npm install -g antora@3.0.0-beta.5
       - name: Clean _out
         run: |
           cd _out
