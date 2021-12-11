@@ -12,10 +12,10 @@ A calling convention is the set of contracts that compiler-generated machine cod
 - how structures are going to be laid out in memory
 - which registers need to be restored by the caller and which by the callee
 
-== x86-64 calling conventions
+== x86-64 Calling Conventions
 The Windows (including UEFI) world and the UNIX (Linux, macOS, BSDs) world have adopted two different conventions. Note that MSVC can only generate code using the Windows calling convention.
 
-=== Microsoft x64footnote:[https://github.com/MicrosoftDocs/cpp-docs/blob/main/docs/build/x64-calling-convention.md]
+== Microsoft x64footnote:[https://github.com/MicrosoftDocs/cpp-docs/blob/main/docs/build/x64-calling-convention.md]
 
 > The x64 Application Binary Interface (ABI) uses a four-register fast-call calling convention by default. Space is allocated on the call stack as a shadow store for callees to save those registers.
 
@@ -25,15 +25,15 @@ The Windows (including UEFI) world and the UNIX (Linux, macOS, BSDs) world have 
 
 > Integer arguments are passed in registers RCX, RDX, R8, and R9. Floating point arguments are passed in XMM0L, XMM1L, XMM2L, and XMM3L. 16-byte arguments are passed by reference. Parameter passing is described in detail in Parameter passing. These registers, and RAX, R10, R11, XMM4, and XMM5, are considered volatile.
 
-==== Register allocation
+=== Register allocation
 
-===== Caller-saved
+==== Caller-saved
 RAX, RCX, RDX,  R8, R9, R10, R11
 
-===== Callee-saved
+==== Callee-saved
 RBX, RBP, RDI, RSI, RSP, R12, R13, R14, R15
 
-==== Stack
+=== Stack
 The stack is always 16-byte aligned at function **entry**: this requires the stack to be **NOT** aligned to 16 bytes before the `CALL`, since the instruction pushes 8 bytes on the stack.
 
 All functions need to have 32 bytes of home space (also known as spill space or shadow space), which is allocated *before* pushing the other parameters on the stack. This allows for an easier implementation of variadic functions: `va_start` can just put the four register parameters in the home space such that `va_arg` simply becomes a lookup starting at RSP.
@@ -41,7 +41,7 @@ All functions need to have 32 bytes of home space (also known as spill space or 
 For example, if the caller calls a function with 4 or 5 arguments, it needs to allocate 40 bytes of stack in order for the stack at the callee entry to be 48 bytes below the caller's stack.
 
 
-==== Parameters
+=== Parameters
 `RCX`/`XMM0`, `RDX`/`XMM1`, `R8`/`XMM2`, `R9`/`XMM3`, stack (`[RSP+0x20]`, `[RSP+0x28]` and so on, 0x20 is due to the home space being there).
 
 For example, a function with the prototype 
@@ -53,14 +53,14 @@ For example, a function with the prototype
 
 would pass parameters in RCX, XMM1, R8, R9, [RSP+0x20] and [RSP+0x28] respectively. A function calling this needs to have at least 56 bytes of stack to store the parameters and home space and ensure that the stack is aligned after the `CALL`.
 
-==== Return value
+=== Return value
 If the return value is an integer/struct/union whose size is less than or equal than 64 bits, it's returned in RAX; otherwise, the struct is allocated by the caller and a pointer to it is passed as the first parameter.
 
 `LargeStruct DoSomething(int a)` 
 actually becomes 
 `void DoSomething(LargeStruct *ret, int a)`.
 
-=== System Vfootnote:[https://raw.githubusercontent.com/wiki/hjl-tools/x86-psABI/x86-64-psABI-1.0.pdf]
+== System Vfootnote:[https://raw.githubusercontent.com/wiki/hjl-tools/x86-psABI/x86-64-psABI-1.0.pdf]
 > The standard calling sequence requirements apply only to global functions. Local functions that are not reachable from other compilation units may use different conventions. Nevertheless, it is recommended that all functions use the standard calling sequence when possible.
 
 > The CPU shall be in x87 mode upon entry to a function. Therefore, every function that uses the MMX registers is required to issue an EMMS or FEMMS instruction after using MMX registers, before returning or calling another function.
@@ -70,24 +70,24 @@ actually becomes
 > Registers RBP, RBX and
 R12 through R15 “belong” to the calling function and the called function is required to preserve their values. In other words, a called function must preserve these registers’ values for its caller. Remaining registers “belong” to the called function.
 
-==== Register allocation
+=== Register allocation
 
 Caller-saved: RAX, RCX, RDX, RDI, RSI, R8, R9, R10, R11
 
 Callee-saved: RBX, RBP, RSP R12, R13, R14, R15
 
-==== Stack
+=== Stack
 The stack is always 16-byte aligned at function **call**: this requires the stack to be aligned to 16 bytes before the `CALL`. The push of the return address onto the stack by `CALL` is immediately succeeded by the push of RBP onto the stack by the callee function, thereby re-aligning the stack shortly after function entry.
 
 
-==== Parameters
+=== Parameters
 `RDI`, `RSI`, `RDX`, `RCX`, `R8`, `R9`, stack (`[RSP+0x00]`, `[RSP+0x08]` and so on).
 
 If the parameter is of type `float` or `double`, it will be stored in the next available SSE register (`XMM0`-`XMM7`).
 
 For example, a function with the prototype `void DoSomething(int a, float b, int c, int d, int e, float f)` would pass parameters in `RDI`, `XMM0`, `R8`, `R9`, `[RSP+0x00]` and `XMM1` respectively. A function calling this needs to have at least 32 bytes of stack to store the parameters and align the stack upon call.
 
-==== Return value
+=== Return value
 If the return value is an integer/struct/union whose size is less than or equal than 64 bits, it's returned in `RAX`; otherwise, the struct is allocated by the caller and a pointer to it is passed as the first parameter, similarly to the Microsoft x64 ABI. Dissimilarly, the pointer is actually returned in `RAX` upon return.
 
 `LargeStruct DoSomething(int a)`
@@ -96,4 +96,3 @@ actually becomes
 
 
 === See Also
-

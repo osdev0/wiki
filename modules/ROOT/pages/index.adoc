@@ -17,6 +17,5 @@ xref:cross_clang.adoc[Cross Compiling using Clang]
 xref:visual_studio.adoc[Don't Use Visual Studio] +
 xref:calling_conventions.adoc[Calling Conventions]
 
-=== Hardware
-==== Instruction Sets/Architectures
+=== Instruction Sets/Architectures
 xref:x86.adoc[x86] +
