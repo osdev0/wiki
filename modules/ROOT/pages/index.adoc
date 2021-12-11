@@ -1,14 +1,22 @@
-= The OSDev wiki
-:description: The place to start for Operating Systems Development in 202X.
+= The New OSDev Wiki
+:description: The place to start for Operating System Development in the 2020s.
 
-The goal of this wiki is to modernize the information found in the long-standing OSDev wiki found at https://wiki.osdev.org[wiki.osdev.org] and to decentralize it. It is currently *WIP* and *not ready* for use.
+The goal of this wiki is to modernize the information found in the long-standing OSDev wiki found at https://wiki.osdev.org[wiki.osdev.org] and decentralize it. It is currently *WIP* and *not ready* for use.
 
-== Tutorials
+== Quick Access
+
+=== Tutorials
 
 xref:stivale_barebones.adoc[Stivale C Bare Bones] +
-Stivale C# Bare Bones (Migration to adoc needed)
+Stivale C# Bare Bones (unavailable)
 
-=== Compiler
+xref:cross_clang.adoc[Cross Compiling using Clang]
 
-xref:cross_clang.adoc[Cross Compiling using Clang] +
-xref:calling_conventions.adoc[]
+=== Toolchain
+
+xref:visual_studio.adoc[Don't Use Visual Studio] +
+xref:calling_conventions.adoc[Calling Conventions]
+
+=== Hardware
+==== Instruction Sets/Architectures
+xref:x86.adoc[x86] +
