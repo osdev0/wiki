@@ -44,9 +44,9 @@ If Visual Studio is not desired or installed, the latest release of clang can be
 
 TODO: Windows
 
-=== OpenBSD
+=== *BSD
 
-TODO
+Clang is the default compiler for OpenBSD, NetBSD and FreeBSD, so it should be pre-installed.
 
 === macOS
 
