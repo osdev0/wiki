@@ -28,7 +28,7 @@ jobs:
       - name: Clean _out
         run: |
           cd _out
-          find . -delete
+          find . -not -path './.git/*' -not -path ./.git -delete
           echo osdev.wiki > CNAME
       - name: build site
         run: |
