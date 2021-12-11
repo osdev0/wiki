@@ -27,11 +27,9 @@ The Windows (including UEFI) world and the UNIX (Linux, macOS, BSDs) world have 
 
 ==== Register allocation
 
-===== Caller-saved
-RAX, RCX, RDX,  R8, R9, R10, R11
+Caller-saved: RAX, RCX, RDX,  R8, R9, R10, R11
 
-===== Callee-saved
-RBX, RBP, RDI, RSI, RSP, R12, R13, R14, R15
+Callee-saved: RBX, RBP, RDI, RSI, RSP, R12, R13, R14, R15
 
 ==== Stack
 The stack is always 16-byte aligned at function **entry**: this requires the stack to be **NOT** aligned to 16 bytes before the `CALL`, since the instruction pushes 8 bytes on the stack.
@@ -61,6 +59,7 @@ actually becomes
 `void DoSomething(LargeStruct *ret, int a)`.
 
 === System Vfootnote:[https://raw.githubusercontent.com/wiki/hjl-tools/x86-psABI/x86-64-psABI-1.0.pdf]
+
 > The standard calling sequence requirements apply only to global functions. Local functions that are not reachable from other compilation units may use different conventions. Nevertheless, it is recommended that all functions use the standard calling sequence when possible.
 
 > The CPU shall be in x87 mode upon entry to a function. Therefore, every function that uses the MMX registers is required to issue an EMMS or FEMMS instruction after using MMX registers, before returning or calling another function.
@@ -79,7 +78,6 @@ Callee-saved: RBX, RBP, RSP R12, R13, R14, R15
 ==== Stack
 The stack is always 16-byte aligned at function **call**: this requires the stack to be aligned to 16 bytes before the `CALL`. The push of the return address onto the stack by `CALL` is immediately succeeded by the push of RBP onto the stack by the callee function, thereby re-aligning the stack shortly after function entry.
 
-
 ==== Parameters
 `RDI`, `RSI`, `RDX`, `RCX`, `R8`, `R9`, stack (`[RSP+0x00]`, `[RSP+0x08]` and so on).
 
@@ -93,7 +91,6 @@ If the return value is an integer/struct/union whose size is less than or equal 
 `LargeStruct DoSomething(int a)`
 actually becomes 
 `LargeStruct* DoSomething(LargeStruct *ret, int a)`.
-
 
 === See Also
 
