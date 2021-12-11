@@ -20,7 +20,7 @@ jobs:
         run: npm install antora
       - name: clone publishing repo
         run: |
-          git clone --depth 1 https://github.com/osdev-wiki/osdev-wiki.github.io
+          git clone --depth 1 https://${PAT}:github.com/osdev-wiki/osdev-wiki.github.io
       - name: build site
         run: npm exec antora -- generate --to-dir osdev-wiki.github.io antora-playbook.yml
       - name: commit and push
@@ -31,8 +31,4 @@ jobs:
           git config user.email "autobuild@osdev.wiki"
           git add .
           git commit -m $COMMIT_HASH
-      - name: Push site 2
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: $\{{ secrets.PAT }}
-        
+          git push
