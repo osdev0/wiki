@@ -28,6 +28,7 @@ jobs:
           cd _out
           find . -not -path './.git/*' -not -path ./.git -delete
           echo osdev.wiki > CNAME
+          touch .nojekyll
       - name: build site
         run: |
           cd wiki
