@@ -1,5 +1,5 @@
 site:
-  title: Modern OSDev Wiki
+  title: New OSDev Wiki
   url: https://osdev.wiki
   start_page: wiki::index.adoc
 content:
