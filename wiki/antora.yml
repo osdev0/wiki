@@ -1,0 +1,5 @@
+name: wiki
+version: master
+title: Modern OSDev Wiki
+nav:
+  - modules/ROOT/nav.adoc

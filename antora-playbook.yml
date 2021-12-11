@@ -1,0 +1,13 @@
+site:
+  title: Modern OSDev Wiki
+  url: https://osdev.wiki
+  start_page: wiki::index.adoc
+content:
+  sources:
+  - url: ./
+    start_path: wiki
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+

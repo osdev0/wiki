@@ -1,66 +1,38 @@
-# Stivale Barebones
+= Stivale Barebones
+:description: A tutorial on how to write a minimal kernel using a stivale2-compliant bootloader.
+:keywords: tutorial, kernel, barebones
+:page-category: Tutorial
+:source-language: c
 
-**stivale** means "boot" in Italian. It is a boot protocol designed to
-overcome shortcomings of common boot protocols used by hobbyist OS
-developers, such as [Multiboot](https://wiki.osdev.org/Multiboot).
+== Introduction
 
-There are actually 2 revisions of the stivale boot protocol, namely:
-**stivale**, and **stivale2**. The earlier stivale revision (simply
-"stivale", but for clarity we are going to call it "stivale1" from now
-on), is a very simple "KISS" boot protocol only supporting what was
-deemed necessary at the time, but versioning and expandability issues
-made creating stivale2 a necessity. stivale2 makes use of tags for
-bootloader writers' and kernel writers' convenience, and to make future
-expandability and revisioning easier.
+=== What is stivale?
 
-This article only covers stivale2, as stivale1 is deprecated and should
-be avoided for new kernels.
+include::partial$stivale.adoc[]
 
-stivale is firmware and architecture agnostic, though the only
-bootloader fully supporting the stivale protocols as of writing this
-article (2021/01/09) is [Limine](https://wiki.osdev.org/Limine), which is an
-x86/x86\_64 [BIOS](https://wiki.osdev.org/BIOS) and [UEFI](https://wiki.osdev.org/UEFI)
-bootloader, with [TomatBoot](https://github.com/TomatOrg/TomatBoot) (now
-archived) and [Sabaton](https://github.com/FlorenceOS/Sabaton) offering
-limited stivale compliance for x86\_64 [UEFI](https://wiki.osdev.org/UEFI)
-exclusively, and aarch64, respectively.
+This article will demonstrate how to write a small 64-bit higher-half stivale2 kernel in (GNU) C, and boot it using the xref:limine.adoc[] bootloader.
 
-This article will demonstrate how to write a small 64-bit higher half
-stivale2 kernel in (GNU) C, and boot it using the
-[Limine](https://wiki.osdev.org/Limine) bootloader.
+It is also recommended to check out https://github.com/limine-bootloader/limine-barebones[this] project as it provides example buildable code to go along with this tutorial.
 
-It is also recommended to check out
-[this](https://github.com/limine-bootloader/limine-barebones) project as
-it provides example buildable code to go along with this guide.
+== Tutorial
 
-## Overview
+=== The Code
+For this example, we will create these 2 files and place them in the same directory:
 
-For this example, we will create these 2 files and place them in the
-same directory:
+* kernel.c
+* linker.ld
 
--   kernel.c
--   linker.ld
+As one may notice, there is no "entry point" assembly stub, as one is not necessary with either stivale1 or 2, when using a language which can make use of a standard System V x86 xref:calling_conventions.adoc[calling convention].
 
-As one may notice, there is no "entry point" assembly stub, as one is
-not necessary with either stivale1 or 2, when using a language which can
-make use of a standard SysV x86 [calling
-convention](https://wiki.osdev.org/Calling_Conventions).
+Furthermore, we will download the header file `stivale2.h` which defines structures that we will use to interact with the bootloader from https://raw.githubusercontent.com/stivale/stivale/master/stivale2.h[here], and place it in the same directory as the other files.
 
-Furthermore, we will download the header file **stivale2.h** which
-defines structures that we will use to interact with the bootloader from
-[here](https://raw.githubusercontent.com/stivale/stivale/master/stivale2.h),
-and place it in the same directory as the other files.
-
-Obviously, this is just a bare bones example, and one should always
-refer to the [stivale2
-specification](https://github.com/stivale/stivale/blob/master/STIVALE2.md)
-for more details and information.
-
-### kernel.c
+Obviously, this is just a bare bones example, and one should always refer to the https://github.com/stivale/stivale/blob/master/STIVALE2.md[[stivale2 specification] for more details and information.
 
 This is the kernel "main".
 
-```c
+.kernel.c
+[source]
+----
 #include <stdint.h>
 #include <stddef.h>
 #include <stivale2.h>
@@ -193,18 +165,15 @@ void _start(struct stivale2_struct *stivale2_struct) {
         asm ("hlt");
     }
 }
-```
+----
 
-**Note:** Using the stivale2 terminal requires that the kernel maintains
-some state as described in the specification
-(https://github.com/stivale/stivale/blob/master/STIVALE2.md\#x86\_64-1).
+NOTE: Using the stivale2 terminal requires that the kernel maintains some state as described in the https://github.com/stivale/stivale/blob/master/STIVALE2.md\#x86\_64-1[specification].
 
-### linker.ld
+This is going to be our linker script describing where our sections will end up in memory.
 
-This is going to be our linker script describing where our sections will
-end up in memory.
-
-```c
+.linker.ld
+[source]
+----
 /* Tell the linker that we want an x86_64 ELF64 output file */
 OUTPUT_FORMAT(elf64-x86-64)
 OUTPUT_ARCH(i386:x86-64)
@@ -259,16 +228,16 @@ SECTIONS
         *(.bss*)
     } :data
 }
-```
+----
 
-Building the kernel and creating an image
------------------------------------------
+=== Building the kernel and creating an image
 
-### Makefile
+==== Makefile
 
 In order to build our kernel, we are going to use a Makefile.
 
-```makefile
+[source, makefile]
+----
 # This is the name that our final kernel executable will have.
 # Change as needed.
 KERNEL := myos.elf
@@ -333,15 +302,14 @@ $(KERNEL): $(OBJ)
 .PHONY: clean
 clean:
     rm -rf $(KERNEL) $(OBJ) $(HEADER_DEPS)
-```
+----
 
-### limine.cfg
+==== limine.cfg
 
-This file is parsed by Limine and it describes boot entries and other
-bootloader configuration variables. Further information
-[here](https://github.com/limine-bootloader/limine/blob/trunk/CONFIG.md).
+This file is parsed by Limine and it describes boot entries and other bootloader configuration variables. Further information https://github.com/limine-bootloader/limine/blob/trunk/CONFIG.md[here].
 
-```ini
+[source, ini]
+----
 # Timeout in seconds that Limine will use before automatically booting.
 TIMEOUT=5
 
@@ -353,33 +321,26 @@ PROTOCOL=stivale2
 
 # Path to the kernel to boot. boot:/// represents the partition on which limine.cfg is located.
 KERNEL_PATH=boot:///myos.elf
-```
+----
 
-## Compiling the kernel
+==== Compiling the kernel
 
-We can now build our example kernel by running **make**. This command,
-if successful, should generate a file called **myos.elf** (or the chosen
-kernel name). This is our stivale2-compliant kernel executable.
+We can now build our example kernel by running *make*. This command, if successful, should generate a file called `myos.elf` (or the chosen kernel name). This is our stivale2-compliant kernel executable.
 
-## Creating the image
+==== Creating the image
 
-We can now create either an ISO or a hard disk/USB drive image with our
-kernel on it. [Limine](https://wiki.osdev.org/Limine) can boot on both
-[BIOS](https://wiki.osdev.org/BIOS) and [UEFI](https://wiki.osdev.org/UEFI) if the image is set
-up to do so, which is what we are going to do.
+We can now create either an ISO or a hard disk/USB drive image with our kernel on it. xref:limine.adoc[] can boot on both xref:bios.adoc[] and xref:uefi.adoc[] if the image is set up to do so, which is what we are going to do.
 
-### Creating an ISO
+=== Creating an ISO
 
-In this example we are going to create a CD-ROM ISO capable of booting
-on both [UEFI](https://wiki.osdev.org/UEFI) and legacy [BIOS](https://wiki.osdev.org/BIOS)
-systems.
+In this example we are going to create a CD-ROM ISO capable of booting on both xref:uefi.adoc[] and legacy xref:bios.adoc[] systems.
 
-For this to work, we will need the **xorriso** utility.
+For this to work, we will need the *xorriso* utility.
 
-These are shell commands. They can also be compiled into a script or
-Makefile.
+These are shell commands. They can also be compiled into a script or Makefile.
 
-```bash
+[source, sh]
+----
 # Download the latest Limine binary release.
 git clone https://github.com/limine-bootloader/limine.git --branch=v2.0-branch-binary --depth=1
 
@@ -402,22 +363,18 @@ xorriso -as mkisofs -b limine-cd.bin \
 
 # Install Limine stage 1 and 2 for legacy BIOS boot.
 ./limine/limine-install image.iso
-```
+----
 
-### Creating a hard disk/USB drive image
+=== Creating a hard disk/USB drive image
 
-In this example we'll create a [GPT](https://wiki.osdev.org/GPT) partition table
-using **parted**, containing a single FAT partition, also known as the
-ESP in EFI terminology, which will store our kernel, configs, and
-bootloader.
+In this example we'll create a xref:gpt.adoc[] partition table using **parted**, containing a single FAT partition, also known as the xref:uefi.adoc#ESP[ESP] in EFI terminology, which will store our kernel, configs, and bootloader.
 
-This example is more involved and is made up of more steps than creating
-an ISO image.
+This example is more involved and is made up of more steps than creating an ISO image.
 
-These are shell commands. They can also be compiled into a script or
-Makefile.
+These are shell commands. They can also be compiled into a script or Makefile.
 
-```bash
+[source, sh]
+----
 # Create an empty zeroed out 64MiB image file.
 dd if=/dev/zero bs=1M count=0 seek=64 of=image.hdd
 
@@ -456,24 +413,14 @@ sudo cp -v limine/BOOTX64.EFI img_mount/EFI/BOOT/
 sync
 sudo umount img_mount
 sudo losetup -d ${USED_LOOPBACK}
-```
+----
 
-Conclusions
------------
+== Conclusion
 
-If everything above has been completed successfully, you should now have
-a bootable ISO or hard drive/USB image containing your 64-bit higher
-half stivale2 kernel and Limine to boot it. Once the kernel is
-successfully booted, you should see "Hello World" printed on screen.
+If everything above has been completed successfully, you should now have a bootable ISO or hard drive/USB image containing your 64-bit higher half stivale2 kernel and Limine to boot it. Once the kernel is successfully booted, you should see "Hello World" printed on screen.
 
-See Also
---------
+== See Also
 
-### External Links
-
--   [stivale2
-    Specification](https://github.com/stivale/stivale/blob/master/STIVALE2.md)
--   [The sabaton aarch64 stivale2
-    bootloader](https://github.com/FlorenceOS/Sabaton)
--   [The TomatBoot x86\_64 UEFI stivale1 and 2
-    bootloader](https://github.com/TomatOrg/TomatBoot) (now archived)
+* https://github.com/stivale/stivale/blob/master/STIVALE2.md[stivale2 specification]
+* https://github.com/FlorenceOS/Sabaton[The sabaton aarch64 stivale2 bootloader]
+* https://github.com/TomatOrg/TomatBoot[The TomatBoot x86\_64 UEFI stivale1 and 2 bootloader] (now archived)

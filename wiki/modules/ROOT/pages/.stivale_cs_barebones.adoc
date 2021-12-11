@@ -1,38 +1,21 @@
-# Stivale CSharp Barebones
+= Stivale CSharp Barebones
+:description: Tutorial on writing a minimal kernel using C# and the limine bootloader.
 
-What is Stivale?
-----------------
+== Introduction
 
-**stivale** means "boot" in Italian. It is a boot protocol designed to
-overcome shortcomings of common boot protocols used by hobbyist OS
-developers, such as [Multiboot](https://wiki.osdev.org/Multiboot).
+=== What is stivale?
 
-There are 2 revisions of the stivale boot protocol, namely: **stivale**,
-and **stivale2**. Stivale2 makes use of tags for bootloader writers' and
-kernel writers' convenience, and to make future expandability and
-revisioning easier. We will use second version.
+include::partial$stivale.adoc[]
 
-[Stivale GitHub repository](https://github.com/stivale/stivale)
+=== What is Limine?
 
-What is Limine?
----------------
+[Limine](https://wiki.osdev.org/Limine) is a modern, advanced x86 bootloader for [BIOS](https://wiki.osdev.org/BIOS) and [UEFI](https://wiki.osdev.org/UEFI), with support for cutting edge features such as 5-level paging, 64-bit [Long Mode](https://wiki.osdev.org/Long_Mode), and direct higher half loading thanks to the [stivale](https://github.com/stivale/stivale) boot protocol. [Limine GitHub repository](https://github.com/limine-bootloader/limine)
 
-[Limine](https://wiki.osdev.org/Limine) is a modern, advanced x86 bootloader for
-[BIOS](https://wiki.osdev.org/BIOS) and [UEFI](https://wiki.osdev.org/UEFI), with support for
-cutting edge features such as 5-level paging, 64-bit [Long
-Mode](https://wiki.osdev.org/Long_Mode), and direct higher half loading thanks to
-the [stivale](https://github.com/stivale/stivale) boot protocol.
+== Getting started
 
-[Limine GitHub repository](https://github.com/limine-bootloader/limine)
+NOTE: It is recommended to check out this [repository](https://github.com/ilobilo/stivale2-cs-barebones) for buildable code.
 
-Getting started
----------------
-
-It is recommended to check out this project
-[repository](https://github.com/ilobilo/stivale2-cs-barebones) until
-getting started
-
-### Install required packages
+=== Install required packages
 
 To compile and run the kernel you will need following programs
 installed:
