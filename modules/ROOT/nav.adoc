@@ -53,27 +53,27 @@
 ** xref:uefi.adoc[]
 ** xref:bios.adoc[]
 
-** Architectures
-*** x86
-**** Processor Modes
-***** Real Mode
-****** Unreal Mode
-***** Virtual 8086 Mode
-***** Protected Mode
-***** xref:long_mode.adoc[]
-**** Interrupts
-***** Interrupt Descriptor Table (IDT)
-***** Interrupt Service Routines (ISR)
-***** Advanced Programmable Interrupt Controller (APIC)
-**** Timing
-***** Time Stamp Counter
-***** High Performance Event Timer (HPET)
-***** APIC Timer
-***** Programmable Interrupt Timer (PIT)
-***** CMOS and RTC
-***** Detecting CPU Speed
+* Architectures
+** xref:x86.adoc[]
+*** Processor Modes
+**** Real Mode
+***** Unreal Mode
+**** Virtual 8086 Mode
+**** Protected Mode
+**** xref:long_mode.adoc[]
+*** Interrupts
+**** Interrupt Descriptor Table (IDT)
+**** Interrupt Service Routines (ISR)
+**** Advanced Programmable Interrupt Controller (APIC)
+*** Timing
+**** Time Stamp Counter
+**** High Performance Event Timer (HPET)
+**** APIC Timer
+**** Programmable Interrupt Timer (PIT)
+**** CMOS and RTC
+**** Detecting CPU Speed
 
-*** xref:arm.adoc[]
+** xref:arm.adoc[]
 
 * Video
 ** UEFI Graphics Output Protocol
