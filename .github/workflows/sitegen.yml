@@ -1,0 +1,40 @@
+name: sitegen
+
+on:
+  push:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  gen:
+    runs-on: ubuntu-latest
+    env:
+      PAT: ${{ secrets.PAT }}
+    steps:
+      - name: Checkout wiki
+        uses: actions/checkout@v2
+      - name: Checkout publishing repo
+        uses: actions/checkout@v2
+        with:
+          repository: osdev-wiki/osdev-wiki.github.io
+          token: ${{secrets.PAT}}
+      - name: Install Node.js
+        uses: actions/setup-node@v2.5.0
+      - name: Install Antora
+        run: npm install antora
+      - name: Build site
+        run: npm exec antora generate --to-dir osdev-wiki.github.io antora-playbook.yml
+      - name: Push site
+        run: |
+          export COMMIT_HASH=$(git rev-parse --short HEAD)
+          cd osdev-wiki.github.io
+          git config --global user.name  "Wiki Autobuild"
+          git config --global user.email "autobuild@osdev.wiki"
+          git add .
+          git commit -m $COMMIT
+      - name: Push site 2
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: $\{{ secrets.PAT }}
+        
