@@ -29,7 +29,9 @@ jobs:
           find . -not -path './.git/*' -not -path ./.git -delete
           echo osdev.wiki > CNAME
       - name: build site
-        run: npm exec antora -- generate --to-dir _out antora-playbook.yml
+        run: |
+          cd wiki
+          npm exec antora -- generate --to-dir ../_out antora-playbook.yml
       - name: Publish
         run: |
           set -xe
