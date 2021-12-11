@@ -50,17 +50,20 @@
 .Hardware
 
 * Firmware
-** xref:uefi.adoc[]
 ** xref:bios.adoc[]
+** xref:uefi.adoc[]
+** ACPI
 
 * Architectures
+
 ** xref:x86.adoc[]
 *** Processor Modes
 **** Real Mode
-***** Unreal Mode
+**** Unreal Mode
 **** Virtual 8086 Mode
 **** Protected Mode
 **** xref:long_mode.adoc[]
+**** System Management Mode
 *** Interrupts
 **** Interrupt Descriptor Table (IDT)
 **** Interrupt Service Routines (ISR)
@@ -75,20 +78,27 @@
 
 ** xref:arm.adoc[]
 
-* Video
-** UEFI Graphics Output Protocol
-** VESA BIOS Extensions Graphics
+* Busses
+** Peripheral Component Interconnect (PCI)
+*** PCI Express (PCIe)
+** Universal Serial Bus (USB)
+*** Extensible Host Controller Interface (XHCI)
+*** Enhanced Host Controller Interface (EHCI)
+** Advanced Host Controller Interface (AHCI)
+** NVM Express (NVMe)
 
-* Disks
-** NVMe
-** AHCI
-** Partitioning
-*** xref:gpt.adoc[GUID Partition Table (GPT)]
-*** Master Boot Record (MBR)
+* Storage
+** xref:gpt.adoc[GUID Partition Table (GPT)]
+** Master Boot Record (MBR)
+
+* Video
+** VESA BIOS Extensions (VBE)
+** UEFI Graphics Output Protocol (GOP)
+** Intel Graphics Technology
 
 .Tools
 * Bootloaders
-** Bootloader theory
+** Bootloader Theory
 ** Protocols
 *** xref:stivale.adoc[]
 *** xref:multiboot.adoc[]
@@ -96,30 +106,26 @@
 *** xref:limine.adoc[]
 *** GRUB
 *** Your Own Bootloader
-
-* Compilers
-** xref:calling_conventions.adoc[]
-** xref:clang.adoc[]
-*** xref:cross_clang.adoc[]
-** xref:visual_studio.adoc[]
-
-* Assemblers
-** LLVM (llvm-as)
-** NASM
-** FASM
-** YASM
-** GAS (GNU as)
-
-* Linkers
-** LLD (LLVM ld)
-** LD (GNU ld)
-** Link Archiver (GNU ar)
-
-* Virtualization and Emulation
-** QEMU
-** VirtualBox
-** VMWare
-** Hyper-V
-** KVM
+** Compilers
+*** xref:calling_conventions.adoc[]
+*** xref:clang.adoc[]
+**** xref:cross_clang.adoc[]
+*** xref:visual_studio.adoc[]
+** Assemblers
+*** LLVM (llvm-as)
+*** NASM
+*** FASM
+*** YASM
+*** GAS (GNU as)
+** Linkers
+*** LLD (LLVM ld)
+*** LD (GNU ld)
+*** Link Archiver (GNU ar)
+** Virtualization and Emulation
+*** QEMU
+*** VirtualBox
+*** VMWare
+*** Hyper-V
+*** KVM
 
 * Disk Image Manipulation
