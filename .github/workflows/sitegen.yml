@@ -24,13 +24,13 @@ jobs:
       - name: Install Antora
         run: npm install antora
       - name: Build site
-        run: npm exec antora generate --to-dir osdev-wiki.github.io antora-playbook.yml
-      - name: Push site
+        run: npm exec antora -- generate --to-dir osdev-wiki.github.io antora-playbook.yml
+      - name: prepare for push
         run: |
           export COMMIT_HASH=$(git rev-parse --short HEAD)
           cd osdev-wiki.github.io
-          git config --global user.name  "Wiki Autobuild"
-          git config --global user.email "autobuild@osdev.wiki"
+          git config user.name  "Wiki Autobuild"
+          git config user.email "autobuild@osdev.wiki"
           git add .
           git commit -m $COMMIT
       - name: Push site 2
