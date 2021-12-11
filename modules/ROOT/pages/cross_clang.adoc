@@ -25,6 +25,7 @@ Install clang on the host system. It is the standard compiler on BSD-like system
 === Linux
 
 Install clang through the distribution package manager:
+
 * Ubuntu-based: `# apt install clang`
 * Arch-based: `# pacman -S clang`
 * Fedora: `# dnf install clang`
