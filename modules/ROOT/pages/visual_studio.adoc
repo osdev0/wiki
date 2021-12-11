@@ -11,8 +11,6 @@ TODO
 
 == Using MSVC/msbuild with Visual Studio
 
-If you insist on using the Microsoft toolchain to build your OS, someday this page may contain information on how to use it.
-
 [CAUTION]
 .MSVC for OSDev
 ====
@@ -22,3 +20,5 @@ It is possible to use MSVC for OS development, but it is heavily advised against
 * It's difficult and sometimes impossible to do certain things required for OS development using a pure MS toolchain.
 * Few people will be willing to give you help if something goes wrong.
 ====
+
+If you insist on using the Microsoft toolchain to build your OS, someday this page may contain information on how to use it.
