@@ -37,7 +37,7 @@ jobs:
       - name: Publish
         run: |
           set -xe
-          export COMMIT_HASH="$(git rev-parse HEAD)"
+          export COMMIT_HASH="$(git -C wiki rev-parse HEAD)"
           cd _out
           git config user.name  "Wiki Autobuild"
           git config user.email "autobuild@osdev.wiki"
