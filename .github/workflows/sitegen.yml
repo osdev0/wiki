@@ -14,25 +14,23 @@ jobs:
     steps:
       - name: Checkout wiki
         uses: actions/checkout@v2
-      - name: Checkout publishing repo
-        uses: actions/checkout@v2
-        with:
-          repository: osdev-wiki/osdev-wiki.github.io
-          token: ${{secrets.PAT}}
       - name: Install Node.js
         uses: actions/setup-node@v2.5.0
       - name: Install Antora
         run: npm install antora
-      - name: Build site
-        run: npm exec antora -- generate --to-dir osdev-wiki.github.io antora-playbook.yml
-      - name: prepare for push
+      - name: clone publishing repo
         run: |
-          export COMMIT_HASH=$(git rev-parse --short HEAD)
+          git clone --depth 1 https://github.com/osdev-wiki/osdev-wiki.github.io
+      - name: build site
+        run: npm exec antora -- generate --to-dir osdev-wiki.github.io antora-playbook.yml
+      - name: commit and push
+        run: |
+          export COMMIT_HASH=$(git rev-parse HEAD)
           cd osdev-wiki.github.io
           git config user.name  "Wiki Autobuild"
           git config user.email "autobuild@osdev.wiki"
           git add .
-          git commit -m $COMMIT
+          git commit -m $COMMIT_HASH
       - name: Push site 2
         uses: ad-m/github-push-action@v0.6.0
         with:
