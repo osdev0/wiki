@@ -1,10 +1,8 @@
-name: sitegen
+name: Generate pages
 
 on:
   push:
     branches: [ main ]
-
-  workflow_dispatch:
 
 jobs:
   gen:
@@ -14,21 +12,35 @@ jobs:
     steps:
       - name: Checkout wiki
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          path: wiki
+      - name: Checkout publishing
+        uses: actions/checkout@v2
+        with:
+          path: _out
+          repository: osdev-wiki/osdev-wiki.github.io
+          token: "${{ secrets.PAT }}"
       - name: Install Node.js
         uses: actions/setup-node@v2.5.0
       - name: Install Antora
-        run: npm install antora
-      - name: clone publishing repo
+        run: npm install -g @antora/cli@2.3 @antora/site-generator-default@2.3
+      - name: Clean _out
         run: |
-          git clone --depth 1 https://b4s3d:${PAT}@github.com/osdev-wiki/osdev-wiki.github.io
+          cd _out
+          find . -delete
+          echo osdev.wiki > CNAME
       - name: build site
-        run: npm exec antora -- generate --to-dir osdev-wiki.github.io antora-playbook.yml
-      - name: commit and push
         run: |
-          export COMMIT_HASH=$(git rev-parse HEAD)
+          cd wiki
+          npm exec antora -- generate --to-dir ../_out antora-playbook.yml
+      - name: Publish
+        run: |
+          set -xe
+          export COMMIT_HASH="$(git rev-parse HEAD)"
           cd osdev-wiki.github.io
           git config user.name  "Wiki Autobuild"
           git config user.email "autobuild@osdev.wiki"
           git add .
-          git commit -m $COMMIT_HASH
+          git commit -m "$COMMIT_HASH"
           git push
