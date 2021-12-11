@@ -7,8 +7,6 @@ on:
 jobs:
   gen:
     runs-on: ubuntu-latest
-    env:
-      PAT: ${{ secrets.PAT }}
     steps:
       - name: Checkout wiki
         uses: actions/checkout@v2
@@ -31,9 +29,7 @@ jobs:
           find . -not -path './.git/*' -not -path ./.git -delete
           echo osdev.wiki > CNAME
       - name: build site
-        run: |
-          cd wiki
-          npm exec antora -- generate --to-dir ../_out antora-playbook.yml
+        run: npm exec antora -- generate --to-dir _out antora-playbook.yml
       - name: Publish
         run: |
           set -xe
