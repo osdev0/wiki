@@ -1,1 +1,7 @@
 = Visual Studio
+:description: Tutorial on how to setup cross-compilation for OS development using clang.
+:keywords: compiler, msvc, toolchain
+:page-category: Toolchain
+Visual Studio is suboptimal for OS development. It is heavily advised that you do not use it.
+
+If you insist on using Visual Studio, someday this page may contain information on how to use it.
