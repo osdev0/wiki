@@ -1,4 +1,4 @@
-= Calling conventions
+= Calling Conventions
 :description: Examples of calling conventions on common platforms
 :keywords: assembly, x86, x64, sysv, msvc
 :page-category: Assembly
@@ -15,7 +15,8 @@ A calling convention is the set of contracts that compiler-generated machine cod
 == x86_64 calling conventions
 The Windows (including UEFI) world and the UNIX (Linux, macOS, BSDs) world have adopted two different conventions. Note that MSVC can only generate code using the Windows calling convention.
 
-=== Microsoft x64
+=== Microsoft x64footnote:[https://github.com/MicrosoftDocs/cpp-docs/blob/main/docs/build/x64-calling-convention.md]
+
 > The x64 Application Binary Interface (ABI) uses a four-register fast-call calling convention by default. Space is allocated on the call stack as a shadow store for callees to save those registers.
 
 > There's a strict one-to-one correspondence between a function call's arguments and the registers used for those arguments. Any argument that doesn't fit in 8 bytes, or isn't 1, 2, 4, or 8 bytes, must be passed by reference. A single argument is never spread across multiple registers.
@@ -26,14 +27,16 @@ The Windows (including UEFI) world and the UNIX (Linux, macOS, BSDs) world have 
 
 ==== Register allocation
 
-Caller-saved: RAX, RCX, RDX, R8, R9, R10, R11
+===== Caller-saved
+RAX, RCX, RDX,  R8, R9, R10, R11
 
-Callee-saved: RBX, RBP, RDI, RSI, RSP, R12, R13, R14, R15
+===== Callee-saved
+RBX, RBP, RDI, RSI, RSP, R12, R13, R14, R15
 
 ==== Stack
 The stack is always 16-byte aligned at function entry: this requires the stack to be **NOT** aligned to 16 bytes before the `CALL`, since the instruction pushes 8 bytes on the stack.
 
-All functions need to have 32 bytes of home space (also known as spill space or shadow space), which is allocated **before** pushing the other parameters on the stack. This allows for an easier implementation of variadic functions: va_start can just put the four register parameters in the home space such that va_arg simply becomes a lookup starting at RSP.
+All functions need to have 32 bytes of home space (also known as spill space or shadow space), which is allocated *before* pushing the other parameters on the stack. This allows for an easier implementation of variadic functions: `va_start` can just put the four register parameters in the home space such that `va_arg` simply becomes a lookup starting at RSP.
 
 For example, if the caller calls a function with 4 or 5 arguments, it needs to allocate 40 bytes of stack in order for the stack at the callee entry to be 48 bytes below the caller's stack.
 
@@ -41,7 +44,14 @@ For example, if the caller calls a function with 4 or 5 arguments, it needs to a
 ==== Parameters
 `RCX`/`XMM0`, `RDX`/`XMM1`, `R8`/`XMM2`, `R9`/`XMM3`, stack (`[RSP+0x20]`, `[RSP+0x28]` and so on, 0x20 is due to the home space being there).
 
-For example, a function with the prototype `void DoSomething(int a, float b, int c, int d, int e, float f)` would pass parameters in RCX, XMM1, R8, R9, [RSP+0x20] and [RSP+0x28] respectively. A function calling this needs to have at least 56 bytes of stack to store the parameters and home space and ensure that the stack is aligned after the `CALL`.
+For example, a function with the prototype 
+
+[source,c]
+----
+ void DoSomething(int a, float b, int c, int d, int e, float f);
+----
+
+would pass parameters in RCX, XMM1, R8, R9, [RSP+0x20] and [RSP+0x28] respectively. A function calling this needs to have at least 56 bytes of stack to store the parameters and home space and ensure that the stack is aligned after the `CALL`.
 
 ==== Return value
 
@@ -49,11 +59,10 @@ If the return value is an integer/struct/union whose size is less than or equal 
 
 `LargeStruct DoSomething(int a)` actually becomes `void DoSomething(LargeStruct *ret, int a)`.
 
-=== SysV
+=== System V
 - Parameters: RDI, RSI, RDX, RCX, R8, R9, stack
 
 TODO: 
 
+=== See Also
 
-=== See also
-https://github.com/MicrosoftDocs/cpp-docs/blob/main/docs/build/x64-calling-convention.md
