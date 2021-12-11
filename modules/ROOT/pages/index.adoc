@@ -1,7 +1,7 @@
 = The OSDev wiki
-:description: The main page containing all the categories and links to various parts of the wiki.
+:description: The place to start for Operating Systems Development in 202X.
 
-The goal of this wiki is to modernize the information found in the long-standing OSDev wiki found at https://wiki.osdev.org[] and to decentralize it. It is currently *WIP* and *not ready* for use.
+The goal of this wiki is to modernize the information found in the long-standing OSDev wiki found at https://wiki.osdev.org[wiki.osdev.org] and to decentralize it. It is currently *WIP* and *not ready* for use.
 
 == Tutorials
 
@@ -10,5 +10,5 @@ Stivale C# Bare Bones (Migration to adoc needed)
 
 === Compiler
 
-xref:cross_clang.adoc[Cross Compiling using Clang]
-
+xref:cross_clang.adoc[Cross Compiling using Clang] +
+xref:calling_conventions.adoc[]
