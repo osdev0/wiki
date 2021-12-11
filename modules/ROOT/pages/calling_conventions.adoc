@@ -60,7 +60,7 @@ If the return value is an integer/struct/union whose size is less than or equal 
 actually becomes 
 `void DoSomething(LargeStruct *ret, int a)`.
 
-=== System V
+=== System Vfootnote:[https://raw.githubusercontent.com/wiki/hjl-tools/x86-psABI/x86-64-psABI-1.0.pdf]
 > The standard calling sequence requirements apply only to global functions. Local functions that are not reachable from other compilation units may use different conventions. Nevertheless, it is recommended that all functions use the standard calling sequence when possible.
 
 > The CPU shall be in x87 mode upon entry to a function. Therefore, every function that uses the MMX registers is required to issue an EMMS or FEMMS instruction after using MMX registers, before returning or calling another function.
