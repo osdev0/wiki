@@ -7,17 +7,21 @@ The goal of this wiki is to modernize the information found in the long-standing
 
 == Quick Access
 
+* About This Wiki
+* xref:time_travel.adoc[Welcome To the Modern Era]
+* Requirements
+
 === Tutorials
 
-xref:stivale_barebones.adoc[Stivale C Bare Bones] +
-Stivale C# Bare Bones (unavailable)
-
-xref:cross_clang.adoc[Cross Compiling using Clang]
+* xref:stivale_barebones.adoc[Stivale C Bare Bones]
+* Stivale C# Bare Bones (unavailable)
+* xref:cross_clang.adoc[Cross Compiling using Clang]
 
 === Toolchain
 
-xref:visual_studio.adoc[Don't Use Visual Studio] +
-xref:calling_conventions.adoc[Calling Conventions]
+* xref:clang.adoc[LLVM+Clang]
+* xref:visual_studio.adoc[Visual Studio]
+* xref:calling_conventions.adoc[Calling Conventions]
 
-=== Instruction Sets/Architectures
-xref:x86.adoc[x86] +
+=== Hardware
+* xref:x86.adoc[x86]

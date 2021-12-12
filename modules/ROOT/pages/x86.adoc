@@ -80,3 +80,9 @@ AVX was released alongside the Haswell microarchitecture in 2014. A not-insignif
 AVX-512 is not a single extension, but rather a family of extensions. It is similar to AVX, but implements a handful of 512-bit `ZMM` registers.
 
 AVX-512 is quite new, with consumer processors supporting AVX-512 being released in 2018.footnote:[https://web.archive.org/web/20161023135525/http://www.legitreviews.com/intel-cannonlake-added-to-llvms-clang_179210] It is yet to become widely supported.
+
+== See Also
+
+* https://en.wikipedia.org/wiki/X86[x86 on Wikipedia]
+* https://www.amd.com/en/support/tech-docs/amd64-architecture-programmers-manual-volumes-1-5[AMD64 Architecture Programmers' Manuals]
+* https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html[Intel Software Developer Manuals]

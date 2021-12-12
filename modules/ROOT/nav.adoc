@@ -50,39 +50,55 @@
 .Hardware
 
 * Firmware
-** xref:uefi.adoc[]
 ** xref:bios.adoc[]
+** xref:uefi.adoc[]
+** ACPI
 
-** xref:instruction_set_architectures.adoc[Architectures]
-*** xref:x86.adoc[]
-**** Interrupts
-***** Interrupt Descriptor Table (IDT)
-***** Interrupt Service Routines (ISR)
-***** Advanced Programmable Interrupt Controller (APIC)
-**** Timing
-***** Time Stamp Counter
-***** High Performance Event Timer (HPET)
-***** APIC Timer
-***** Programmable Interrupt Timer (PIT)
-***** CMOS and RTC
-***** Detecting CPU Speed
+* xref:instruction_set_architectures.adoc[Architectures]
 
-*** xref:arm.adoc[]
+** xref:x86.adoc[]
+*** Processor Modes
+**** xref:x86.adoc#_real_mode[Real Mode]
+**** Unreal Mode
+**** Virtual 8086 Mode
+**** xref:x86.adoc#_protected_mode_32_bit[Protected Mode]
+**** xref:long_mode.adoc[]
+**** System Management Mode
+*** Interrupts
+**** Interrupt Descriptor Table (IDT)
+**** Interrupt Service Routines (ISR)
+**** Advanced Programmable Interrupt Controller (APIC)
+*** Timing
+**** Time Stamp Counter
+**** High Performance Event Timer (HPET)
+**** APIC Timer
+**** Programmable Interrupt Timer (PIT)
+**** CMOS and RTC
+**** Detecting CPU Speed
+
+** xref:arm.adoc[]
+
+* Busses
+** Peripheral Component Interconnect (PCI)
+*** PCI Express (PCIe)
+** Universal Serial Bus (USB)
+*** Extensible Host Controller Interface (XHCI)
+*** Enhanced Host Controller Interface (EHCI)
+** Advanced Host Controller Interface (AHCI)
+** NVM Express (NVMe)
+
+* Storage
+** xref:gpt.adoc[GUID Partition Table (GPT)]
+** Master Boot Record (MBR)
 
 * Video
-** UEFI Graphics Output Protocol
-** VESA BIOS Extensions Graphics
-
-* Disks
-** NVMe
-** AHCI
-** Partitioning
-*** xref:gpt.adoc[GUID Partition Table (GPT)]
-*** Master Boot Record (MBR)
+** VESA BIOS Extensions (VBE)
+** UEFI Graphics Output Protocol (GOP)
+** Intel Graphics Technology
 
 .Tools
 * Bootloaders
-** Bootloader theory
+** Bootloader Theory
 ** Protocols
 *** xref:stivale.adoc[]
 *** xref:multiboot.adoc[]
@@ -90,30 +106,26 @@
 *** xref:limine.adoc[]
 *** GRUB
 *** Your Own Bootloader
-
-* Compilers
-** xref:calling_conventions.adoc[]
-** xref:clang.adoc[]
-*** xref:cross_clang.adoc[]
-** xref:visual_studio.adoc[]
-
-* Assemblers
-** LLVM (llvm-as)
-** NASM
-** FASM
-** YASM
-** GAS (GNU as)
-
-* Linkers
-** LLD (LLVM ld)
-** LD (GNU ld)
-** Link Archiver (GNU ar)
-
-* Virtualization and Emulation
-** QEMU
-** VirtualBox
-** VMWare
-** Hyper-V
-** KVM
+** Compilers
+*** xref:calling_conventions.adoc[]
+*** xref:clang.adoc[]
+**** xref:cross_clang.adoc[]
+*** xref:visual_studio.adoc[]
+** Assemblers
+*** LLVM (llvm-as)
+*** NASM
+*** FASM
+*** YASM
+*** GAS (GNU as)
+** Linkers
+*** LLD (LLVM ld)
+*** LD (GNU ld)
+*** Link Archiver (GNU ar)
+** Virtualization and Emulation
+*** QEMU
+*** VirtualBox
+*** VMWare
+*** Hyper-V
+*** KVM
 
 * Disk Image Manipulation
