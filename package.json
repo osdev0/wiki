@@ -1,0 +1,10 @@
+{
+  "name": "osdev-wiki",
+  "repository": "https://github.com/osdev-wiki/wiki.git",
+  "private": true,
+  "license": "CC0-1.0",
+  "dependencies": {
+    "@antora/lunr-extension": "gitlab:antora/antora-lunr-extension",
+    "asciidoctor-kroki": "^0.14.0"
+  }
+}

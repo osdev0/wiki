@@ -2,11 +2,23 @@ site:
   title: New OSDev Wiki
   url: https://osdev.wiki
   start_page: wiki::index.adoc
+
 content:
   sources:
   - url: ./
+
 ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
     snapshot: true
+  supplemental_files: ./supplemental-ui
 
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+
+asciidoc:
+  extensions:
+    - asciidoctor-kroki
+  attributes:
+    kroki-fetch-diagram: true

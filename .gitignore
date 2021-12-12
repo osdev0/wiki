@@ -1,1 +1,3 @@
 build/
+.antora/
+node_modules/
