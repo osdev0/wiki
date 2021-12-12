@@ -51,7 +51,7 @@ This is similar to the *GDT* except:
 * Although the *IDT* can contain more than 256 entries, extra entries are ignored.
 * Although the *IDT* can contain less than 256 entries, any entries that are not present (due to this or other reasons) will generate a *General Protection Fault* when an attempt to access them is made.
 
-For more information, see *Section 2.4.3: IDTR Interrupt Descriptor Table Register* and *Figure 2-6: Memory Management Registers* of the *Intel Software Developer's Manual, Volume 3A*.
+For more information, see *Section 2.4.3: IDTR Interrupt Descriptor Table Register*, *Figure 2-6: Memory Management Registers*, and *Figure 6-1: Relationship of the IDTR and IDT* of the *Intel Software Developer's Manual, Volume 3A*.
 
 == Structure on IA-32
 
@@ -89,6 +89,8 @@ If the CPU was running in 32-bit mode and the specified selector enters 32-bit c
 
 If the CPU was running in 32-bit mode and the specified selector enters 16-bit code, then the CPU will enter xref:x86.adoc#_protected_mode_16_bit[*16-bit Protected Mode*] after calling the *ISR*. To return in this case, the _O32 IRET_ instruction should be used, or else the CPU will not know that it should do a 32-bit return (reading 32-bit values off the stack instead of 16 bit).
 
+For more information, see *Section 6.10: Interrupt Descriptor Table (IDT)* of the *Intel Software Developer's Manual, Volume 3A*.
+
 === Interrupt Descriptor
 
 Each entry in the table has a complex structure:
@@ -107,20 +109,6 @@ Each entry in the table has a complex structure:
 * *P:* Present bit. Must be set (*1*) for the descriptor to be valid.
 
 For more information, see *Section 6.11: IDT Descriptors* and *Figure 6-2: IDT Gate Descriptors* of the *Intel Software Developer's Manual, Volume 3A*.
-
-=== Example Code
-
-C Struct:
-[source]
-----
-struct InterruptDescriptor32 {
-   uint16_t offset_1;        // offset bits 0..15
-   uint16_t selector;        // a code segment selector in GDT or LDT
-   uint8_t  zero;            // unused, set to 0
-   uint8_t  type_attributes; // gate type, dpl, and p fields
-   uint16_t offset_2;        // offset bits 16..31
-};
-----
 
 == Structure on x86-64
 
@@ -156,6 +144,8 @@ The corresponding entry for a given *Interrupt Vector* is pointed to in memory b
 
 If the CPU is running in xref:x86.adoc#_long_mode_x86_64_only[*Long Mode*] or an associated xref:x86.html#_compatibility_mode_x86_64_only[*Compatibility Mode*], then the CPU will enter *Long Mode* after calling the *ISR*. To return in this case, the _IRETQ_ instruction should be used.
 
+For more information, see *Section 6.14: Exception and Interrupt Handling in 64-bit Mode* of the *Intel Software Developer's Manual, Volume 3A*.
+
 === Interrupt Descriptor
 
 Each entry in the table has a complex structure:
@@ -171,28 +161,6 @@ Each entry in the table has a complex structure:
 * *P:* Present bit. Must be set (*1*) for the descriptor to be valid.
 
 For more information, see *Section 6.14.1: 64-Bit Mode IDT* and *Figure 6-8: 64-Bit IDT Gate Descriptors* of the *Intel Software Developer's Manual, Volume 3A*.
-
-=== Example Code
-
-C Struct:
-
-[source]
-----
-struct InterruptDescriptor64 {
-   uint16_t offset_1;        // offset bits 0..15
-   uint16_t selector;        // a code segment selector in GDT or LDT
-   uint8_t  ist;             // bits 0..2 holds Interrupt Stack Table offset, rest of bits zero.
-   uint8_t  type_attributes; // gate type, dpl, and p fields
-   uint16_t offset_2;        // offset bits 16..31
-   uint32_t offset_3;        // offset bits 32..63
-   uint32_t zero;            // reserved
-};
-----
-
-Example _type_attributes_ values that people are likely to use (assuming *DPL* is 0):
-
-* 64-bit *Interrupt Gate: 0x8E* (p = 1, dpl = 0b00, type=0b1110 => _type_attributes_ = 0b1000_1110 = *0x8E*)
-* 64-bit *Trap Gate: 0x8F* (p = 1, dpl = 0b00, type = 0b1111 => _type_attributes_ = 1000_1111b = *0x8F*)
 
 == Gate Types
 
