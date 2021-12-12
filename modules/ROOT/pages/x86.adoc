@@ -15,34 +15,33 @@ In 1984, Intel announced the Intel 80386 architecture (later renamed x86). The f
 
 To this day, every properly-implemented x86 processor has backwards compatibility, all the way back to the original Intel 8086.
 
-== Features
-=== Operating Modes
+== Operating Modes
 
 x86 has a handful of operating modes, used for backwards compatibility.
 
-==== Real Mode
+=== Real Mode
 Real mode is the operating mode that an x86 processor boots into. It mostly models the original 16-bit 8086 processor, with a few extensions.
 
 While data can be handled 16 bits at a time, segment offset registers offer addressing up to 21 bits, which provides the processor with 1MiB of addressable memory.
 
 Real mode contains no access rings or protection of any kind.
 
-==== Protected Mode (16-bit)
+=== Protected Mode (16-bit)
 16-bit protected mode runs with 16-bit data and instructions, but segment offset registers are replaced with segment selector registers, which point to an entry into the 16-bit GDT.
 
 Programs written for real mode may have a handful of compatibility issues with 16-bit protected mode, but instructions are still read in the same format.
 
 16-bit protected mode is rarely used.
 
-==== Protected Mode (32-bit)
+=== Protected Mode (32-bit)
 32-bit protected mode reads and addresses with 32-bit values. This is the mode commonly referred to as "protected mode". Protected mode mandates a 32-bit before entry. Protected mode is officially entered when a far jump is performed that sets CS to an offset which points to a code segment in a 32-bit GDT.
 
 32 bits of addressing provide up to 4GiB of addressable virtual memory. However, with PAE paging extensions, the virtual address space can be mapped to 64-bit physical addresses, theoretically allowing up to 16PiB of physical memory to be addressed.
 
-==== Compatibility Mode (x86-64 only)
+=== Compatibility Mode (x86-64 only)
 Compatibility mode runs during the transition from protected mode to long mode. Compatibility mode runs similarly to protected mode, and is used to allow 64-bit structures to be loaded before entering proper long mode.
 
-==== Long Mode (x86-64 only)
+=== Long Mode (x86-64 only)
 Long mode handles data up to 64 bits in general purpose registers, with extensions that allow for the handling of up to 512 bits of data at a time. Addressing in long mode is 64-bit, theoretically allowing for up to 16PiB of virtual memory to be *directly* addressed.
 
 However, on most x86-64 processors, only 48 bits of addressing are actually implemented, with the notable exception of processors that support 5-level-paging. These 48-bit addresses must all have the top unsupported bits be set or unset, resulting in two "halves" of the virtual address space. These addresses are referred to as "canonical" addresses.
@@ -51,28 +50,28 @@ The name "long mode" refers to the commonplace technical term for a 64-bit integ
 
 Due to the unfulfillable amount of virtual memory, PAE paging is mandated in long mode. This allows for contiguous mapping of physical RAM, with memory-mapped IO out of physical RAM space. This also allows x86-64 operating systems to implement "swap memory", a process where virtual addresses point to data not in physical RAM, but rather stored on disk.
 
-=== Extensions
+== Extensions
 x86 processors have a plethora of extensions that expand on standard behavior. The most notable, x86-64, implements 64-bit addressing and long mode. 
 
 (This section only contains a handful of extensions, there are too many to list at once.)
 
-==== x86-64
+=== x86-64
 The x86-64 extension is quite expansive, implementing the 64-bit operating mode and 64-bit addressing. It is nearly impossible to find a working computer today that does not support x86-64.
 
-==== PAE/NX
+=== PAE/NX
 PAE/NX implements 4-level paging, and adds a handful of properties to pages to implement extensive memory protection, including NX, a flag to disable execution on a particular page. 
 
 Most operational computers today support PAE/NX.
 
-==== x87
+=== x87
 x87 is a floating-point calculation extension. While technically an extension, it is supported on most x86 processors.
 
-==== SSE
+=== SSE
 SSE is a 128-bit data extension. It adds 8-16 128-bit general purpose `XMM` registers, and instructions to perform SIMD vector math. 
 
 SSE has several versions. x86-64 processors are mandated to support at least SSE2.
 
-==== AVX
+=== AVX
 AVX is a 256-bit data extension. It performs a purpose similar to SSE, and implements a handful of 256-bit `YMM` registers.
 
 AVX was released alongside the Haswell microarchitecture in 2014. A not-insignificant number of operational computers today do not support AVX.
@@ -80,4 +79,10 @@ AVX was released alongside the Haswell microarchitecture in 2014. A not-insignif
 ==== AVX-512
 AVX-512 is not a single extension, but rather a family of extensions. It is similar to AVX, but implements a handful of 512-bit `ZMM` registers.
 
-AVX-512 is quite new, with consumer processors supporting AVX-512 being released in 2018.:footnote:[https://web.archive.org/web/20161023135525/http://www.legitreviews.com/intel-cannonlake-added-to-llvms-clang_179210] It is yet to become widely supported.
+AVX-512 is quite new, with consumer processors supporting AVX-512 being released in 2018.footnote:[https://web.archive.org/web/20161023135525/http://www.legitreviews.com/intel-cannonlake-added-to-llvms-clang_179210] It is yet to become widely supported.
+
+== See Also
+
+* https://en.wikipedia.org/wiki/X86[x86 on Wikipedia]
+* https://www.amd.com/en/support/tech-docs/amd64-architecture-programmers-manual-volumes-1-5[AMD64 Architecture Programmers' Manuals]
+* https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html[Intel Software Developer Manuals]

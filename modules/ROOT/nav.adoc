@@ -58,10 +58,10 @@
 
 ** xref:x86.adoc[]
 *** Processor Modes
-**** Real Mode
+**** xref:x86.adoc#_real_mode[Real Mode]
 **** Unreal Mode
 **** Virtual 8086 Mode
-**** Protected Mode
+**** xref:x86.adoc#_protected_mode_32_bit[Protected Mode]
 **** xref:long_mode.adoc[]
 **** System Management Mode
 *** Interrupts
