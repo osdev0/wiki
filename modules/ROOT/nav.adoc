@@ -23,11 +23,11 @@
 **** Picokernel
 *** Exokernel
 ** Kernel Modularity
-** Higher-half Kernel
+** Higher-Half Kernel
 
 * Tasking and Scheduling
-** What is a Task?
-*** Task vs. Process vs Thread
+** Tasks
+*** Tasks, Processes, and Threads
 ** Monotasking Systems
 ** Multitasking Systems
 ** Real-Time Systems
@@ -37,7 +37,7 @@
 ** Resource Sharing
 
 * Memory and Resource Management
-* Overview of Memory Management
+* Memory Management
 ** Paging
 ** Segmentation
 ** Memory Allocation
@@ -54,13 +54,7 @@
 ** xref:bios.adoc[]
 
 ** Architectures
-*** x86
-**** Processor Modes
-***** Real Mode
-****** Unreal Mode
-***** Virtual 8086 Mode
-***** Protected Mode
-***** xref:long_mode.adoc[]
+*** xref:x86.adoc[]
 **** Interrupts
 ***** Interrupt Descriptor Table (IDT)
 ***** Interrupt Service Routines (ISR)
