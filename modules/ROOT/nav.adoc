@@ -53,7 +53,7 @@
 ** xref:uefi.adoc[]
 ** xref:bios.adoc[]
 
-** Architectures
+** xref:instruction_set_architectures.adoc[Architectures]
 *** xref:x86.adoc[]
 **** Interrupts
 ***** Interrupt Descriptor Table (IDT)

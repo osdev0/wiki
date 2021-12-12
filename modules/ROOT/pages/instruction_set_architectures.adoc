@@ -1,0 +1,53 @@
+= Instruction Set Architectures
+
+An instruction set architecture, or ISA, is a specification detailing the design of instructions and operations on a processor.
+
+== Purpose
+ISAs are used to standardize operations between processors that might not share the same micro-architecture. They detail the set of instructions that a processor can execute, how those instructions are read and executed, and how the processor may communicate with devices.
+
+== Design
+
+=== Instruction Sets
+Instruction sets can usually be categorized into two main types:
+ 
+ - *CISC:* complex instruction set computer: Contains many instructions, many variations of an instruction which may perform operations with minor differences, and performs many operations with each particular instruction.
+
+ - *RISC:* reduced instruction set computer: Contains a reduced set of instructions, variations are consolidated into a single instruction, and performs a minimal amount of operations with each instruction.footnote:[https://web.archive.org/web/20170228123914/http://faculty.cs.niu.edu/~berezin/463/lec/05/risc03.html]
+
+For example, a complex instruction set may have a dedicated instruction for scanning strings, whereas a reduced instruction set xref:riscv.adoc[may not even contain a multiplication instruction].
+
+Despite their names, RISCs are usually more complex to program due to the reduced instruction set.footnote:[https://elixir.bootlin.com/linux/latest/source/arch/riscv/lib/memcpy.S] Despite this, RISCs perform better on embedded or low-power applications, such as smartphones or ultralight laptops.footnote:[https://www.businessinsider.com/macbook-pro-13-2020-m1-vs-macbook-pro-13-2020-intel]
+
+=== Architecture
+CISCs are usually designed with a lot of backward compatibility, and coincidentally tend to be older. Therefore, new features coexist with old features that do the same thing. This uses up instruction opcodes, draws more power, and results in more complicated configuration.
+
+RISCs are cleanly designed, have modern features, and minimal bloat. The configuration is usually simpler, and they draw far less power.
+
+[cols="1,1"]
+|===
+|**RISC (ARM64)**
+|**CISC (x86-64)**
+
+|Memory-mapped IO only
+|Port-based IO + Memory-mapped IO
+
+|~50 instructionsfootnote:[citation needed]
+|2,034 instructionsfootnote:[https://stefanheule.com/blog/how-many-x86-64-instructions-are-there-anyway/]
+
+| 5-watt power consumptionfootnote:[https://www.anandtech.com/show/17024/apple-m1-max-performance-review/3]
+| 15-watt power consumptionfootnote:[https://ark.intel.com/content/www/us/en/ark/products/209736/intel-core-i31120g4-processor-8m-cache-up-to-3-50-ghz-with-ipu.html]
+|===
+
+== Notable Architectures
+
+=== x86
+xref:x86.adoc[x86] is a CISC architecture, with the original 8086, which is still backwards-compatible with every x86 processor today, introduced in 1978. x86 is notorious for bloat and heat.
+
+=== ARM
+xref:arm.adoc[ARM] is an advanced and widespread RISC architecture, introduced in 1987. ARM is used on virtually every single mobile device, as well as powering laptops, to TVs, to supercomputers.
+
+=== RISC-V
+xref:riscv.adoc[RISC-V] is an open-source RISC architecture. Designed in 2010, an official RISC-V specification published in 2019. RISC-V is known for its minimalist design, with only a handful of instructions.
+
+
+=== See also
