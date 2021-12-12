@@ -1,0 +1,5 @@
+= RISC-V
+
+RISC-V is an open-source, minimalist RISC architecture. Originally designed in 2010, the RISC-V Foundation was founded in 2015, with an official RISC-V specification published in 2019. RISC-V was awarded accolades in 2017 for innovative technology.footnote:[https://linleygroup.com/press_detail.php?The-Linley-Group-Announces-Winners-of-Annual-Analysts-Choice-Awards-85]
+
+=== See also
