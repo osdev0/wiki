@@ -65,7 +65,7 @@
 **** xref:long_mode.adoc[]
 **** System Management Mode
 *** Interrupts
-**** Interrupt Descriptor Table (IDT)
+**** xref:idt.adoc[Interrupt Descriptor Table (IDT)]
 **** Interrupt Service Routines (ISR)
 **** Advanced Programmable Interrupt Controller (APIC)
 *** Timing
