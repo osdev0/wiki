@@ -51,7 +51,7 @@ This is similar to the *GDT* except:
 * Although the *IDT* can contain more than 256 entries, extra entries are ignored.
 * Although the *IDT* can contain less than 256 entries, any entries that are not present (due to this or other reasons) will generate a *General Protection Fault* when an attempt to access them is made.
 
-For more information, see *Section 2.4.3: IDTR Interrupt Descriptor Table Register*, *Figure 2-6: Memory Management Registers*, and *Figure 6-1: Relationship of the IDTR and IDT* of the *Intel Software Developer's Manual, Volume 3A*.
+For more information, see <<1>>.
 
 == Structure on IA-32
 
@@ -89,7 +89,7 @@ If the CPU was running in 32-bit mode and the specified selector enters 32-bit c
 
 If the CPU was running in 32-bit mode and the specified selector enters 16-bit code, then the CPU will enter xref:x86.adoc#_protected_mode_16_bit[*16-bit Protected Mode*] after calling the *ISR*. To return in this case, the _O32 IRET_ instruction should be used, or else the CPU will not know that it should do a 32-bit return (reading 32-bit values off the stack instead of 16 bit).
 
-For more information, see *Section 6.10: Interrupt Descriptor Table (IDT)* of the *Intel Software Developer's Manual, Volume 3A*.
+For more information, see <<2>>.
 
 === Interrupt Descriptor
 
@@ -98,7 +98,7 @@ Each entry in the table has a complex structure:
 *TODO DIAGRAM OR TABLE HERE*
 
 * *Offset:* A 32-bit value, split in two parts. It is the virtual address of the entry point of an *Interrupt Service Routine*.
-* *Selector:* A 16-bit value with multiple fields which must refer to a valid code segment in the *GDT*.
+* *Selector:* A 16-bit value with multiple fields which must refer to a valid code segment in the *GDT*. For more information, see <<3>>.
 * *Gate Type:* A 4-bit value which defines the type of gate this **Interrupt Descriptor** represents. There are five valid type values:
 ** *0x5:* Task Gate, not that in this case the *Offset* value is unused and should be zero.
 ** *0x6:* 16-bit Interrupt Gate.
@@ -108,7 +108,7 @@ Each entry in the table has a complex structure:
 * *DPL:* A 2-bit value which defines the *CPU Privilege Levels* which are allowed to access this interrupt via the _INT_ instruction. Hardware interrupts ignore this mechanism.
 * *P:* Present bit. Must be set (*1*) for the descriptor to be valid.
 
-For more information, see *Section 6.11: IDT Descriptors* and *Figure 6-2: IDT Gate Descriptors* of the *Intel Software Developer's Manual, Volume 3A*.
+For more information, see <<4>>.
 
 == Structure on x86-64
 
@@ -144,7 +144,7 @@ The corresponding entry for a given *Interrupt Vector* is pointed to in memory b
 
 If the CPU is running in xref:x86.adoc#_long_mode_x86_64_only[*Long Mode*] or an associated xref:x86.html#_compatibility_mode_x86_64_only[*Compatibility Mode*], then the CPU will enter *Long Mode* after calling the *ISR*. To return in this case, the _IRETQ_ instruction should be used.
 
-For more information, see *Section 6.14: Exception and Interrupt Handling in 64-bit Mode* of the *Intel Software Developer's Manual, Volume 3A*.
+For more information, see <<5>>.
 
 === Interrupt Descriptor
 
@@ -153,14 +153,14 @@ Each entry in the table has a complex structure:
 *TODO DIAGRAM OR TABLE HERE*
 
 * *Offset:* A 64-bit value, split in three parts. It is the virtual address of the entry point of an *Interrupt Service Routine*.
-* *Selector:* A 16-bit value with multiple fields which must refer to a valid code segment in the *GDT*.
+* *Selector:* A 16-bit value with multiple fields which must refer to a valid code segment in the *GDT*. For more information, see <<3>>.
 * *Gate Type:* A 4-bit value which defines the type of gate this **Interrupt Descriptor** represents. There are two valid type values:
 ** *0xE:* 64-bit Interrupt Gate.
 ** *0xF:* 64-bit Trap Gate.
 * *DPL:* A 2-bit value which defines the *CPU Privilege Levels* which are allowed to access this interrupt via the _INT_ instruction. Hardware interrupts ignore this mechanism.
 * *P:* Present bit. Must be set (*1*) for the descriptor to be valid.
 
-For more information, see *Section 6.14.1: 64-Bit Mode IDT* and *Figure 6-8: 64-Bit IDT Gate Descriptors* of the *Intel Software Developer's Manual, Volume 3A*.
+For more information, see <<6>>.
 
 == Gate Types
 
@@ -184,3 +184,17 @@ A *Task Gate* is a gate type specific to xref:x86.adoc#_protected_mode_32_bit[*P
 "*NOTE* Because IA-32 tasks are not re-entrant, an interrupt-handler task must disable interrupts between the time it completes handling the interrupt and the time it executes the IRET instruction. This action prevents another interrupt from occurring while the interrupt task's TSS is still marked busy, which would cause a general-protection (#GP) exception."
 
 This type of gate is not often used as hardware task switching is slow and has little to no optimization on modern processors. As well, it is entirely absent in xref:x86.adoc#_long_mode_x86_64_only[*Long Mode*].
+
+[bibliography]
+== References
+[[[1]]] Intel Software Developer's Manual, Volume 3A - *Section 2.4.3*: IDTR Interrupt Descriptor Table Register, *Figure 2-6*: Memory Management Registers, *Figure 6-1*: Relationship of the IDTR and IDT
+
+[[[2]]] Intel Software Developer's Manual, Volume 3A - *Section 6.10*: Interrupt Descriptor Table (IDT)
+
+[[[3]]] Intel Software Developer's Manual, Volume 3A - *Section 3.4.2*: Segment Selectors, *Figure 3-6*: Segment Selector of the 
+
+[[[4]]] Intel Software Developer's Manual, Volume 3A - *Section 6.11*: IDT Descriptors, *Figure 6-2*: IDT Gate Descriptors of the 
+
+[[[5]]] Intel Software Developer's Manual, Volume 3A - *Section 6.14*: Exception and Interrupt Handling in 64-bit Mode
+
+[[[6]]] Intel Software Developer's Manual, Volume 3A - *Section 6.14.1*: 64-Bit Mode IDT, *Figure 6-8*: 64-Bit IDT Gate Descriptors
