@@ -106,26 +106,30 @@
 *** xref:limine.adoc[]
 *** GRUB
 *** Your Own Bootloader
-** Compilers
-*** xref:calling_conventions.adoc[]
-*** xref:clang.adoc[]
-**** xref:cross_clang.adoc[]
-*** xref:visual_studio.adoc[]
-** Assemblers
-*** LLVM (llvm-as)
-*** NASM
-*** FASM
-*** YASM
-*** GAS (GNU as)
-** Linkers
-*** LLD (LLVM ld)
-*** LD (GNU ld)
-*** Link Archiver (GNU ar)
-** Virtualization and Emulation
-*** QEMU
-*** VirtualBox
-*** VMWare
-*** Hyper-V
-*** KVM
+
+* Compilers
+** xref:calling_conventions.adoc[]
+** xref:clang.adoc[]
+*** xref:cross_clang.adoc[]
+** xref:visual_studio.adoc[]
+
+* Assemblers
+** LLVM (llvm-as)
+** NASM
+** FASM
+** YASM
+** GAS (GNU as)
+
+* Linkers
+** LLD (LLVM ld)
+** LD (GNU ld)
+** Link Archiver (GNU ar)
+
+* Virtualization and Emulation
+** QEMU
+** VirtualBox
+** VMWare
+** Hyper-V
+** KVM
 
 * Disk Image Manipulation
