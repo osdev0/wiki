@@ -92,5 +92,85 @@ If the return value is an integer/struct/union whose size is less than or equal 
 actually becomes 
 `LargeStruct* DoSomething(LargeStruct *ret, int a)`.
 
+== S/390 calling conventions
+The S/390 offers a limited and partially undocumented set of calling conventions.
+
+=== "MVS"
+> The stack pointer is passed via R1
+> "Base" register (this is, the register used for instructions as the base-displacement operand) is R12
+> R15 is the return value
+
+An example stub function is shown belown:
+
+```hlasm
+         CSECT
+*
+* Diag 8
+* IN:
+*    pointer to EBCDIC message
+*    length
+         ENTRY @@DIAG8
+@@DIAG8  DS 0H
+* This will save non-clobbered registers into the stack
+         SAVE (14,12),,@@DIAG8
+* Base register would have a relative address to @@DIAG8
+* so any LOAD operation that takes place is then given an
+* access address of BASE+ADDR; this is required because
+* S/390 does not offer many instructions that address above
+* the 12-bit limit.
+         LR 12,15
+* From this point the R12 register is "allocated" (and later dropped)
+         USING @@DIAG8,12
+         LR 11,1
+* Pointer to message loaded on R1
+         L 1,0(11)
+* Length loaded on R2
+         L 2,4(11)
+* DIAG is not supported by MVS3.8J HLASM
+* so we have to define it manually
+*         DIAG 1,2,8
+         DC X'83120008'
+* Set our return value to 0
+         L 15,0
+* Return and restore 14,12, the return code is on R15
+         RETURN (14,12),RC=(15)
+* Organize for data section (usually in MVS data and code are mixed together)
+         LTORG
+* We free up our base register so other procedure can use it
+         DROP 12
+		 END
+```
+
+On a bare-metal situation the GCCMVS compiler will expect stack+76 to have a pointer to the next stack frame.
+
+In said case one has simply to do the very simple task of:
+
+```hlasm
+		 CSECT
+* Symbol declarations
+		 ENTRY KEINIT
+         ENTRY SETSTACK
+SETSTACK DS 0H
+         BALR 12,0
+* Base register R12 will be based at this precise address
+* the asterisk denotes the current address
+         USING *,12
+* Set the stack pointer
+         L 13,=A(@@STACK)
+* Load the address of 180(13), this is, calculate R13+180, then
+* put said value into R5
+         LA 5,180(13)
+* Now the value we calculated is then put onto R13[76] where GCCMVS
+* expects it to be
+         ST 5,76(13)
+* Jump to the C-code expected to be loaded (=V is for external symbols)
+         L 15,=V(KEINIT)
+         BR 15
+* Properly prepare for data section and deallocate our base register
+		 LTORG
+         DROP 12
+		 END
+```
+
 === See Also
 

@@ -78,6 +78,8 @@
 
 ** xref:arm.adoc[]
 
+** xref:s390.adoc[]
+
 * Busses
 ** Peripheral Component Interconnect (PCI)
 *** PCI Express (PCIe)

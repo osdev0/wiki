@@ -1,0 +1,70 @@
+= S/390
+:description: Description about the 390 architecture
+:keywords: s390, zarch, z11, s360, s370
+:page-category: Hardware
+:source-language: c
+
+== History
+The S/390 is part of the S/3X0 family, which includes the S/360, S/370 and S/390 - all of these were released around in 1960, 1970 and 1990 respectively.
+
+== Terminology
+A quick summary for understanding some key terminology:
+
+> Hardware Floating Point, Closely related to a `float` (but not quite)
+> Dynamic Address Translation, Paging
+> Channel Subsystem I/O, DMA I/O
+> Storage, Random Acess Memory (RAM)
+> Facility, Extensions
+> Character, 8-bits
+> Halfword, 16-bits
+> Word, 32-bits
+> Double word, 64-bits
+> Define Storage (DS on HLASM), Uninitialized data
+> Define Character (DC on HLASM), Initialized data
+> Procedure, Function
+> Dataset, File
+> Processing Unit, CPU
+> Supervisor Call, SYSCALL
+> Principles Of Operation is the main manual and "architecture-reference" document, often abbreviated as POP
+> The word "Recognized" is related to an interrupt being fired up as in: "A MC interrupt is recognized when a device fails"
+
+== Notes
+> A popular belief amongst non-S390-ers is that the 3X0 is limited to EBCDIC. This is a false statment since the S/3X0 offers specialization instructions for EBCDIC and UTF8 but does not force their usage system-wide; translations are still required through
+> The S/3X0 is more CISC than x86 itself, offering as many instructions to be assembler-friendly as possible
+> Transactional I/O (known formally as Channel Subystem I/O) is used instead of the widely-known x86 I/O; it's mostly related to DMA I/O
+
+== Operating modes
+In S/3X0 there are varying multiple modes depending on the system being ran, along with the facilities it has.
+
+=== 24-bit mode
+Present since S/360.
+
+=== 31-bit mode
+Present since S/370.
+
+=== 32-bit mode
+Present since S/390.
+
+=== 64-bit mode
+Present since z/Arch.
+
+== Extensions
+The 390 has a handful of extensions (also known as facilities).
+
+=== Dynamic Address Translation
+Offers paging-like functionality, allowing for virtual spaces and 3-level paging.
+
+=== Cryptographic Assist Facility
+Allows the usage of cryptographic functions with common cryptographic algorithms such as AES.
+
+=== Hardware Floating Point Unpack
+Allows to unpack a HFP.
+
+=== Vector Instructions (z/Arch only)
+These are not an extension per-se since they are virtually in every z/Arch machine - however they offer vectorization opportunities for compilers and allows for AVX-like operation.
+
+== See also
+
+* https://www.ibm.com/docs/en/SSQ2R2_15.0.0/com.ibm.tpf.toolkit.hlasm.doc/dz9zr006.pdfe[z/Arch Principles of Operation Manual]
+* http://bitsavers.org/pdf/ibm/370/princOps/SA22-7085-1_370-XA_Principles_of_Operation_Jan87.pdf[S/370 Extended Principles Of Operation Manual]
+* https://www.kernel.org/doc/html/v5.3/s390/debugging390.html[Debugging z/Linux on the S/390]
