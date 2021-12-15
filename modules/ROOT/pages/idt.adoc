@@ -1,0 +1,200 @@
+= Interrupt Descriptor Table
+:description: 
+:keywords: interrupts, x86
+:page-category: interrupts
+:source-language: c
+:table-caption!:
+
+== Overview
+
+The *Interrupt Descriptor Table* is a binary data structure specific to xref:x86.adoc[x86]'s 32-bit (IA-32) and 64-bit (x86-64) variants. It is used in xref:x86.adoc#_protected_mode_32_bit[*Protected Mode*] and xref:x86.adoc#_long_mode_x86_64_only[*Long Mode*] and a similar *Interrupt Vector Table* exists in xref:x86.adoc#_real_mode[*Real Mode*].
+
+The *IDT* is responsible for informing the CPU of the location and operation modes of *Interrupt Service Routines* corresponding to one of 256 *Interrupt Vectors*.
+
+The *IDT* is similar to the xref:gdt.adoc[*Global Descriptor Table*] in structure and interfaces with it, making it important to have a working and complete *GDT* before it can be used.
+
+== Interrupt Descriptor Table Register (IDTR)
+
+The location and size of the *Interrupt Descriptor Table* is held in the *Interrupt Descriptor Table Register* (*IDTR*). It is formatted as follows
+
+.*IDTR*
+[cols="10,1,5,1", grid=rows, stripes=odd]
+|===
+|47 (32-bit Mode) +
+79 (64-bit Mode)
+|16
+|15
+|0
+
+|*Offset* +
+31 (32-bit Mode) +
+63 (64-bit Mode)
+|{zwsp} +
+0
+|*Size* +
+15
+|{zwsp} +
+0
+|===
+
+* *Size:* The size of the *IDT* in bytes subtracted by 1.
+* *Offset:* The virtual address of the *IDT*.
+
+Note that the size of the Offset field differs in 32-bit and 64-bit modes. *Offset* is 4 bytes long in 32-bit mode and 8 bytes long in 64-bit mode.
+
+The *IDTR* can be changed by use of the _LIDT_ assembly instruction, whose argument is a virtual address pointing to a 6 or 10 byte structure laid out identically to the register. The instruction must work in this way to accomodate the unusually large size of the register compared to others.
+
+This is similar to the *GDT* except:
+
+* The first entry (at *Offset* + 0) is used in the *IDT*.
+* There are only 256 *Interrupt Vectors*, so the IDT should have 256 entries, each corresponding to a specific vector.
+* Although the *IDT* can contain more than 256 entries, extra entries are ignored.
+* Although the *IDT* can contain less than 256 entries, any entries that are not present (due to this or other reasons) will generate a *General Protection Fault* when an attempt to access them is made.
+
+For more information, see <<1>>.
+
+== Structure on IA-32
+
+=== Table
+
+On 32-bit processors, the entries in the *IDT* are 8 bytes long and form a table in memory like this:
+
+.*Interrupt Descriptor Table*
+[cols="2,1"]
+|===
+|*Address*
+|*Content*
+
+|IDTR Offset + 0
+|Entry 0
+
+|IDTR Offset + 8
+|Entry 1
+
+|IDTR Offset + 16
+|Entry 2
+
+|...
+|...
+
+|IDTR Offset + 2040
+|Entry 255
+|===
+
+The total size of the table including all 256 entries is 2048 bytes.
+
+The corresponding entry for a given *Interrupt Vector* is pointed to in memory by scaling the vector by 8 and adding it to the value of the *Offset* field in the *IDTR*.
+
+If the CPU was running in 32-bit mode and the specified selector enters 32-bit code, then the CPU will enter xref:x86.adoc#_protected_mode_32_bit[*32-bit Protected Mode*] after calling the *ISR*. To return in this case, the _IRET_ instruction should be used.
+
+If the CPU was running in 32-bit mode and the specified selector enters 16-bit code, then the CPU will enter xref:x86.adoc#_protected_mode_16_bit[*16-bit Protected Mode*] after calling the *ISR*. To return in this case, the _O32 IRET_ instruction should be used, or else the CPU will not know that it should do a 32-bit return (reading 32-bit values off the stack instead of 16 bit).
+
+For more information, see <<2>>.
+
+=== Interrupt Descriptor
+
+Each entry in the table has a complex structure:
+
+*TODO DIAGRAM OR TABLE HERE*
+
+* *Offset:* A 32-bit value, split in two parts. It is the virtual address of the entry point of an *Interrupt Service Routine*.
+* *Selector:* A 16-bit value with multiple fields which must refer to a valid code segment in the *GDT*. For more information, see <<3>>.
+* *Gate Type:* A 4-bit value which defines the type of gate this **Interrupt Descriptor** represents. There are five valid type values:
+** *0x5:* Task Gate, not that in this case the *Offset* value is unused and should be zero.
+** *0x6:* 16-bit Interrupt Gate.
+** *0x7:* 16-bit Trap Gate.
+** *0xE:* 32-bit Interrupt Gate.
+** *0xF:* 32-bit Trap Gate.
+* *DPL:* A 2-bit value which defines the *CPU Privilege Levels* which are allowed to access this interrupt via the _INT_ instruction. Hardware interrupts ignore this mechanism.
+* *P:* Present bit. Must be set (*1*) for the descriptor to be valid.
+
+For more information, see <<4>>.
+
+== Structure on x86-64
+
+=== Table
+
+On 64-bit processors, the entries in the *IDT* are 16 bytes long and form a table in memory like this:
+
+.*Interrupt Descriptor Table*
+[cols="2,1"]
+|===
+|*Address*
+|*Content*
+
+|IDTR Offset + 0
+|Entry 0
+
+|IDTR Offset + 16
+|Entry 1
+
+|IDTR Offset + 32
+|Entry 2
+
+|...
+|...
+
+|IDTR Offset + 4080
+|Entry 255
+|===
+
+The total size of the table including all 256 entries is 4096 bytes, which is conveniently the size of a single *Page*.
+
+The corresponding entry for a given *Interrupt Vector* is pointed to in memory by scaling the vector by 16 and adding it to the value of the *Offset* field in the *IDTR*.
+
+If the CPU is running in xref:x86.adoc#_long_mode_x86_64_only[*Long Mode*] or an associated xref:x86.html#_compatibility_mode_x86_64_only[*Compatibility Mode*], then the CPU will enter *Long Mode* after calling the *ISR*. To return in this case, the _IRETQ_ instruction should be used.
+
+For more information, see <<5>>.
+
+=== Interrupt Descriptor
+
+Each entry in the table has a complex structure:
+
+*TODO DIAGRAM OR TABLE HERE*
+
+* *Offset:* A 64-bit value, split in three parts. It is the virtual address of the entry point of an *Interrupt Service Routine*.
+* *Selector:* A 16-bit value with multiple fields which must refer to a valid code segment in the *GDT*. For more information, see <<3>>.
+* *Gate Type:* A 4-bit value which defines the type of gate this **Interrupt Descriptor** represents. There are two valid type values:
+** *0xE:* 64-bit Interrupt Gate.
+** *0xF:* 64-bit Trap Gate.
+* *DPL:* A 2-bit value which defines the *CPU Privilege Levels* which are allowed to access this interrupt via the _INT_ instruction. Hardware interrupts ignore this mechanism.
+* *P:* Present bit. Must be set (*1*) for the descriptor to be valid.
+
+For more information, see <<6>>.
+
+== Gate Types
+
+There are at a basic level two kinds of interrupts: undesired interrupts or *Exceptions*, which occur when running code has encountered a CPU-level error, and desired interrupts such as hardware interrupts or the _INT_ instruction. In the first case it is pertinent to save the address of the _currently_ executing instruction so that it can be retried, this is called a *Trap*. In the second case it is pertinent to save the address of the _next_ instruction so that execution can be resumed where it left off. Another difference to note is that with *Traps*, new interrupts might occur during the service routine, but when the CPU is serving an *IRQ* or _INT_ call, further interrupts are masked until an *End of Interrupt* signal is sent. How a certain interrupt is served depends on which kind of gate you put in the corresponding *Interrupt Descriptor*.
+
+=== Interrupt Gate
+
+An *Interrupt Gate* is used to specify an *Interrupt Service Routine*. For example, when the assembly instruction _INT 50_ is performed while running in protected mode, the CPU looks up the 50th entry (located at 50 * 8 or 50 * 16) in the *IDT*. Then the *Interrupt Gate*'s *Selector* and *Offset* values are loaded. The *Selector* and *Offset* are used to call the *Interrupt Service Routine*. When the _IRET_ or _IRETQ_ instruction is performed, the CPU returns from the interrupt after the instruction which was interrupted.
+
+=== Trap Gate
+
+A *Trap Gate* is used to handle *Exceptions*. When such an exception occurs, there can sometimes be an error code placed on the stack, which should be popped before returning from the interrupt. When the _IRET_ or _IRETQ_ instruction is performed, the CPU returns to the instruction which caused the interrupt.
+
+*Trap Gates* and *Interrupt Gates* are similar, and their descriptors are structurally the same, differing only in the *Gate Type* field. The difference is that for *Interrupt Gates*, interrupts are automatically disabled upon entry and reenabled upon _IRET_ or _IRETQ_, whereas this does not occur for *Trap Gates*.
+
+=== Task Gate
+
+A *Task Gate* is a gate type specific to xref:x86.adoc#_protected_mode_32_bit[*Protected Mode*] that is used for hardware task switching. For a *Task Gate* the *Selector* value should refer to a position in the *GDT* which specifies a *Task State Segment* rather than a code segment, and the *Offset* value is unused and should be set to zero. Rather than jumping to a service routine, when the CPU processes this interrupt, it will perform a hardware task switch to the specified task. A pointer back to the task which was interrupted will be stored in the *Task Link* field in the *TSS*.
+
+[quote, Intel Software Developer's Manual]
+"*NOTE* Because IA-32 tasks are not re-entrant, an interrupt-handler task must disable interrupts between the time it completes handling the interrupt and the time it executes the IRET instruction. This action prevents another interrupt from occurring while the interrupt task's TSS is still marked busy, which would cause a general-protection (#GP) exception."
+
+This type of gate is not often used as hardware task switching is slow and has little to no optimization on modern processors. As well, it is entirely absent in xref:x86.adoc#_long_mode_x86_64_only[*Long Mode*].
+
+[bibliography]
+== References
+[[[1]]] Intel Software Developer's Manual, Volume 3A - *Section 2.4.3*: IDTR Interrupt Descriptor Table Register, *Figure 2-6*: Memory Management Registers, *Figure 6-1*: Relationship of the IDTR and IDT
+
+[[[2]]] Intel Software Developer's Manual, Volume 3A - *Section 6.10*: Interrupt Descriptor Table (IDT)
+
+[[[3]]] Intel Software Developer's Manual, Volume 3A - *Section 3.4.2*: Segment Selectors, *Figure 3-6*: Segment Selector of the 
+
+[[[4]]] Intel Software Developer's Manual, Volume 3A - *Section 6.11*: IDT Descriptors, *Figure 6-2*: IDT Gate Descriptors of the 
+
+[[[5]]] Intel Software Developer's Manual, Volume 3A - *Section 6.14*: Exception and Interrupt Handling in 64-bit Mode
+
+[[[6]]] Intel Software Developer's Manual, Volume 3A - *Section 6.14.1*: 64-Bit Mode IDT, *Figure 6-8*: 64-Bit IDT Gate Descriptors
