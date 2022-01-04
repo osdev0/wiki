@@ -1,7 +1,12 @@
 *stivale* means "boot" in Italian. It is a boot protocol designed to overcome shortcomings of common boot protocols used by hobbyist OS developers, such as xref:multiboot.adoc[].
 
-There are actually 2 revisions of the stivale boot protocol, namely: *stivale*, and *stivale2*. The earlier stivale revision (simply "stivale", but for clarity we are going to call it "stivale1" from now on), is a very simple https://en.wikipedia.org/wiki/KISS_principle["KISS"] boot protocol only supporting what was deemed necessary at the time, but versioning and expandability issues made creating stivale2 a necessity. stivale2 makes use of tags for bootloader writers' and kernel writers' convenience, and to make future expandability and revisioning easier.
+There are actually 2 revisions of the stivale boot protocol, namely: *stivale*, and *stivale2*. The earlier stivale revision (simply "stivale", but for clarity we are going to call it "stivale1" from now on), is a very simple https://en.wikipedia.org/wiki/KISS_principle["KISS"] boot protocol only supporting what was deemed necessary at the time, but versioning and expandability issues made creating stivale2 a necessity. stivale2 makes use of tags for bootloader writers' and kernel writers' convenience, and to make future expandability and revisioning easier. Stivale1 is also depreciated and should not be used by new kernels, since stivale2 is more robust and still in active development. Stivale is also firmware and architecture agnostic, with a list of protocols implementing it down below.
 
-NOTE: stivale1 is deprecated and should be avoided for new kernels.
+.Stivale/Stivale2 Implementations
+* xref:limine.adoc[Limine] - the refrence implementation of stivale/stivale2, created in 2019 to boot https://github.com/qword-os/qword[Qword-OS], and has since then evolved into a modern bootloader capable of booting https://wiki.archlinux.org/title/Limine[Arch Linux] (and it has a clean ui!).
+* https://github.com/FlorenceOS/Sabaton[Sabaton] xref:arm.adoc#AArch64[aarch64] implementation of stivale2 in zig, with support for multiple SOCs (the only aarch64 implementation)
+* https://github.com/TomatOrg/TomatBoot[TomatBoot] original UEFI implementation of stivale1/2 (partial compliance), and is now archived (superseded by xref:limine.adoc[Limine]
+* https://github.com/Andy-Python-Programmer/ion.git[Ion] UEFI implementation of stivale2, also with partial compliance (seems to be inactive)
 
-stivale is firmware and architecture agnostic, though the only bootloader fully supporting the stivale protocols as of writing this article (2021/01/09) is xref:limine.adoc[], which is an x86/x86_64 xref:bios.adoc[] and xref:uefi.adoc[] bootloader, with https://github.com/TomatOrg/TomatBoot[TomatBoot] (now archived) and https://github.com/FlorenceOS/Sabaton[Sabaton] offering limited stivale compliance for xref:uefi.adoc#x86[x86_64 UEFI] exclusively, and xref:arm.adoc#AArch64[aarch64], respectively.
+NOTE: For more information on the stivale protocol, see https://github.com/stivale/stivale.
+
