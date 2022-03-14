@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" type="text/css" href="/_/stylesheet.css">
+
+        <title>$title$ - osdev.wiki</title>
+        $if(opengraph)$$opengraph$$endif$
+        <meta name="keywords" content="osdev-wiki,osdev,programming,x86">
+        <meta name="description" content="$description$">
+    </head>
+    <body>
+        <span id="roothack" href="/"></span>
+        <div id="content">
+            <svg id="logo" viewBox="0 0 747.13464 126.28621">
+                <use href="/_/static/logo.svg#g623"></use>
+            </svg>
+            <div id="navbar">$partial("html/navbar.html")$</div>
+            <div id="padding"></div>
+            $body$
+            <footer>
+                &copy; 2021 osdev.wiki contributors. All contents released under
+                the Creative Commons Zero license. Icons (marked with class
+                <code>bi</code>) provided by
+                <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a>
+                under the MIT license.
+                Search provided by
+                <a href="https://stork-search.net/">Stork</a> under the
+                Apache-2.0 license.
+                $if(forge)$<a href="$forge$/tree/$hash$/">Source code</a>.$endif$
+            </footer>
+        </div>
+        <script src="https://files.stork-search.net/releases/v1.4.0/stork.js"
+                integrity="sha512-aWKhPNaS3Dw47qzN1e1oxmqW0LofAvNpvrLFPb+DISgrfQPdkn5bmqaVnPyyPK5o69v9z1alQhU9yEvUcgp9Cg=="
+                crossorigin="anonymous"
+        ></script>
+        <script src="/_/static/search.js"></script>
+    </body>
+</html>
+<!-- vim: set sw=4 et : -->

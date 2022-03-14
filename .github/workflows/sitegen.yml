@@ -18,21 +18,50 @@ jobs:
         with:
           path: _out
           repository: osdev-wiki/osdev-wiki.github.io
+          fetch-depth: 0
           token: "${{ secrets.PAT }}"
-      - name: Install Node.js
-        uses: actions/setup-node@v2.5.0
-      - name: Install Antora
-        run: npm install -g antora@3.0.0-beta.5
+        if: ${{ github.repository == 'osdev-wiki/wiki' }}
+      - name: Checkout publishing (for fork)
+        uses: actions/checkout@v2
+        with:
+          path: _out
+          token: "${{ github.token }}"
+          fetch-depth: 0
+          ref: gh-pages
+      - name: Cache dependency builds
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.stack
+            wiki/generator/.stack-work/
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+          key: ${{ runner.os }}
+      - name: Get deps
+        run: |
+          set -xe
+          gem install --user-install asciidoctor tilt
+          pip install --user -U Pygments
+          cargo install --force --locked stork-search
+        if: ${{ github.repository != 'osdev-wiki/wiki' }}
       - name: Clean _out
         run: |
           cd _out
           find . -not -path './.git/*' -not -path ./.git -delete
           echo osdev.wiki > CNAME
           touch .nojekyll
-      - name: build site
+      - name: Build site
         run: |
-          cd wiki
-          npm exec antora -- generate --to-dir ../_out antora-playbook.yml
+          export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+          export PATH="$GEM_HOME/bin:$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
+          cd wiki/generator
+          stack run --cwd .. -- build
+          cd ..
+          rsync -a _site/ ../_out
+        env:
+          WIKI_FORGE: ${{ format('https://github.com/{0}', github.repository) }}
       - name: Publish
         run: |
           set -xe

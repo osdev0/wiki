@@ -1,0 +1,109 @@
+/* Copyright (c) 2021 Arsen Arsenovic, CC0 */
+
+* {
+	box-sizing: border-box;
+}
+
+body, html {
+	width: 100%;
+	min-height: 100vh;
+	margin: 0;
+	padding: 0;
+}
+
+div#content {
+	display: grid;
+	grid-template-areas:
+		"header"
+		"sitemap"
+		"toc"
+		"content"
+		"footer";
+	grid-template-rows:
+		min-content
+		min-content
+		min-content
+		1fr
+		min-content;
+	grid-template-columns: auto;
+	grid-gap: 10px;
+	min-height: 100vh;
+}
+
+div#content > * {
+	padding: 5px;
+}
+
+div#header {
+	grid-area: header;
+}
+
+div#navbar {
+	grid-area: sitemap;
+}
+
+div#navbar > ul {
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+div#toc {
+	grid-area: toc;
+}
+
+a#forgebtn {
+	display: block;
+	height: 1em;
+}
+
+div#padding {
+	display: none;
+	grid-area: filler;
+}
+
+div#content > article {
+	grid-area: content;
+	max-width: 900px;
+	justify-self: center;
+}
+
+div#content > footer {
+	grid-area: footer;
+	text-align: center;
+}
+
+a.listSlug {
+	font-size: 1.4em;
+	font-family: monospace;
+}
+
+ul.pageList > li {
+	margin: 0.5em 0;
+}
+
+span#roothack {
+	display: none;
+}
+
+@media only screen and (min-width: 768px) {
+	div#content {
+		display: grid;
+		grid-template-columns: minmax(50px, 300px) auto;
+		grid-template-areas:
+			"header		contenttop"
+			"sitemap	content"
+			"toc		content"
+			"filler		content"
+			"footer		footer";
+		grid-gap: 10px;
+		min-height: 100vh;
+	}
+
+	div#navbar > ul {
+		display: block;
+		flex-direction: row;
+		justify-content: space-evenly;
+	}
+}

@@ -1,0 +1,22 @@
+name: generator
+version: 0.1.0.0
+synopsis: Static site generator for https://osdev.wiki based on Hakyll
+category: Web
+license: PublicDomain
+license-file: LICENSE
+ghc-options: -Wall
+
+dependencies:
+  - base >= 4.7 && < 5
+  - hakyll
+  - pandoc
+  - time
+  - yaml
+  - text
+  - unordered-containers
+  - bytestring
+  - aeson
+
+executable:
+  main: Main.hs
+  source-dirs: app
