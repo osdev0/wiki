@@ -4,6 +4,9 @@ on:
   push:
     branches: [ main ]
 
+env:
+  STORK_VERSION: 1.4.0
+
 jobs:
   gen:
     runs-on: ubuntu-latest
@@ -61,7 +64,7 @@ jobs:
           pip install --user -U Pygments
           nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
           nix-channel --update nixpkgs
-          nix-env -I nixpkgs-overlays="$(realpath wiki/generator/overlays/)" -i stork
+          nix-env -I nixpkgs-overlays="$(realpath wiki/generator/overlays/)" -i "stork-$STORK_VERSION"
 
       - name: Clean _out
         run: |
@@ -78,10 +81,11 @@ jobs:
       - name: Update nix caches
         if: always()
         run: |
+          set -xe
           [ -r ~/.nix-key ] || exit 0
           cd wiki/generator
           nix store sign -k ~/.nix-key "$(readlink result)"
-          stork_path="$(nix-build -I nixpkgs-overlays=overlays/ --no-out-link '<nixpkgs>' -A stork)"
+          stork_path="$(nix-env -q --installed --out-path --no-name stork)"
           nix copy --to 's3://osdev-wiki-cache?scheme=https&endpoint=s3.us-west-000.backblazeb2.com&profile=osdev-wiki-cache' \
               "$(readlink result)" "$stork_path"
 
