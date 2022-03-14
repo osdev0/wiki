@@ -13,6 +13,7 @@ jobs:
         with:
           fetch-depth: 0
           path: wiki
+
       - name: Checkout publishing
         uses: actions/checkout@v2
         with:
@@ -21,47 +22,81 @@ jobs:
           fetch-depth: 0
           token: "${{ secrets.PAT }}"
         if: ${{ github.repository == 'osdev-wiki/wiki' }}
-      - name: Checkout publishing (for fork)
+      - name: Checkout publishing (for forks)
         uses: actions/checkout@v2
         with:
           path: _out
           token: "${{ github.token }}"
           fetch-depth: 0
           ref: gh-pages
+
+      - uses: cachix/install-nix-action@v15
+        with:
+          extra_nix_config: |
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= osdev-wiki-cache-2:xnfH8Tkm0Sp5c8dDxpuFE0/w1PB6E4NUxjcnShNdkZ0=
+            substituters = https://cache.nixos.org/ https://hydra.iohk.io s3://osdev-wiki-cache?scheme=https&endpoint=s3.us-west-000.backblazeb2.com
+
+      - name: Maybe add secrets
+        run: |
+          set -uxe
+          [ -z "$AWS_CREDS$NIX_SIGNING_KEY" ] && exit
+          mkdir ~/.aws
+          echo "$AWS_CREDS" > ~/.aws/credentials
+          echo "$NIX_SIGNING_KEY" > ~/.nix-key
+          echo secret-key-files = ~/.nix-key | sudo tee -a /etc/nix/nix.conf
+        env:
+          NIX_SIGNING_KEY: ${{ secrets.NIX_SIGNING_KEY }}
+          AWS_CREDS: ${{ secrets.AWS_CREDS }}
+
       - name: Cache dependency builds
         uses: actions/cache@v2
         with:
           path: |
-            ~/.stack
-            wiki/generator/.stack-work/
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
+            ~/.cache/nix/*sqlite*
           key: ${{ runner.os }}
       - name: Get deps
         run: |
           set -xe
           gem install --user-install asciidoctor tilt
           pip install --user -U Pygments
-          cargo install --force --locked stork-search
-        if: ${{ github.repository != 'osdev-wiki/wiki' }}
+          nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+          nix-channel --update nixpkgs
+          nix-env -I nixpkgs-overlays="$(realpath wiki/generator/overlays/)" -i stork
+
       - name: Clean _out
         run: |
           cd _out
           find . -not -path './.git/*' -not -path ./.git -delete
           echo osdev.wiki > CNAME
           touch .nojekyll
+
+      - name: Build generator
+        run: |
+          cd wiki/generator
+          nix-build
+
+      - name: Update nix caches
+        if: always()
+        run: |
+          [ -r ~/.nix-key ] || exit 0
+          cd wiki/generator
+          nix store sign -k ~/.nix-key "$(readlink result)"
+          stork_path="$(nix-build -I nixpkgs-overlays=overlays/ --no-out-link '<nixpkgs>' -A stork)"
+          nix copy --to 's3://osdev-wiki-cache?scheme=https&endpoint=s3.us-west-000.backblazeb2.com&profile=osdev-wiki-cache' \
+              "$(readlink result)" "$stork_path"
+
       - name: Build site
         run: |
           export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
           export PATH="$GEM_HOME/bin:$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
-          cd wiki/generator
-          stack run --cwd .. -- build
-          cd ..
+          export PATH="$HOME/.nix-profile/bin:$PATH"
+          cd wiki
+
+          generator/result/bin/generator build
           rsync -a _site/ ../_out
         env:
           WIKI_FORGE: ${{ format('https://github.com/{0}', github.repository) }}
+
       - name: Publish
         run: |
           set -xe
