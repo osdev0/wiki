@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
+import           GHC.IO.Encoding (setLocaleEncoding, utf8)
 import           Hakyll
 import           System.Environment (lookupEnv)
 import           Control.Applicative ((<|>))
@@ -96,6 +97,8 @@ hakyllConfig = defaultConfiguration
 
 main :: IO ()
 main = do
+    setLocaleEncoding utf8
+
     gitHash <- fromMaybe "main" <$> lookupEnv "GIT_HASH"
     wikiForge <- lookupEnv "WIKI_FORGE"
     (year, _, _) <- toGregorian <$> utctDay <$> getCurrentTime
