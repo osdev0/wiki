@@ -96,5 +96,5 @@ render outPath is = do
 
     storkDb <- H.unixFilterLBS storkCmd' storkArgs json
     H.makeItem storkDb
-        where storkCmd = ["stork", "build", "--input", "-", "--output", "-"]
+        where storkCmd = ["stork", "build", "--input", "-", "--output", "/dev/stdout"]
               (storkCmd':storkArgs) = storkCmd
