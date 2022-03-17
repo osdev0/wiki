@@ -298,12 +298,174 @@ You may use abbreviations like "Dec", if the space is limited.
 +
 NOTE: Not every edge case can be reasonably covered.
 
+== AsciiDoc and source code style
+As much as we strive for clean content, we should strive for clean source code.
+The following guidelines will help ensure future contributors and/or editors of
+the wiki have no problems making changes.
+
+=== AsciiDoc formatting guidelines
+For an AsciiDoc reference, please see the
+https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/[AsciiDoc
+Syntax Quick reference] as well as the more broad
+https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc Language Documentation].
+
+A useful tool for formatting your AsciiDoc is
+https://www.nicemice.net/par/[`par`], though as it's not specific to AsciiDoc,
+it will break formatting elements.
+Use sparingly and explicitly, on ranges of text.
+
+Full stops are line breaks::
+  AsciiDoc does not care about line breaks, only paragraph breaks.
+  By breaking lines on full stops, we minimize the chance of inducing conflicts
+  with future contributors to the same page, but different parts.
+  `par` violates this rule, so it is best to reformat a paragraph, break on
+  full stops, and then rejoin lines to fit.
++
+[source,asciidoc]
+----
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat.
+----
+
+Long lines should be broken::
+  Long lines in the source code are hard to read.
+  If your AsciiDoc sources include lines longer than 100 columns (including
+  leading whitespace, for simplicity sake), hard wrap them.
+  Many text editors can do this out of the box for you.
+
+Links to other bits of AsciiDoc should be ``xref``s::
+  https://docs.asciidoctor.org/asciidoc/latest/macros/xref/[`xref`] macros
+  should be used to connect contents on the wiki.
+  For this reason, please be careful when removing sections or IDs, at least
+  until stronger verification is introduced.
+
+Referenced sections should always have explicit IDs::
+  For the sake of preventing issues induced by cross references, and for the
+  sake of clarity, all cross references must be made to explicit anchors.
++
+[source,asciidoc]
+----
+See <<section_1>>.
+
+[#section_1]
+== Section 1
+----
+
+Leave comments for further editors::
+  AsciiDoc supports comments.
+  When something is not immediately obvious, or when something is left out, add
+  a comment attributed to yourself.
+  These should be in the format of `// TYPE(author): text`.
+  `TYPE` should be `TODO`, `XXX`, `FIXME`, `NOTE`, etc.
+  Please note that comments also tend to go stale, so their overuse is strongly
+  advised against.
++
+[source,asciidoc]
+----
+// TODO(arsen): add xref validation
+
+////
+NOTE(steve): This paragraph is quite noteworthy!
+             I should talk about it in more detail.
+////
+----
+
+Align text elements, use 2-space indent::
+  On text elements such as lists, align continuation lines (and in turn
+  sentences) to the start of the text on the first line of the element.
+  Indentation, for instance when writing definition lists, should be done in
+  two space increments.
+  We are dealing with text, not code; text is much more dense.
++
+Exception: places where syntax makes it impossible to do otherwise.
+[source,asciidoc]
+----
+. This first example demonstrates how to indent continuations.
+  Isn't this lovely?
+
+. This example is wrong.
+Some would even consider it unintuitive.
+
+Indentation::
+  The blank space produced by indenting, often used for clarity of scope
++
+Sadly, to insert a newline above this line, we must lose indentation here as to
+not make this paragraph verbatim.
+----
+
+=== C source code formatting
+As established, C is the _lingua franca_ of programming, all code that is not
+platform-specific assembly should be written in C, with placeholders for
+platform details (e.g. port I/O).
+Here are a few guidelines on C code:
+
+* Do not assume a compiler.
+  If absolutely necessary, assume the common subset of Clang and GCC.
++
+Exception: compiler-specific pages.
+
+* Format code in the
+  https://en.wikipedia.org/wiki/Indentation_style#Variant:_1TBS_(OTBS)[One True
+  Brace Style].
++
+This style is a variant of K&R with optional braces explicitly stated, and
+opening braces of blocks on the same line as their respective statements.
+Crucially, adding a line of code should never result in editing another line
+(e.g. to add a brace) or result in flow that disagrees with indentation.
++
+[source,c]
+----
+/* bad */
+f1(int a, int b, int c)
+{
+  if (a)
+  {
+    return b + c;
+  }
+  else {
+    return a * c;
+  }
+}
+
+/* good */
+int f1(int a, int b, int c) {
+    if (a) {
+      return b + c;
+    } else {
+      return a * c;
+    }
+}
+----
+
+* The unit of indentation is four spaces, and alignment is allowed.
++
+[source,c]
+----
+int function1(int a, /* carried over for demonstration sake */
+              int b,
+              int c) {
+    /* ... */
+}
+----
+
+* Use a `snake_case` naming convention, with names up to around 16 characters.
++
+While modern compilers _are_ able to handle more, over-verbose function names
+will lead to less readable code on the wiki.
+Since code on the wiki should be considered pseudo-C and incomplete, there
+is no need to worry about function names conflicting, and hence no need to
+introduce namespacing (i.e. `whatever_` prefixes).
+
+
 == Hard rules
+These rules must not and cannot be broken under any conditions.
+Violations of these rules will not be accepted under any circumstance.
 
 . Absolutely no copyright violation.
-  By submitting a contribution to this wiki, you
-  irrevocably agree to release your contribution under the
-  link:/licenses/CC0.txt[CC0 license] and certify
+  By submitting a contribution to this wiki, you irrevocably agree to release
+  your contribution under the link:/licenses/CC0.txt[CC0 license] and certify
   that you have the right to do so.
 
 . Commit messages must conform with the
