@@ -45,7 +45,7 @@ jobs:
       - name: Get deps
         run: |
           set -xe
-          gem install --user-install asciidoctor tilt
+          gem install --user-install asciidoctor asciidoctor-bibtex tilt
           pip install --user -U Pygments
           nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
           nix-channel --update nixpkgs

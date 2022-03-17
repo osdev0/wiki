@@ -27,9 +27,18 @@ asciidoctorOptions =
     , "-a", "source-highlighter=pygments" -- use pygments
     , "-a", "toc" -- generate TOC
     , "-a", "source-linenums-option" -- generate line numbers
+    , "-a", "sectnums"
+    , "-a", "showtitle"
+
+    , "-r", "asciidoctor-bibtex"
+    , "-a", "bibtex-file=sources.bib"
+    , "-a", "bibtex-throw=true"
+    , "-a", "bibtex-style=apa"
+
     , "-a", "relfileprefix=/pages/"
     , "-a", "relfilesuffix=.html" -- correctly locate xref'd pages
-    , "-a", "sectnums"
+
+
     , "-T", "adoc", "-E", adocTemplates
     , "-" -- stdin/stdout
     ]
