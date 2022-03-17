@@ -8,6 +8,7 @@ import           Data.Maybe (fromMaybe, maybeToList)
 import           Data.Char (toLower)
 import           Data.Time.Clock (getCurrentTime, utctDay)
 import           Data.Time.Calendar (toGregorian)
+import           Data.Traversable (forM)
 import           Data.Yaml (decodeFileEither, prettyPrintParseException)
 import qualified Data.HashMap.Strict as HM
 import qualified Data.Text as T
@@ -207,3 +208,21 @@ main = do
 
         create ["tags/index.html"] $ renderTagPage "Global tag list" tags
         create ["categories/index.html"] $ renderTagPage "Global category list" cats
+
+        let errorPageIdentifier = fromFilePath . (++".html") . show
+        forM [(404 :: Int, "Not Found")] $
+            \(code', msg) -> create [errorPageIdentifier code'] $ do
+                let code = show code'
+                route idRoute
+                let title = code ++ " " ++ msg
+                let errorContext = mconcat
+                        [ constField "title" title
+                        , constField "description" title
+                        , constField "error" code
+                        , constField "errormsg" msg
+                        , removeField "forge"
+                        , genericContext
+                        ]
+                compile $ makeItem ""
+                    >>= loadAndApplyTemplate "html/error_page.html" errorContext
+                    >>= loadAndApplyTemplate "html/wrapper.html" errorContext
