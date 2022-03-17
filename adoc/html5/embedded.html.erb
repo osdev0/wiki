@@ -2,4 +2,15 @@
 <article>
 <%= header.render() %>
 <%= content %>
+<% if self.footnotes? %>
+<div id="footnotes">
+  <hr>
+  <ul>
+  <% self.footnotes.each do |fn| %>
+    <li class="footnote" id="_footnotedef_<%= fn.index %>">
+      <%= fn.index %>. <%= fn.text %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
 </article>
