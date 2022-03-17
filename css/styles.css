@@ -105,6 +105,10 @@ a {
 
 ul {
 	padding-left: 1ch;
+}
+
+/* this specific ul shouldn't have bullets */
+#navbar > ul {
 	list-style: none;
 }
 

@@ -1,0 +1,323 @@
+---
+title: Style guidelines
+tags: meta
+category: Meta
+description: An overview of wiki tone, source code style, and more
+---
+
+== Content guide
+. The style guide will always leave some leeway, since there is no single best
+  way of doing something, but the overall style should be consistent _within_
+  an article and may be different _across_ articles.
+  This also means one should keep the current style when expanding an article.
+  An article's style should only be changed when there is good reason to.
++
+NOTE: Inconsistent styling within an article might cause confusion to the
+      reader, however imposing one arbitrary decision across the entire wiki
+      will be cumbersome and will be of limited use.
+In addition, different topics may require different treatment.
+
+. An article should be structured as follows:
+
+* Warning templates
++
+NOTE: This is the first thing any reader should see
+
+* Lead section (a short, self-contained overview of the topic)
++
+NOTE: A reader should be able to get a quick overview of the topic without
+      reading a long text.
+A person encountering the article should be able to assess quickly, if they
+are interested in reading it further or not.
+The lead section is also the part displayed in search engines and social media
+embeds.
+
+* Main matter
+
+* See also (internal links to tangentially related topics that might be of
+  interest to the reader, in order to facilitate navigation)
++
+NOTE: The reader will be able to easily find articles they want to read next.
+
+* Further reading (external links, books, etc ..., such as tutorials,
+  references, and documentation, that might be of interest to someone writing
+  an OS)
++
+NOTE: The wiki cannot and should not cover everything, it serves as a starting
+      point for further research.
+
+* References (list of inline citations that appear as footnotes throughout the
+  article)
+
+. American English spelling and terminology used in technical literature should
+  be used when writing articles.
+  However, terms that are widely used across all English-speaking countries
+  should be preferred over terms used exclusively in the US.
++
+NOTE: Most technical literature is written in American English.
+
+. An article should be logically divided into sections and subsections.
++
+NOTE: It facilitates navigation of long articles.
+      Sections may appear in search engine results.
+
+* Article and section titles should be written in sentence case (first letter
+  of first word capitalized) and should not contain redundant "the" or "a".
+  This means "BIOS", not "The BIOS".
+  Exception: proper names.
+
+* A subsection title should not redundantly contain the title of its parent
+  section.
++
+NOTE: Do not repeat yourself.
+
+* Avoid markup in article and section titles.
++
+NOTE: They appear in cross-references, tables of contents and search engine
+      results.
+      Use of certain markup may cause unforeseen problems.
+
+. Every claim in an article should be sourced, preferably using inline
+  footnotes.
+  Primary sources (official documentation, references or specifications) should
+  be preferred over secondary ones, unless primary sources are not available or
+  have errors.
++
+NOTE: The reader should be able to easily verify the correctness of content.
+      Factual errors and hearsay should also be avoided.
+
+* Claims in the lead section must not have an inline citation, if they appear
+  in the main matter.
++
+NOTE: Do not repeat yourself.
+
+. Articles should have a neutral point of view.
+  They should not prefer a certain solution over another one, when the
+  alternative is also widely used (avoid holy wars).
+  However, arguments for and against a solution may be presented in an
+  objective and sourced way.
+
+* If opinions must be included, they must be quoted from a source.
++
+NOTE: The wiki is not a place for holy wars.
+      Different people have different opinions and there is no objective way to
+      settle all disputes.
+
+* Modern methods and solutions should be emphasized over obsolete ones.
+This does not mean that older technologies are not covered.
+However, the reader must always be aware of legacy.
++
+NOTE: This wiki should focus on modern OS development.
+
+. If the title of an article is mentioned in another article, the first mention
+  of that title should be linked.
++
+NOTE: Navigation in any wiki lives from internal links.
+However, articles should not be cluttered with internal links.
+
+* If a link to an article exists in the lead section, another link may exist in
+  the main matter.
+
+* An article may be linked more than once within a long article, but not more
+  than once within the same section.
++
+NOTE: The one link guideline should not get in the way of navigability.
+
+. Code examples should be small self-contained snippets of code (as a rule of
+  thumb, not larger than a screen).
+  Articles should not be written as step-by-step tutorials.
++
+NOTE: OS development requires a certain level of skill.
+This includes being able to implement code based on a specification.
+Providing large and complete code examples gives novice programmers the
+incentive to simply copy and paste them, without fully understanding them.
+OS development is not a linear process and there are a lot of choices that have
+to be made.
+Tutorials cannot cover the broadness of OS development.
+Large code examples are also harder to test and maintain.
+Buggy code should not be in the wiki.
+
+* Code examples should be written in C.
+  However, they must not be completely valid source files.
+  For example, functions may be used that are not declared anywhere in the code
+  snippet.
+  Snippets should be vague and generic and should have pseudocode-like
+qualities.
++
+NOTE: C is the _lingua franca_ of programming languages and _the_ generic
+      programming language.
+      It is known by most programmers.
+      In addition, it is a simple language that does not contain a lot of
+      features that some programmers might not know.
+
+* An exception to the C rule is low level code that must be written in
+  assembly.
+  Assembly is architecture-specific and therefore should be used only on
+  architecture-specific pages or sections.
+  When it comes to x86 assembly, the most convenient syntax (Intel or AT&T) in
+  the relevant context should be used.
+
+. Articles should be written in proper English with encyclopedic tone.
+  A list of common things to look out for is provided.
+  No rationale is provided, since these are common rules of English and are
+  essentially linguistic conventions.
+
+* General rules, grammar, tone and vocabulary
+
+** Avoid repeating yourself.
+   Avoid redundant phrases in sentences.
+   Avoid long run-on sentences.
+   For example, "OS development requires a certain level of skill" is preferred
+   over "OS development requires the programmer to have a certain level of
+   general skill".
+
+** Articles should be written in encyclopedic tone, this includes _never_ using
+   the first or second person ("I", "me", "you"), unless quoting.
+
+** "The" should never be capitalized mid-sentence, unless it is part of a
+   proper name.
+
+** Plural forms of nouns are formed by using -s or -es, not -'s.
+
+** Possessive forms of nouns are formed by using -'s.
++
+IMPORTANT: "It" is not a noun, but a personal pronoun.
+The corresponding possessive pronoun is "its", not "it's".
+
+** Use the present tense by default.
+
+** Avoid contractions like "can't" or "don't".
+
+** Avoid language like "note", "remember" or "obviously", which either address
+   the reader directly or makes presumptions about the reader's knowledge.
+
+** Use gender-neutral language, avoid the use of "he" or "she".
+
+** Abbreviations may be used in article or section titles, if they are used
+   more commonly than the full expression (for example "BIOS" instead of "Basic
+   Input/Output System").
+
+** The first occurrence of an abbreviation must be written out, with the
+   abbreviation following in parentheses: "Basic Input/Output System (BIOS)".
+
+** Abbreviations may or may not include full stops, however no spaces may exist
+   within the abbreviation ("B.I.O.S." is allowed, but "B. I. O. S." is not).
+   However their use must be consistent and must follow conventions set in
+   technical literature (use "BIOS", not "B.I.O.S.").
+
+* Punctuation and symbols
+
+** Do not use ampersands (&), use "and", unless quoting or part of a proper
+   name like "AT&T".
+
+** Use boldface to highlight an important term being introduced (such as the
+   first occurrence of the article title), but do not use it more than once for
+   the same term.
+  For emphasis and foreign words, use italics.
+  Do not italize or boldface nearby punctuation.
+
+** When quoting a source, the source must be mentioned _in the text_, in
+   addition to having a footnote as references.
+
+** Straight quotes (") and apostrophes (') should be used (no curly quotes or
+   apostrophes, no backticks, no low-high quotes, no guillemet).
+
+** Nested quotes should use alternating quotes and apostrophes.
+
+** Quotations should change the original text only minimally, any omitted,
+   added, or changed words should be enclosed in square brackets.
+
+** A comma before a quotation can be omitted, if the sentence is still
+   grammatically correct and if the meaning of the quote is not changed.
+
+** Punctuation may be included inside a quotation, if it makes logical sense
+   and the punctuation is present in the original text.
+   If isolated fragments of a sentence are quoted, nearby punctuation should
+   usually be outside of the quote.
+
+** An ellipsis consists of three dot characters (...) without spaces.
+   They should be used when content is omitted from quotes.
+   Square brackets may be placed around them to indicate that they are not part
+   of the original quote.
+
+** The main text may include side notes or clarifications in parentheses.
+   However, the text around the parentheses must still make grammatical and
+   logical sense without the content inside the parentheses.
+
+** Nested parentheses should be avoided.
+   Adjacent set of parentheses should also be avoided, the phrases should be
+   joined by a comma.
+   This means "the BIOS (a type of firmware) (replaced by UEFI)" is not
+   allowed, and should be replaced by "the BIOS (a type of interface, replaced
+   by UEFI)".
+
+** Semicolons may be used to join two phrases that could stand as independent
+   sentences: "stivale2 can load a kernel in long mode; multiboot cannot".
+   Phrases that cannot stand alone may not be joined with a semicolon.
+
+** Hyphens should be used to link prefixes ("quasi-multipliers") and compound
+   modifiers ("well-known").
+
+** Dashes may be used to punctuate a sentence, in order to indicate that the
+   two surrounding phrases indicate a pair.
+   They should be used sparingly.
+
+** _Never_ put a space before punctuation.
+
+* Dates and numbers
+
+** Months and days of week are upper case, while seasons are lower case
+   ("Monday", "July", "summer").
+
+** Either use 12-hour ("2:45 pm" or "2:45 p.m.") or 24-hour dates ("14:45").
+   Avoid "12 am" and "12 pm", when using the 12-hour format.
+   Rather, use "noon" or "midnight".
+   The latter is ambiguous, so specify whether it is the beginning or the end
+   of the day.
+   The 24-hour format has no such ambiguity "0:00" is the beginning of the day
+   and "24:00" the end.
+
+** Dates are either written as "19 December 2021" or "December 19, 2021".
+Numerical dates may be written in the yyyy-mm-dd format: "2021-12-19".
+
+** When omitting the year write either "19 December" or "December 19".
+
+** When referring to months, use "December 2021".
+You may use abbreviations like "Dec", if the space is limited.
+
+** Avoid "#", use "No.", "Nos." or "number".
+
+* List items should be formatted consistently and follow a certain "schema",
+  such as being all complete sentences, sentence fragments or names.
+  Mixing of different types of items should not occur.
+
+. It is important to note that these are guidelines.
+  They apply in the vast majority of cases, but there may be some rare
+  exceptions.
+  Exceptions should be introduced with care and with a good rationale.
++
+NOTE: Not every edge case can be reasonably covered.
+
+== Hard rules
+
+. Absolutely no copyright violation.
+  By submitting a contribution to this wiki, you
+  irrevocably agree to release your contribution under the
+  link:/licenses/CC0.txt[CC0 license] and certify
+  that you have the right to do so.
+
+. Commit messages must conform with the
+  https://www.conventionalcommits.org/en/v1.0.0/[Conventional Commits]
+  standard.
+  However, the meaning of the types `feat` and `fix` do not apply.
+  Valid types are: `content`, `project`, `sitegen`, [...].
+  The type `fix` must be used when conducting a minor fix that does not change
+  the content of pages.
+  When using `fix`, one of the other types must be included as the scope of the
+  commit message (in order to indicate what area the fix refers to).
+  In addition, commits of the type `content` should only modify a single
+  article.
+  The scope must list all articles that have been changed in the commit of type
+  `content`.
+  The description of the commit must sumarize all changes; descriptions may not
+  be vague (e.g. "updated bios.adoc").

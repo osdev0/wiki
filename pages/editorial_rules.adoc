@@ -1,0 +1,30 @@
+---
+title: Editorial process
+tags: meta
+category: Meta
+description: Wiki governance
+---
+Contributions are submitted via pull requests on GitHub.
+A pull request is reviewed by someone who is a members of the "osdev-wiki"
+organization ("reviewers") and that therefore has the permission to merge it.
+Reviewers must make sure that following things hold before merging a pull
+request:
+
+. The pull request complies with the content guidelines.
+  In particular, the reviewer must make sure that the commit messages are
+  compliant.
+  In addition, the reviewer must check the contribution for plagiarism.
+
+. The contribution is within the scope of the wiki.
+  In particular, reviewers may make discretionary decisions on whether a
+  contribution is accepted or rejected.
+
+. The contribution was not submitted or authored in part by the reviewer
+  reviewing the contribution.
+
+Multiple reviewers may review the same pull request.
+Diagreements between reviewers may be mediated or resolved by another member of
+the "osdev-wiki" organization who is uninvolved in the dispute.
+If no such mediation is possible, the dispute is resolved through general
+consensus among the members of the "osdev-wiki" organization.
+If there is no conseus, the _status quo_ remains.

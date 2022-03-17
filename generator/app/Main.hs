@@ -148,6 +148,10 @@ main = do
                 sheets <- loadAll "css/*"
                 makeItem $ unlines $ map itemBody sheets
 
+        match "licenses/*" $ do
+            route idRoute
+            compile $ copyFileCompiler
+
         adocExtraDeps $ match "pages/*.adoc" $ do
             route $ setExtension "html"
             compile $ getResourceBody
