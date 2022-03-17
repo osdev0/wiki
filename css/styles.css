@@ -14,6 +14,12 @@
 	--cyan1: hsl(210deg, 60%, 80%);
 	--cyan2: hsl(210deg, 60%, 30%);
 
+	--yellow0: hsl(45deg, 100%, 500%);
+	--orange0: hsl(25deg, 100%, 500%);
+	--blue0: hsl(250deg, 85%, 50%);
+	--purple0: hsl(280deg, 85%, 50%);
+	--red0: hsl(358deg, 85%, 50%);
+
 	--foreground: var(--white0);
 	--foreground-hc: var(--whitef);
 	--background: var(--black0);
@@ -107,8 +113,9 @@ ul {
 	padding-left: 1ch;
 }
 
-/* this specific ul shouldn't have bullets */
-#navbar > ul {
+/* these specific ul shouldn't have bullets */
+#navbar ul,
+#toc ul {
 	list-style: none;
 }
 
@@ -128,4 +135,57 @@ footer {
 
 footer > a {
 	color: var(--dark-links);
+}
+
+/* admonitions */
+
+.admonitionblock {
+	margin: 1.4rem 0 0;
+	background-color: var(--background-code);
+	border-radius: 0.5em;
+}
+
+.admonitionblock > table {
+	table-layout: fixed;
+	position: relative;
+	width: 100%;
+}
+
+.admonitionblock td.icon {
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: translate(-0.5rem,-50%);
+	padding: 0.25em 0.25em;
+	text-transform: uppercase;
+	border-radius: 5px;
+
+	background-color: var(--cyan0);
+	color: var(--whitef);
+	font-size: 0.9em;
+}
+
+.admonitionblock td.content {
+	width: 100%;
+	padding: 1rem 1rem 0.75rem 1rem;
+}
+
+.admonitionblock.warning td.icon {
+	background-color: var(--yellow0);
+}
+
+.admonitionblock.caution td.icon {
+	background-color: var(--orange0);
+}
+
+.admonitionblock.tip td.icon {
+	background-color: var(--blue0);
+}
+
+.admonitionblock.note td.icon {
+	background-color: var(--purple0);
+}
+
+.admonitionblock.important td.icon {
+	background-color: var(--red0);
 }
