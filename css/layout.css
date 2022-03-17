@@ -87,6 +87,12 @@ span#roothack {
 	display: none;
 }
 
+dd, dt {
+	--dd-margin: 1em;
+	margin-top: var(--dd-margin);
+	margin-bottom: var(--dd-margin);
+}
+
 @media only screen and (min-width: 768px) {
 	div#content {
 		display: grid;
