@@ -471,15 +471,57 @@ Violations of these rules will not be accepted under any circumstance.
 . Commit messages must conform with the
   https://www.conventionalcommits.org/en/v1.0.0/[Conventional Commits]
   standard.
-  However, the meaning of the types `feat` and `fix` do not apply.
-  Valid types are: `content`, `project`, `sitegen`, [...].
-  The type `fix` must be used when conducting a minor fix that does not change
-  the content of pages.
-  When using `fix`, one of the other types must be included as the scope of the
-  commit message (in order to indicate what area the fix refers to).
-  In addition, commits of the type `content` should only modify a single
-  article.
-  The scope must list all articles that have been changed in the commit of type
-  `content`.
-  The description of the commit must sumarize all changes; descriptions may not
-  be vague (e.g. "updated bios.adoc").
+
+*  The following list contains some commit types that may be used:
+
+** `ci`: changes related to CI.
+
+** `deletion`: removal of a wiki article.
+
+** `expansion`: expansion of a wiki article.
+
+** `fix`: a minor fix that does not change the essence of the thing being
+   changed (applies to all sections of the wiki).
+
+** `feat`: introduction of a new feature (does not apply to edits of wiki
+   articles).
+
+** `generator`: changes to files related to site generation, other than CI.
+
+** `new`: creation of a new wiki article.
+
+** `ref`: changes to references.
+
+** `style`: changes related to code or markup style, without changing the
+   meaning of the code or markup tiself.
+
+** `trim`: partial removal of content form a wiki article.
+
+* Commits should also contain a scope indicating what part of the repository
+  has been changed:
+
+** `content`: content articles of the wiki (i.e. articles about OSDev).
+
+** `css`: CSS files in the `css` folder.
+
+** `generator`: files related to the site generator.
+
+** `html`: HTML files in the `html` folder.
+
+** `static`: assets that go in the `static` folder.
+
+** `meta`: articles in the wiki, related to rules and governances (i.e.
+   articles with the category `Meta`).
+
+** `misc`: other miscalleneous files.
+
+* Commits changing articles should usually modify a single article, however
+  frequent exceptions are allowed, especially for commits of the type `fix` and
+  `style`.
+  In case a single article is changed, the title of the article must
+  be listed as the scope of the commit.
+  In case multiple articles, that are all members of a certain category or tag,
+  are modified, that tag or category may be modyfied.
+
+* The description of the commit must sumarize all changes; descriptions must
+  not be vague (e.g. "updated bios.adoc").
