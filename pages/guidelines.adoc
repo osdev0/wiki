@@ -360,7 +360,7 @@ Leave comments for further editors::
   These should be in the format of `// TYPE(author): text`.
   `TYPE` should be `TODO`, `XXX`, `FIXME`, `NOTE`, etc.
   Please note that comments also tend to go stale, so their overuse is strongly
-  advised against.
+  discouraged.
 +
 [source,asciidoc]
 ----
