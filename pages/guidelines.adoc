@@ -15,22 +15,22 @@ description: An overview of wiki tone, source code style, and more
 NOTE: Inconsistent styling within an article might cause confusion to the
       reader, however imposing one arbitrary decision across the entire wiki
       will be cumbersome and will be of limited use.
-In addition, different topics may require different treatment.
+      In addition, different topics may require different treatment.
 
 . An article should be structured as follows:
 
 * Warning templates
 +
-NOTE: This is the first thing any reader should see
+NOTE: This is the first thing any reader should see.
 
 * Lead section (a short, self-contained overview of the topic)
 +
 NOTE: A reader should be able to get a quick overview of the topic without
       reading a long text.
-A person encountering the article should be able to assess quickly, if they
-are interested in reading it further or not.
-The lead section is also the part displayed in search engines and social media
-embeds.
+      A person encountering the article should be able to assess quickly, if
+      they are interested in reading it further or not.
+      The lead section is also the part displayed in search engines and social
+      media embeds.
 
 * Main matter
 
@@ -113,7 +113,7 @@ NOTE: This wiki should focus on modern OS development.
   of that title should be linked.
 +
 NOTE: Navigation in any wiki lives from internal links.
-However, articles should not be cluttered with internal links.
+      However, articles should not be cluttered with internal links.
 
 * If a link to an article exists in the lead section, another link may exist in
   the main matter.
@@ -217,7 +217,7 @@ The corresponding possessive pronoun is "its", not "it's".
   Do not italize or boldface nearby punctuation.
 
 ** When quoting a source, the source must be mentioned _in the text_, in
-   addition to having a footnote as references.
+   addition to having a footnote as reference.
 
 ** Straight quotes (") and apostrophes (') should be used (no curly quotes or
    apostrophes, no backticks, no low-high quotes, no guillemet).
