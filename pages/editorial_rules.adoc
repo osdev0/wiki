@@ -19,8 +19,8 @@ request:
   In particular, reviewers may make discretionary decisions on whether a
   contribution is accepted or rejected.
 
-. The contribution was not submitted or authored in part by the reviewer
-  reviewing the contribution.
+. The contribution was not submitted or authored, in part or in whole, by the
+  reviewer reviewing the contribution.
 
 Multiple reviewers may review the same pull request.
 Diagreements between reviewers may be mediated or resolved by another member of
