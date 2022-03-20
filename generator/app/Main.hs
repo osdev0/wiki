@@ -137,7 +137,7 @@ main = do
 
         create ["css/pygments.css"] $
             compile $
-                unixFilter "pygmentize" [ "-S", "gruvbox-light"
+                unixFilter "pygmentize" [ "-S", "gruvbox-dark"
                                         , "-f", "html"
                                         , "-O", "classprefix=tok-"
                                         ] "" >>= makeItem

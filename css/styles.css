@@ -45,7 +45,6 @@ html, body {
 		--foreground: var(--black0);
 		--background: var(--white1);
 		--foreground-hc: var(--blackf);
-		--background-code: var(--white0);
 		--background-active: var(--cyan1);
 		--accent: var(--black1);
 		--links: var(--blue0);
@@ -89,6 +88,11 @@ a {
 
 .listingblock > .content {
 	position: relative;
+}
+
+.listingblock {
+	color: var(--dark-foreground);
+	background-color: var(--dark-background);
 }
 
 .listingblock code[data-lang]::before {
