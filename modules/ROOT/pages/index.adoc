@@ -27,3 +27,7 @@ This wiki is not endorsed by, does not have any connection to, and is not relate
 
 === Hardware
 * xref:x86.adoc[x86]
+
+=== Learning
+* xref:fundamentals.adoc[Computer Science Fundamentals]
+
