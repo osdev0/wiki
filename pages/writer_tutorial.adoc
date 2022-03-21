@@ -78,7 +78,7 @@ deserunt mollit anim id est laborum.
 
 == Submitting your changes
 When submitting your change, please confirm it adheres to our
-xref:guidelines[style guidelines] and make commits accordingly.
+xref:guidelines.adoc[style guidelines] and make commits accordingly.
 Please ensure these commits are atomic and encompass one change each.
 
 After you are done, push your changes to a fork of our source repository and
