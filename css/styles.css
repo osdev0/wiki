@@ -113,14 +113,11 @@ a {
 	display: block;
 }
 
-ul {
-	padding-left: 1ch;
-}
-
-/* these specific ul shouldn't have bullets */
+/* these specific ul shouldn't have bullets or padding */
 #navbar ul,
 #toc ul {
 	list-style: none;
+	padding-left: 1ch;
 }
 
 a#forgebtn {
