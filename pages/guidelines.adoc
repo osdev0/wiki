@@ -474,8 +474,6 @@ Violations of these rules will not be accepted under any circumstance.
 
 *  The following list contains some commit types that may be used:
 
-** `ci`: changes related to CI.
-
 ** `deletion`: removal of a wiki article.
 
 ** `expansion`: expansion of a wiki article.
@@ -499,6 +497,8 @@ Violations of these rules will not be accepted under any circumstance.
 
 * Commits should also contain a scope indicating what part of the repository
   has been changed:
+
+** `ci`: changes related to CI.
 
 ** `content`: content articles of the wiki (i.e. articles about OSDev).
 
