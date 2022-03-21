@@ -237,3 +237,4 @@ main = do
                 compile $ makeItem ""
                     >>= loadAndApplyTemplate "html/error_page.html" errorContext
                     >>= loadAndApplyTemplate "html/wrapper.html" errorContext
+                    >>= relativizeUrls
