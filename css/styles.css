@@ -25,6 +25,7 @@
 	--background: var(--black0);
 	--background-code: var(--black1);
 	--background-active: var(--cyan2);
+	--background-admonition: var(--black1);
 	--accent: var(--white1);
 	--links: var(--cyan0);
 
@@ -46,6 +47,7 @@ html, body {
 		--background: var(--white1);
 		--foreground-hc: var(--blackf);
 		--background-active: var(--cyan1);
+		--background-admonition: var(--white0);
 		--accent: var(--black1);
 		--links: var(--blue0);
 	}
@@ -142,7 +144,7 @@ footer > a {
 
 .admonitionblock {
 	margin: 1.4rem 0 0;
-	background-color: var(--background-code);
+	background-color: var(--background-admonition);
 	border-radius: 0.5em;
 }
 
