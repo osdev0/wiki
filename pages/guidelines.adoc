@@ -518,8 +518,8 @@ Violations of these rules will not be accepted under any circumstance.
 * Commits changing articles should usually modify a single article, however
   frequent exceptions are allowed, especially for commits of the type `fix` and
   `style`.
-  In case a single article is changed, the title of the article must
-  be listed as the scope of the commit.
+  In case a single article is changed, the slug of the article must be listed
+  as the scope of the commit.
   In case multiple articles, that are all members of a certain category or tag,
   are modified, that tag or category may be modyfied.
 
