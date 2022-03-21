@@ -214,7 +214,7 @@ The corresponding possessive pronoun is "its", not "it's".
    first occurrence of the article title), but do not use it more than once for
    the same term.
   For emphasis and foreign words, use italics.
-  Do not italize or boldface nearby punctuation.
+  Do not italicize or boldface nearby punctuation.
 
 ** When quoting a source, the source must be mentioned _in the text_, in
    addition to having a footnote as reference.
@@ -493,7 +493,7 @@ Violations of these rules will not be accepted under any circumstance.
 ** `ref`: changes to references.
 
 ** `style`: changes related to code or markup style, without changing the
-   meaning of the code or markup tiself.
+   meaning of the code or markup itself.
 
 ** `trim`: partial removal of content form a wiki article.
 
@@ -510,18 +510,18 @@ Violations of these rules will not be accepted under any circumstance.
 
 ** `static`: assets that go in the `static` folder.
 
-** `meta`: articles in the wiki, related to rules and governances (i.e.
+** `meta`: articles in the wiki, related to rules and governance (i.e.
    articles with the category `Meta`).
 
-** `misc`: other miscalleneous files.
+** `misc`: other miscellaneous files.
 
 * Commits changing articles should usually modify a single article, however
   frequent exceptions are allowed, especially for commits of the type `fix` and
   `style`.
-  In case a single article is changed, the slug of the article must be listed
-  as the scope of the commit.
+  In case a single article is changed, the slug (i.e. filename without the
+  filename extension) of the article must be listed as the scope of the commit.
   In case multiple articles, that are all members of a certain category or tag,
-  are modified, that tag or category may be modyfied.
+  are modified, that tag or category may be modified.
 
-* The description of the commit must sumarize all changes; descriptions must
+* The description of the commit must summarize all changes; descriptions must
   not be vague (e.g. "updated bios.adoc").
