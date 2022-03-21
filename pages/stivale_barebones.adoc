@@ -284,27 +284,27 @@ INTERNALLDFLAGS :=             \
     -static
 
 # Use find to glob all *.c files in the directory and extract the object names.
-CFILES := $$(shell find ./ -type f -name '*.c')
-OBJ := $$(CFILES:.c=.o)
-HEADER_DEPS := $$(CFILES:.c=.d)
+CFILES := $(shell find ./ -type f -name '*.c')
+OBJ := $(CFILES:.c=.o)
+HEADER_DEPS := $(CFILES:.c=.d)
 
 # Default target.
 .PHONY: all
-all: $$(KERNEL)
+all: $(KERNEL)
 
 # Link rules for the final kernel executable.
-$$(KERNEL): $$(OBJ)
-    $$(LD) $$(OBJ) $$(LDFLAGS) $$(INTERNALLDFLAGS) -o $$@
+$(KERNEL): $(OBJ)
+    $(LD) $(OBJ) $(LDFLAGS) $(INTERNALLDFLAGS) -o $@
 
 # Compilation rules for *.c files.
--include $$(HEADER_DEPS)
+-include $(HEADER_DEPS)
 %.o: %.c
-    $$(CC) $$(CFLAGS) $$(INTERNALCFLAGS) -c $$< -o $$@
+    $(CC) $(CFLAGS) $(INTERNALCFLAGS) -c $< -o $@
 
 # Remove object files and the final executable.
 .PHONY: clean
 clean:
-    rm -rf $$(KERNEL) $$(OBJ) $$(HEADER_DEPS)
+    rm -rf $(KERNEL) $(OBJ) $(HEADER_DEPS)
 ----
 
 ==== limine.cfg
@@ -398,14 +398,14 @@ make -C limine
 ./limine/limine-install image.hdd
 
 # Mount the loopback device.
-USED_LOOPBACK=$$(sudo losetup -Pf --show image.hdd)
+USED_LOOPBACK=$(sudo losetup -Pf --show image.hdd)
 
 # Format the ESP partition as FAT32.
-sudo mkfs.fat -F 32 $${USED_LOOPBACK}p1
+sudo mkfs.fat -F 32 ${USED_LOOPBACK}p1
 
 # Mount the partition itself.
 mkdir -p img_mount
-sudo mount $${USED_LOOPBACK}p1 img_mount
+sudo mount ${USED_LOOPBACK}p1 img_mount
 
 # Copy the relevant files over.
 sudo mkdir -p img_mount/EFI/BOOT
@@ -415,7 +415,7 @@ sudo cp -v limine/BOOTX64.EFI img_mount/EFI/BOOT/
 # Sync system cache and unmount partition and loopback device.
 sync
 sudo umount img_mount
-sudo losetup -d $${USED_LOOPBACK}
+sudo losetup -d ${USED_LOOPBACK}
 ----
 
 == Conclusion

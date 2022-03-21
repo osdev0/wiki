@@ -155,7 +155,6 @@ main = do
         adocExtraDeps $ match "pages/*.adoc" $ do
             route $ setExtension "html"
             compile $ getResourceBody
-                >>= applyAsTemplate genericContext
                 >>= saveSnapshot "source"  -- needed for indexes
                 >>  pageCompiler categories
                 >>= loadAndApplyTemplate "html/wrapper.html" genericContext
@@ -164,7 +163,6 @@ main = do
         adocExtraDeps $ match "index.adoc" $ do
             route $ setExtension "html"
             compile $ getResourceBody
-                >>= applyAsTemplate genericContext
                 >>  itemCompiler
                 >>= loadAndApplyTemplate "html/wrapper.html" genericContext
                 >>= relativizeUrls
