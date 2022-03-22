@@ -39,8 +39,6 @@ certify that you have the right to do so.
 
 === Toolchain
 
-* xref:clang.adoc[LLVM+Clang]
-
 * xref:visual_studio.adoc[Visual Studio]
 
 * xref:calling_conventions.adoc[Calling conventions]
@@ -52,8 +50,14 @@ certify that you have the right to do so.
 === Learning
 * xref:fundamentals.adoc[Computer science fundamentals]
 
+=== Bootloaders
+
+* xref:stivale.adoc[Stivale]
+
 == Todo
 
 * Welcome to the modern era
 
 * Stivale C# bare bones
+
+* LLVM + Clang

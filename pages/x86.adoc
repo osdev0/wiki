@@ -63,11 +63,11 @@ In 1989, the Intel 486 was introduced, with new features, such as:
 To this day, every properly-implemented x86 processor has backwards
 compatibility, all the way back to the original Intel 8086.
 
-== Operating Modes
+== Operating modes
 
 x86 has a handful of operating modes, used for backwards compatibility.
 
-=== Real Mode
+=== Real mode
 Real mode is the operating mode that an x86 processor boots into. It mostly
 models the original 16-bit 8086 processor, with a few extensions.
 
@@ -77,7 +77,7 @@ memory.
 
 Real mode contains no access rings or protection of any kind.
 
-=== Protected Mode (16-bit)
+=== Protected mode (16-bit)
 16-bit protected mode runs with 16-bit data and instructions, but segment
 offset registers are replaced with segment selector registers, which point to
 an entry into the 16-bit GDT.
@@ -87,7 +87,7 @@ Programs written for real mode may have a handful of compatibility issues with
 
 16-bit protected mode is rarely used.
 
-=== Protected Mode (32-bit)
+=== Protected mode (32-bit)
 32-bit protected mode reads and addresses with 32-bit values. This is the mode
 commonly referred to as "protected mode".
 Protected mode mandates a 32-bit before entry.
@@ -99,12 +99,12 @@ However, with PAE paging extensions, the virtual address space can be mapped to
 64-bit physical addresses, theoretically allowing up to 16PiB of physical
 memory to be addressed.
 
-=== Compatibility Mode (x86-64 only)
+=== Compatibility mode (x86-64 only)
 Compatibility mode runs during the transition from protected mode to long mode.
 Compatibility mode runs similarly to protected mode, and is used to allow
 64-bit structures to be loaded before entering proper long mode.
 
-=== Long Mode (x86-64 only)
+=== Long mode (x86-64 only)
 Long mode handles data up to 64 bits in general purpose registers, with
 extensions that allow for the handling of up to 512 bits of data at a time.
 Addressing in long mode is 64-bit, theoretically allowing for up to 16PiB of
