@@ -11,15 +11,17 @@ it.
 This site is currently *WIP* and very incomplete, thus contributions are
 welcome!
 
-+
-IMPORTANT: This wiki is not endorsed by, does not have any connection to, and
+[IMPORTANT]
+This wiki is not endorsed by, does not have any connection to, and
 is not related in any way with another wiki found at
 https://wiki.osdev.org[wiki.osdev.org].
 
 == Contributing
 Before contributing to this wiki, you should read following pages:
+
 * xref:writer_tutorial.adoc[Writing a document], for a quick tutorial on how to
 write pages for this wiki.
+
 * xref:guidelines.adoc[Style guidelines], for rules on article structure,
 vocabulary, commit messages and much more.
 
