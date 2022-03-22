@@ -127,6 +127,13 @@ main = do
                                                    , adocTemplateDep
                                                    ]
 
+        -- null rule to load categories.yml into the cache
+        -- the contents here don't matter since we don't use them
+        -- TODO(arsen): load the category set out of hakyll rather than on
+        --              startup to prevent it going out of date when using
+        --              watch
+        match "categories.yml" $ compile $ makeItem ()
+
         match "html/*" $ compile templateCompiler
         match "adoc/*.adoc" $ compile templateCompiler
 
