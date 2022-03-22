@@ -5,10 +5,12 @@ category: Toolchain
 description: How to use Visual Studio, with either MSVC or clang for OS development.
 ---
 
-This page describes how to use Visual Studio as an IDE and build system for OS development. It is recommended that you use the clang toolchain, but using Microsoft's native MSVC compiler is possible as well.
+This page describes how to use *Visual Studio* as an IDE and build system for OS
+development.
+It is recommended that you use the clang toolchain, but using Microsoft's
+native MSVC compiler is possible as well.
 
 == Using clang and cmake with Visual Studio
-
 TODO
 
 == Using MSVC/msbuild with Visual Studio
@@ -16,11 +18,16 @@ TODO
 [CAUTION]
 .MSVC for OSDev
 ====
-It is possible to use MSVC for OS development, but it is heavily advised against for a number of reasons.
+It is possible to use MSVC for OS development, but it is heavily advised
+against for a number of reasons.
 
 * It is proprietary and not properly documented.
-* It's difficult and sometimes impossible to do certain things required for OS development using a pure MS toolchain.
+
+* It is difficult and sometimes impossible to do certain things required for OS
+  development using a pure MS toolchain.
+
 * Few people will be willing to give you help if something goes wrong.
 ====
 
-If you insist on using the Microsoft toolchain to build your OS, someday this page may contain information on how to use it.
+If you insist on using the Microsoft toolchain to build your OS, someday this
+page may contain information on how to use it.
