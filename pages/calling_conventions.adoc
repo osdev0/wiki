@@ -26,7 +26,7 @@ the Windows calling convention.
 
 === Microsoft x64
 
-The *x64 Application Binary Interface*footnote:[https://github.com/MicrosoftDocs/cpp-docs/blob/main/docs/build/x64-calling-convention.md]
+The x64 Application Binary Interfacefootnote:[https://github.com/MicrosoftDocs/cpp-docs/blob/main/docs/build/x64-calling-convention.md]
 (ABI) uses a four-register fast-call calling convention by default.
 Space is allocated on the call stack as a shadow store for callees to save
 those registers.
