@@ -26,6 +26,7 @@
 	--background-code: var(--black1);
 	--background-active: var(--cyan2);
 	--background-admonition: var(--black1);
+	--background-input: var(--black1);
 	--accent: var(--white1);
 	--links: var(--cyan0);
 
@@ -48,6 +49,7 @@ html, body {
 		--foreground-hc: var(--blackf);
 		--background-active: var(--cyan1);
 		--background-admonition: var(--white0);
+		--background-input: var(--white1);
 		--accent: var(--black1);
 		--links: var(--blue0);
 	}

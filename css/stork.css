@@ -141,3 +141,8 @@
 	padding: 1em 2ch;
 	text-align: right;
 }
+
+div.stork-wrapper > input {
+	background-color: var(--background-input);
+	color: var(--foreground);
+}
