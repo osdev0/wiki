@@ -94,6 +94,7 @@ jobs:
           token: "${{ github.token }}"
           fetch-depth: 0
           ref: gh-pages
+        if: ${{ github.repository != 'osdev-wiki/wiki' }}
 
       - name: Publish
         run: |
