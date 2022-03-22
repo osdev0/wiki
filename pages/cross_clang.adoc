@@ -1,59 +1,100 @@
 ---
-title: clang Cross-Compiler
+title: Clang cross compiler
 tags: compiler, clang, tutorial
 category: Tutorial
-description: Tutorial on how to setup cross-compilation for OS development using clang.
+description: Tutorial on how to setup cross compilation for OS development using Clang.
 ---
 
-== Introduction
-
-A https://en.wikipedia.org/wiki/Cross_compiler[cross compiler] is a compiler that runs on platform A (the **host**), but generates executable code for platform B (the **target**). The platforms do not need to but usually differ in CPU architecture, library environment, xref:calling_conventions.adoc[ABI], and/or xref:executable_format.adoc[executable format]. For operating system development, the host is our development system, and the target is the developed OS. It is important to realize that these two platforms are not the same: the developed OS will always differ from the development OS. Thus it is necessary to use a cross compiler to avoid various troubles down the road.
+A https://en.wikipedia.org/wiki/Cross_compiler[*cross compiler*] is a compiler
+generates a code for a different platform (the **target**) than platform it
+runs on (the **host**).
+The platforms may differ in CPU architecture, library environment,
+xref:calling_conventions.adoc[ABI], and executable format.
+For operating system development, the host is our development system, and the
+target is the developed OS.
+It is important to realize that these two platforms are not the same: the
+developed OS will always differ from the development OS.
+Thus it is necessary to use a cross compiler to avoid various troubles down the
+road.
 
 == Why is cross-compilation necessary?
+Unless development is being done on the OS being developed, a cross compiler is
+necessary.
+The compiler must know the correct target platform, otherwise there will be
+issues, if not now then later.
+If the system compiler is used, it will not know that it is not targeting the
+host OS: it compiles something else entirely.
+Some tutorials suggest using the system compiler, and passing it several
+options to tell it that it is not targetting the host.
+This is not sustainable in the long run and the real solution is to use a
+cross-compiler.
 
-Unless development is being done on your developed OS, a cross compiler is necessary. The compiler must know the correct target platform, otherwise there will be issues, if not now then later. If the system compiler is used, it will not know that it is not targeting your host OS: it compiling something else entirely. Some tutorials suggest using the system compiler, and passing it several options to tell it that it's not targetting the host. This is not sustainable in the long run and the real solution is to use a cross-compiler. Further argumentation for using a cross compiler, if this wasn't convincing enough, can be found in the article xref:why_cross_compile.adoc[]
-
-== What is clang?
-
-As an operating system developer in the 2020s, xref:time_travel.adoc[newer technologies] have been developed that not only simplify the development process, but are of higher quality and are more powerful than what was used before. One of these technologies is https://llvm.org[LLVM]. Most osdev guides, including the original https://wiki.osdev.org[osdev.org wiki] instruct the developer to use GCC. Using LLVM+clang makes the life of an OS developer easier at the beginning, because unlike GCC, this compiler was designed to cross-compile from the very beginning, and thus it is not neccessary to build an entire toolchain from scratch for each desired target platform. It is also the native compiler on BSD and Mac OS X systems. The error messages are more accurate and informational. The main drawbacks is that when adding support for your custom platform is slower, as LLVM is much larger and slower to compile. GCC also compiles code faster. Ultimately, the compiler you use doesn't matter too much.
+== What is Clang?
+As an operating system developer in the 2020s, newer technologies have been
+developed that not only simplify the development process, but are of higher
+quality and are more powerful than what was used before.
+One of these technologies is https://llvm.org[LLVM].
+Most osdev guides instruct the developer to use GCC.
+Using LLVM+Clang makes the life of an OS developer easier at the beginning,
+because unlike GCC, this compiler was designed to cross-compile from the very
+beginning, and thus it is not neccessary to build an entire toolchain from
+scratch for each desired target platform.
+It is also the native compiler on BSD and Mac OS X systems.
+The error messages are more accurate and informational.
+The main drawbacks is that when adding support for your custom platform is
+slower, as LLVM is much larger and slower to compile.
+GCC also compiles code faster.
+Ultimately, the compiler you use does not matter too much.
 
 == Targets
-Cross compilation is done using a xref:target_triplet.adoc[], which conveys information to the compiler about the platform that is being compiled to.
+Cross compilation is done using a target triplet, which conveys information to
+the compiler about the platform that is being compiled to.
 
 == Start
-
-Install clang on the host system. It is the standard compiler on BSD-like systems, and virtually all Linux distributions have clang packaged in their software repositories. There is an installer for Windows.
+Install Clang on the host system.
+It is the standard compiler on BSD-like systems, and virtually all Linux
+distributions have Clang packaged in their software repositories.
+There is an installer for Windows.
 
 === Linux
+Install Clang through the distribution package manager:
 
-Install clang through the distribution package manager:
+* Ubuntu-based: `# apt install Clang`
+* Arch-based: `# pacman -S Clang`
+* Fedora: `# dnf install Clang`
+* Gentoo: `# emerge -a Clang`
+  - Be sure to enable the target architecture(s) in the LLVM_TARGETS variable
+    in /etc/portage/make.conf
+* Alpine: `# apk add Clang`
+* Others: It is highly unlikely the distribution does not provide Clang
+  packaged.
+  Search the repositories.
 
-* Ubuntu-based: `# apt install clang`
-* Arch-based: `# pacman -S clang`
-* Fedora: `# dnf install clang`
-* Gentoo: `# emerge -a clang`
-  - Be sure to enable the target architecture(s) in the LLVM_TARGETS variable in /etc/portage/make.conf
-* Alpine: `# apk add clang`
-* Others: It is highly unlikely the distribution does not provide clang packaged. Search the repositories.
-
-In the case that clang isn't packaged, it can be built from source.
+In the case that Clang isn't packaged, it can be built from source.
 
 === Windows
+If xref:visual_studio.adoc[Visual Studio] with the "Desktop Development with
+C++" toolset is installed, Clang can be installed as an individual component
+through the Visual Studio Installer.
+See https://docs.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170[Clang/LLVM support in Visual Studio].
 
-If xref:visual_studio.adoc[Visual Studio] with the "Desktop Development with C++" toolset is installed, clang can be installed as an individual component through the Visual Studio Installer. See https://docs.microsoft.com/en-us/cpp/build/clang-support-msbuild?view=msvc-170[Clang/LLVM support in Visual Studio].as
-
-If Visual Studio is not desired or installed, the latest release of clang can be installed from the https://github.com/llvm/llvm-project/releases[LLVM GitHub release page].
+If Visual Studio is not desired or installed, the latest release of Clang can
+be installed from the
+https://github.com/llvm/llvm-project/releases[LLVM GitHub release page].
 
 TODO: Windows
 
 === *BSD
-
-Clang is the default compiler for OpenBSD, NetBSD and FreeBSD, so it should be pre-installed.
+Clang is the default compiler for OpenBSD, NetBSD and FreeBSD, so it should be
+pre-installed.
 
 === macOS
-
-The built-in apple clang comes crippled: it only ships with x86_64 and arm64 support (but still supports ELF). It is recommended to get clang from https://brew.sh[homebrew], as the LLVM linker (lld) is needed to get anything meaningful done either way. It is also worth noting that proper cross-compilation GCC tools are also in the homebrew repositories (under the names x86_64-elf-binutils and x86_64-elf-gcc).
+The built-in apple Clang comes crippled: it only ships with x86_64 and arm64
+support (but still supports ELF).
+It is recommended to get Clang from https://brew.sh[homebrew], as the LLVM
+linker (lld) is needed to get anything meaningful done either way.
+It is also worth noting that proper cross-compilation GCC tools are also in the
+homebrew repositories (under the names x86_64-elf-binutils and x86_64-elf-gcc).
 
 == Enabling cross-compilation
-
 TODO

@@ -126,7 +126,7 @@ Caller-saved: RAX, RCX, RDX, RDI, RSI, R8, R9, R10, R11
 Callee-saved: RBX, RBP, RSP R12, R13, R14, R15
 
 ==== Stack
-The stack is always 16-byte aligned at function **call**: this requires the
+The stack is always 16-byte aligned at function _call_: this requires the
 stack to be aligned to 16 bytes before the `CALL`.
 The push of the return address onto the stack by `CALL` is immediately succeeded
 by the push of RBP onto the stack by the callee function, thereby re-aligning
