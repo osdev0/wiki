@@ -1,35 +1,49 @@
 ---
-title: Main Page
-description: The place to start for Operating System Development in the 2020s.
+title: Main page
+description: The place to start for operating system development in the 2020s.
 ---
-= The New OSDev Wiki
 
-Welcome to osdev.wiki.
+Welcome to *osdev.wiki*!
 
-The goal of this wiki is to modernize the information found in the long-standing OSDev wiki found at https://wiki.osdev.org[wiki.osdev.org] and to decentralize it. It is currently *WIP* and *not ready* for use.
+The goal of this wiki is to modernize the information found in the long-standing
+OSDev wiki found at https://wiki.osdev.org[wiki.osdev.org] and to decentralize
+it.
+This site is currently *WIP* and very incomplete, thus contributions are
+welcome!
 
-This wiki is not endorsed by, does not have any connection to, and is not related in any way with another wiki found at https://wiki.osdev.org[wiki.osdev.org].
++ IMPORTANT
+This wiki is not endorsed by, does not have any connection to, and is not
+related in any way with another wiki found at
+https://wiki.osdev.org[wiki.osdev.org].
+
+== Contributing
+Before contributing to this wiki, you should read following pages:
+* xref:writer_tutorial.adoc[Writing a document], for a quick tutorial on how to
+write pages for this wiki.
+* xref:guidelines.adoc[Style guidelines], for rules on article structure,
+vocabulary, commit messages and much more.
+
++ IMPORTANT
+By submitting a contribution to this wiki, you irrevocably agree to release
+your contribution under the link:/licenses/CC0.txt[CC0 license] and certify
+that you have the right to do so.
 
 == Quick Access
-
-* About This Wiki
-* xref:time_travel.adoc[Welcome To the Modern Era]
-* Requirements
-
 === Tutorials
-
-* xref:stivale_barebones.adoc[Stivale C Bare Bones]
-* Stivale C# Bare Bones (unavailable)
-* xref:cross_clang.adoc[Cross Compiling using Clang]
+* xref:stivale_barebones.adoc[Stivale C bare bones]
+* xref:cross_clang.adoc[Cross compiling using Clang]
 
 === Toolchain
-
 * xref:clang.adoc[LLVM+Clang]
 * xref:visual_studio.adoc[Visual Studio]
-* xref:calling_conventions.adoc[Calling Conventions]
+* xref:calling_conventions.adoc[Calling conventions]
 
 === Hardware
 * xref:x86.adoc[x86]
 
 === Learning
-* xref:fundamentals.adoc[Computer Science Fundamentals]
+* xref:fundamentals.adoc[Computer science fundamentals]
+
+== Todo
+* Welcome to the modern era
+* Stivale C# bare bones
