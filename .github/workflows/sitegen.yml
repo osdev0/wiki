@@ -85,7 +85,7 @@ jobs:
           path: _out
           repository: osdev-wiki/osdev-wiki.github.io
           fetch-depth: 0
-          token: "${{ secrets.PAT }}"
+          ssh-key: "${{ secrets.DEPLOY_KEY }}"
         if: ${{ github.repository == 'osdev-wiki/wiki' }}
       - name: Checkout publishing (for forks)
         uses: actions/checkout@v2
