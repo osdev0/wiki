@@ -310,8 +310,8 @@ Syntax Quick reference] as well as the more broad
 https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc Language Documentation].
 
 A useful tool for formatting your AsciiDoc is
-https://www.nicemice.net/par/[`par`], though as it's not specific to AsciiDoc,
-it will break formatting elements.
+https://www.nicemice.net/par/[`par`], although, as it is not specific to
+AsciiDoc, it will break formatting elements.
 Use sparingly and explicitly, on ranges of text.
 
 Full stops are line breaks::
