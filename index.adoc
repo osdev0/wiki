@@ -11,9 +11,9 @@ it.
 This site is currently *WIP* and very incomplete, thus contributions are
 welcome!
 
-+ IMPORTANT
-This wiki is not endorsed by, does not have any connection to, and is not
-related in any way with another wiki found at
++
+IMPORTANT: This wiki is not endorsed by, does not have any connection to, and
+is not related in any way with another wiki found at
 https://wiki.osdev.org[wiki.osdev.org].
 
 == Contributing
@@ -23,27 +23,35 @@ write pages for this wiki.
 * xref:guidelines.adoc[Style guidelines], for rules on article structure,
 vocabulary, commit messages and much more.
 
-+ IMPORTANT
-By submitting a contribution to this wiki, you irrevocably agree to release
-your contribution under the link:/licenses/CC0.txt[CC0 license] and certify
-that you have the right to do so.
++
+IMPORTANT: By submitting a contribution to this wiki, you irrevocably agree to
+release your contribution under the link:/licenses/CC0.txt[CC0 license] and
+certify that you have the right to do so.
 
 == Quick Access
 === Tutorials
+
 * xref:stivale_barebones.adoc[Stivale C bare bones]
+
 * xref:cross_clang.adoc[Cross compiling using Clang]
 
 === Toolchain
+
 * xref:clang.adoc[LLVM+Clang]
+
 * xref:visual_studio.adoc[Visual Studio]
+
 * xref:calling_conventions.adoc[Calling conventions]
 
 === Hardware
+
 * xref:x86.adoc[x86]
 
 === Learning
 * xref:fundamentals.adoc[Computer science fundamentals]
 
 == Todo
+
 * Welcome to the modern era
+
 * Stivale C# bare bones
