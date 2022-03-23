@@ -1,5 +1,5 @@
 ---
-title: Calling conventions
+title: Calling conventions (x86)
 tags: assembly, x86, x64, sysv, msvc
 category: Assembly
 description: Examples of calling conventions on common platforms.
@@ -66,7 +66,7 @@ bytes below the caller's stack.
 
 ==== Parameters
 `RCX`/`XMM0`, `RDX`/`XMM1`, `R8`/`XMM2`, `R9`/`XMM3`, stack (`[RSP+0x20]`,
-`[RSP+0x28]` and so on, 0x20 is due to the home space being there).
+`[RSP+0x28]` and so on, 0x20 is due to the home space).
 
 For example, a function with the prototype 
 
@@ -82,7 +82,7 @@ parameters and home space and ensure that the stack is aligned after the `CALL`.
 
 ==== Return value
 If the return value is an integer/struct/union whose size is less than or equal
-than 64 bits, it is returned in RAX; otherwise, the struct is allocated by the
+to 64 bits, it is returned in RAX; otherwise, the struct is allocated by the
 caller and a pointer to it is passed as the first parameter.
 
 `LargeStruct DoSomething(int a)` 
