@@ -35,7 +35,7 @@ developed that not only simplify the development process, but are of higher
 quality and are more powerful than what was used before.
 One of these technologies is https://llvm.org[LLVM].
 Most osdev guides instruct the developer to use GCC.
-Using LLVM+Clang makes the life of an OS developer easier at the beginning,
+Using LLVM and Clang makes the life of an OS developer easier at the beginning,
 because unlike GCC, this compiler was designed to cross-compile from the very
 beginning, and thus it is not neccessary to build an entire toolchain from
 scratch for each desired target platform.
@@ -59,13 +59,13 @@ There is an installer for Windows.
 === Linux
 Install Clang through the distribution package manager:
 
-* Ubuntu-based: `# apt install Clang`
-* Arch-based: `# pacman -S Clang`
-* Fedora: `# dnf install Clang`
-* Gentoo: `# emerge -a Clang`
+* Ubuntu-based: `# apt install clang`
+* Arch-based: `# pacman -S clang`
+* Fedora: `# dnf install clang`
+* Gentoo: `# emerge -a clang`
   - Be sure to enable the target architecture(s) in the LLVM_TARGETS variable
     in /etc/portage/make.conf
-* Alpine: `# apk add Clang`
+* Alpine: `# apk add clang`
 * Others: It is highly unlikely the distribution does not provide Clang
   packaged.
   Search the repositories.
@@ -82,7 +82,7 @@ If Visual Studio is not desired or installed, the latest release of Clang can
 be installed from the
 https://github.com/llvm/llvm-project/releases[LLVM GitHub release page].
 
-TODO: Windows
+// TODO: Windows
 
 === *BSD
 Clang is the default compiler for OpenBSD, NetBSD and FreeBSD, so it should be
@@ -94,7 +94,7 @@ support (but still supports ELF).
 It is recommended to get Clang from https://brew.sh[homebrew], as the LLVM
 linker (lld) is needed to get anything meaningful done either way.
 It is also worth noting that proper cross-compilation GCC tools are also in the
-homebrew repositories (under the names x86_64-elf-binutils and x86_64-elf-gcc).
+Homebrew repositories (under the names x86_64-elf-binutils and x86_64-elf-gcc).
 
-== Enabling cross-compilation
-TODO
+// == Enabling cross-compilation
+// TODO
