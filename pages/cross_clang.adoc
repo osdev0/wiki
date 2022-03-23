@@ -91,7 +91,7 @@ pre-installed.
 === macOS
 The built-in apple Clang comes crippled: it only ships with x86_64 and arm64
 support (but still supports ELF).
-It is recommended to get Clang from https://brew.sh[homebrew], as the LLVM
+It is recommended to get Clang from https://brew.sh[Homebrew], as the LLVM
 linker (lld) is needed to get anything meaningful done either way.
 It is also worth noting that proper cross-compilation GCC tools are also in the
 Homebrew repositories (under the names x86_64-elf-binutils and x86_64-elf-gcc).
