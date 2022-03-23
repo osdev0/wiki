@@ -11,12 +11,9 @@ code respects and expects external functions to respect.
 The calling convention specifies, for example
 
 - how parameters are passed to functions
-
 - how the stack is handled and cleaned (for example if needs to be aligned at
   function entry)
-
 - how structures are going to be laid out in memory
-
 - which registers need to be restored by the caller and which by the callee
 
 == x86-64 calling conventions
@@ -25,7 +22,6 @@ adopted two different conventions. Note that MSVC can only generate code using
 the Windows calling convention.
 
 === Microsoft x64
-
 The x64 Application Binary Interfacefootnote:[https://github.com/MicrosoftDocs/cpp-docs/blob/main/docs/build/x64-calling-convention.md]
 (ABI) uses a four-register fast-call calling convention by default.
 Space is allocated on the call stack as a shadow store for callees to save
@@ -48,7 +44,6 @@ detail in Parameter passing.
 These registers, and RAX, R10, R11, XMM4, and XMM5, are considered volatile.
 
 ==== Register allocation
-
 Caller-saved: RAX, RCX, RDX,  R8, R9, R10, R11
 
 Callee-saved: RBX, RBP, RDI, RSI, RSP, R12, R13, R14, R15
@@ -95,7 +90,6 @@ actually becomes
 `void DoSomething(LargeStruct *ret, int a)`.
 
 === System V
-
 The standard calling sequence requirementsfootnote:[https://raw.githubusercontent.com/wiki/hjl-tools/x86-psABI/x86-64-psABI-1.0.pdf]
 apply only to global functions.
 Local functions that are not reachable from other compilation units may use
@@ -120,7 +114,6 @@ caller.
 Remaining registers "belong" to the called function.
 
 ==== Register allocation
-
 Caller-saved: RAX, RCX, RDX, RDI, RSI, R8, R9, R10, R11
 
 Callee-saved: RBX, RBP, RSP R12, R13, R14, R15

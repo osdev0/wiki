@@ -14,7 +14,6 @@ native MSVC compiler is possible as well.
 TODO
 
 == Using MSVC/msbuild with Visual Studio
-
 [CAUTION]
 .MSVC for OSDev
 ====
@@ -22,10 +21,8 @@ It is possible to use MSVC for OS development, but it is heavily advised
 against for a number of reasons.
 
 * It is proprietary and not properly documented.
-
 * It is difficult and sometimes impossible to do certain things required for OS
   development using a pure MS toolchain.
-
 * Few people will be willing to give you help if something goes wrong.
 ====
 
