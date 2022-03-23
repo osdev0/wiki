@@ -11,14 +11,12 @@ Intelfootnote:[https://www.intel.com/content/www/us/en/developer/articles/techni
 The iterations of the ISA can be broadly classified by integer width:
 
 * 16-bit x86, also referred to as x86_16 or IA-16 (introduced with the Intel
-8086 in 1978)
-
+  8086 in 1978)
 * 32-bit x86, also referred to as x86_32 or IA-32 (introduced with the Intel
-386 in 1985)
-
+  386 in 1985)
 * 64-bit x86 (not to be confused with IA-64), also referred to as x86_64, AMD64
-or x64.
-It is also referred to as EM64T, IA-32e or Intel64 by Intel.
+  or x64.
+  It is also referred to as EM64T, IA-32e or Intel64 by Intel.
 
 == History
 The first iteration of the x86 architecture was introduced in 1978 with the
@@ -55,9 +53,7 @@ four gigabytes of RAM.
 In 1989, the Intel 486 was introduced, with new features, such as:
 
 - An integrated "x87" FPU
-
 - L1 cache used for increased IPC
-
 - System management capabilities
 
 To this day, every properly-implemented x86 processor has backwards

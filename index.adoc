@@ -25,39 +25,30 @@ write pages for this wiki.
 * xref:guidelines.adoc[Style guidelines], for rules on article structure,
 vocabulary, commit messages and much more.
 
-+
-IMPORTANT: By submitting a contribution to this wiki, you irrevocably agree to
-release your contribution under the link:/licenses/CC0.txt[CC0 license] and
-certify that you have the right to do so.
+[IMPORTANT]
+By submitting a contribution to this wiki, you irrevocably agree to release
+your contribution under the link:/licenses/CC0.txt[CC0 license] and certify
+that you have the right to do so.
 
 == Quick Access
 === Tutorials
-
 * xref:stivale_barebones.adoc[Stivale C bare bones]
-
 * xref:cross_clang.adoc[Cross compiling using Clang]
 
 === Toolchain
-
 * xref:visual_studio.adoc[Visual Studio]
-
 * xref:calling_conventions.adoc[Calling conventions]
 
 === Hardware
-
 * xref:x86.adoc[x86]
 
 === Learning
 * xref:fundamentals.adoc[Computer science fundamentals]
 
 === Bootloaders
-
 * xref:stivale.adoc[Stivale]
 
 == Todo
-
 * Welcome to the modern era
-
 * Stivale C# bare bones
-
 * LLVM + Clang

@@ -182,7 +182,7 @@ NOTE: C is the _lingua franca_ of programming languages and _the_ generic
 ** Possessive forms of nouns are formed by using -'s.
 +
 IMPORTANT: "It" is not a noun, but a personal pronoun.
-The corresponding possessive pronoun is "its", not "it's".
+           The corresponding possessive pronoun is "its", not "it's".
 
 ** Use the present tense by default.
 
