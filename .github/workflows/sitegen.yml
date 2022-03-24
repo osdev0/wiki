@@ -1,8 +1,12 @@
 name: Generate pages
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
+
+env:
+  STORK_VERSION: 1.4.0
 
 jobs:
   gen:
@@ -13,31 +17,97 @@ jobs:
         with:
           fetch-depth: 0
           path: wiki
+
+      - uses: cachix/install-nix-action@v15
+        with:
+          extra_nix_config: |
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= osdev-wiki-cache-2:xnfH8Tkm0Sp5c8dDxpuFE0/w1PB6E4NUxjcnShNdkZ0=
+            substituters = https://cache.nixos.org/ https://hydra.iohk.io s3://osdev-wiki-cache?scheme=https&endpoint=s3.us-west-000.backblazeb2.com
+
+      - name: Maybe add secrets
+        run: |
+          set -uxe
+          [ -z "$AWS_CREDS$NIX_SIGNING_KEY" ] && exit
+          mkdir ~/.aws
+          echo "$AWS_CREDS" > ~/.aws/credentials
+          echo "$NIX_SIGNING_KEY" > ~/.nix-key
+          echo secret-key-files = ~/.nix-key | sudo tee -a /etc/nix/nix.conf
+        env:
+          NIX_SIGNING_KEY: ${{ secrets.NIX_SIGNING_KEY }}
+          AWS_CREDS: ${{ secrets.AWS_CREDS }}
+
+      - name: Cache dependency builds
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/nix/*sqlite*
+          key: ${{ runner.os }}
+      - name: Get deps
+        run: |
+          set -xe
+          gem install --user-install asciidoctor asciidoctor-bibtex tilt \
+                                    pygments.rb
+          pip install --user -U Pygments
+          nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+          nix-channel --update nixpkgs
+          nix-env -I nixpkgs-overlays="$(realpath wiki/generator/overlays/)" -i "stork-$STORK_VERSION"
+
+      - name: Build generator
+        run: |
+          cd wiki/generator
+          nix-build
+
+      - name: Update nix caches
+        if: always()
+        run: |
+          set -xe
+          [ -r ~/.nix-key ] || exit 0
+          cd wiki/generator
+          nix store sign -k ~/.nix-key "$(readlink result)"
+          stork_path="$(nix-env -q --installed --out-path --no-name stork)"
+          nix copy --to 's3://osdev-wiki-cache?scheme=https&endpoint=s3.us-west-000.backblazeb2.com&profile=osdev-wiki-cache' \
+              "$(readlink result)" "$stork_path"
+
+      - name: Build site
+        run: |
+          export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+          export PATH="$GEM_HOME/bin:$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
+          export PATH="$HOME/.nix-profile/bin:$PATH"
+
+          cd wiki
+          generator/result/bin/generator build
+        env:
+          WIKI_FORGE: ${{ format('https://github.com/{0}', github.repository) }}
+
       - name: Checkout publishing
         uses: actions/checkout@v2
         with:
           path: _out
           repository: osdev-wiki/osdev-wiki.github.io
-          token: "${{ secrets.PAT }}"
-      - name: Install Node.js
-        uses: actions/setup-node@v2.5.0
-      - name: Install Antora
-        run: npm install -g antora@3.0.0-beta.5
-      - name: Clean _out
+          fetch-depth: 0
+          ssh-key: "${{ secrets.DEPLOY_KEY }}"
+        if: ${{ github.repository == 'osdev-wiki/wiki' }}
+      - name: Checkout publishing (for forks)
+        uses: actions/checkout@v2
+        with:
+          path: _out
+          token: "${{ github.token }}"
+          fetch-depth: 0
+          ref: gh-pages
+        if: ${{ github.repository != 'osdev-wiki/wiki' }}
+
+      - name: Publish
         run: |
+          set -xe
+
           cd _out
           find . -not -path './.git/*' -not -path ./.git -delete
           echo osdev.wiki > CNAME
           touch .nojekyll
-      - name: build site
-        run: |
-          cd wiki
-          npm exec antora -- generate --to-dir ../_out antora-playbook.yml
-      - name: Publish
-        run: |
-          set -xe
-          export COMMIT_HASH="$(git -C wiki rev-parse HEAD)"
-          cd _out
+
+          rsync -a ../wiki/_site/ ./
+
+          export COMMIT_HASH="$(git -C ../wiki rev-parse HEAD)"
           git config user.name  "Wiki Autobuild"
           git config user.email "autobuild@osdev.wiki"
           git add .

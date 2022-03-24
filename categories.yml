@@ -1,0 +1,9 @@
+# KV pairs (Text -> Text) of category name to description mappings
+Assembly: Topics related to assembly and machine code, calling conventions, et cetera
+x86: x86-specific documentation
+Tutorial: Guides on how to do simple things, to get you off the ground with a given tool
+Bootloaders: Bootloaders and boot protocols
+Toolchain: LLVM, GCC, and others, and how to use them
+
+# Special pages
+Meta: Pages about wiki administration, editing, and processes

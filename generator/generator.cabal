@@ -1,0 +1,33 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           generator
+version:        0.1.0.0
+synopsis:       Static site generator for https://osdev.wiki based on Hakyll
+category:       Web
+license:        PublicDomain
+license-file:   LICENSE
+build-type:     Simple
+
+executable generator
+  main-is: Main.hs
+  other-modules:
+      Stork
+      Paths_generator
+  hs-source-dirs:
+      app
+  ghc-options: -Wall
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , hakyll
+    , pandoc
+    , text
+    , time
+    , unordered-containers
+    , yaml
+  default-language: Haskell2010

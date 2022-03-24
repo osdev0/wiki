@@ -1,0 +1,93 @@
+---
+title: Writing a document
+tags: meta
+category: Meta
+description: An overview of how to write and submit an article
+---
+== Writing the AsciiDoc
+The wiki consists of documents written in AsciiDoc under the `pages/` directory
+in the source tree.
+Documents are prefaced with a nonstandard preamble containing page metadata.
+This preamble is surrounded by `---` and is a standard YAML document.
+The following fields are required:
+
+- `title`: The document title,
+- `tags`: A comma separated list of page tags (see a list of current tags on
+  link:/tags[the tag index page]),
+- `category`: The main category of this page (see a list of current categories
+  on link:/categories[the category index page]),
+- `description`: A brief description of the page (to show in overviews and
+  OpenGraph metadata).
+
+The convention for the names of documents on the wiki is
+`pages/snake_case_slug.adoc`.
+
+Categories are defined in a YAML-formatted category description mapping in the
+`categories.yaml` file.
+
+=== References and bibliographies
+We use https://github.com/asciidoctor/asciidoctor-bibtex[asciidoctor-bibtex] to
+emit bibliographies and references on the wiki.
+If you wish to cite something, first check whether `sources.bib` in the root of
+the repository has the document you wish to cite and if it's metadata is
+correct, if your entry isn't present, or is incorrect, please update it.
+
+When adding references to a page, please add the following to the end of the
+document in order to render its bibliography:
+
+[source,asciidoc]
+----
+== Bibliography
+bibliography::[]
+----
+
+=== Things of note
+- Written documents will be prefixed with their title emitted as a level zero
+  heading automatically.
+  Start with level one headings (`==`) when dividing up documents.
+- All AsciiDoctor features _should_ work.
+  If there is a construct we missed and is broken, it is likely a bug in the
+  generator.
+  Please report it.
+
+=== Further reading
+- https://docs.asciidoctor.org/asciidoc/latest/[AsciiDoc manual]
+- https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/[Syntax
+  Quick Reference]
+- https://docs.asciidoctor.org/asciidoctor/latest/[AsciiDoctor manual]
+
+=== Example document
+[source,asciidoc]
+----
+---
+title: Lorem Ipsum
+tags: examples
+category: Examples
+description: Lorem ipsum
+---
+== Ipsum
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla pariatur.
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+deserunt mollit anim id est laborum.
+----
+
+== Submitting your changes
+When submitting your change, please confirm it adheres to our
+xref:guidelines.adoc[style guidelines] and make commits accordingly.
+Please ensure these commits are atomic and encompass one change each.
+
+After you are done, push your changes to a fork of our source repository and
+submit a pull request.
+It will then be reviewed by our editorial team and merged if appropriate.
+
+We suggest that you enable GitHub actions on your fork and use them to ensure
+your pages look like what you intended them to.
+Our workflows will push changes to `gh-pages` on the same repository.
+You might need to create that branch, even if empty.
+
+// TODO(arsen): make creating the branch unnecessary.
