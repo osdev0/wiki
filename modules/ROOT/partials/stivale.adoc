@@ -1,7 +1,0 @@
-*stivale* means "boot" in Italian. It is a boot protocol designed to overcome shortcomings of common boot protocols used by hobbyist OS developers, such as xref:multiboot.adoc[].
-
-There are actually 2 revisions of the stivale boot protocol, namely: *stivale*, and *stivale2*. The earlier stivale revision (simply "stivale", but for clarity we are going to call it "stivale1" from now on), is a very simple https://en.wikipedia.org/wiki/KISS_principle["KISS"] boot protocol only supporting what was deemed necessary at the time, but versioning and expandability issues made creating stivale2 a necessity. stivale2 makes use of tags for bootloader writers' and kernel writers' convenience, and to make future expandability and revisioning easier.
-
-NOTE: stivale1 is deprecated and should be avoided for new kernels.
-
-stivale is firmware and architecture agnostic, though the only bootloader fully supporting the stivale protocols as of writing this article (2021/01/09) is xref:limine.adoc[], which is an x86/x86_64 xref:bios.adoc[] and xref:uefi.adoc[] bootloader, with https://github.com/TomatOrg/TomatBoot[TomatBoot] (now archived) and https://github.com/FlorenceOS/Sabaton[Sabaton] offering limited stivale compliance for xref:uefi.adoc#x86[x86_64 UEFI] exclusively, and xref:arm.adoc#AArch64[aarch64], respectively.

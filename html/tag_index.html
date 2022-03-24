@@ -1,0 +1,15 @@
+<article>
+	<h2>$title$</h2>
+	$if(tagDescription)$
+	$tagDescription$
+	$endif$
+<ul class="pageList">
+$for(pages)$
+<li>
+	<a href="$url$">$title$</a>
+	<br>
+	$description$
+</li>
+$endfor$
+</ul>
+</article>

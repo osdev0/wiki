@@ -1,5 +1,0 @@
-name: wiki
-version: master
-title: New OSDev Wiki
-nav:
-  - modules/ROOT/nav.adoc

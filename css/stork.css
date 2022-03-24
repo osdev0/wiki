@@ -1,0 +1,148 @@
+/* Copyright (c) 2021 Arsen Arsenovic, CC0 */
+/* inspired by storks upstream styling but reimplemented */
+:root {
+	--stork-dialog-margins: 0.75em;
+}
+
+.stork-wrapper {
+	box-sizing: border-box;
+
+	display: none; /* hide without JS */
+	width: 100%;
+}
+
+.stork-wrapper > * {
+	display: none;
+	box-sizing: border-box;
+}
+
+.stork-wrapper > input {
+	display: block;
+	grid-row: 1;
+	grid-column-start: 1;
+	grid-column-end: 1;
+	width: 100%;
+	margin: 0;
+}
+
+/* display as overlay */
+.stork-fullscreen {
+	position: fixed;
+	margin: 3%;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	box-sizing: border-box;
+	max-width: 700px;
+	max-height: min-content;
+	margin: auto auto;
+	z-index: 100;
+
+	background-color: var(--background);
+	grid-template-columns: 1fr min-content;
+	grid-template-rows: min-content min-content 1fr;
+	grid-template-areas:
+		"input close"
+		"progress progress"
+		"results results";
+}
+
+.stork-fullscreen > * {
+	display: revert;
+}
+
+.stork-results {
+	--shadow-size: 0.5em;
+	--neg-shadow-size: calc(-1 * var(--shadow-size));
+
+	overflow-y: auto;
+	max-height: 25em;
+	border: var(--foreground) 1px solid;
+	border-left: none;
+	border-right: none;
+	box-shadow: inset 0em var(--shadow-size) var(--shadow-size) var(--neg-shadow-size) var(--black0),
+			inset 0em var(--neg-shadow-size) var(--shadow-size) var(--neg-shadow-size) var(--black0);
+	padding: var(--shadow-size) 0;
+	margin: 0;
+}
+
+.stork-close-button {
+	grid-area: close;
+	aspect-ratio: 1 / 1;
+	margin-left: var(--stork-dialog-margins);
+}
+
+.stork-progress {
+	grid-area: progress;
+}
+
+.stork-fullscreen > input {
+	grid-area: input;
+}
+
+[data-stork="wiki-output"] {
+	grid-area: results;
+}
+
+.stork-fullscreen > .stork-output-visible {
+	display: flex;
+	flex-direction: column;
+	margin-top: var(--stork-dialog-margins);
+
+	border: var(--foreground) 1px solid;
+	border-radius: 5px;
+	box-shadow: 5px var(--foreground);
+}
+
+.stork-result {
+	margin: 0;
+	padding: 0 1ch;
+}
+
+.stork-result a {
+	display: block;
+	color: currentcolor;
+}
+
+.stork-title {
+	font-weight: bold;
+	font-size: 1.2em;
+
+	display: flex;
+	justify-content: space-between;
+}
+
+.stork-excerpt {
+	font-size: 0.9em;
+	line-height: 1;
+	margin: 0;
+
+	display: flex;
+	justify-content: space-between;
+}
+
+.stork-excerpt:not(:last-of-type) {
+	margin-bottom: 0.6em;
+}
+
+.stork-result.selected {
+	background-color: var(--background-active);
+}
+
+.stork-message {
+	font-size: 1.5em;
+	padding: 0.5em;
+}
+
+.stork-attribution {
+	font-style: italic;
+	font-size: 0.6em;
+	padding: 1em 2ch;
+	text-align: right;
+}
+
+div.stork-wrapper > input {
+	background-color: var(--background-input);
+	color: var(--foreground);
+}

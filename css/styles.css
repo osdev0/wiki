@@ -1,0 +1,196 @@
+/* Copyright (c) 2021 Arsen Arsenovic, CC0 */
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";
+
+:root {
+	--white0: #ccc;
+	--white1: #fefefe;
+	--whitef: #fff;
+	--black0: #111;
+	--black1: #222;
+	--black2: #181818;
+	--blackf: #000;
+	--blue0: #0645ad;
+	--cyan0: hsl(210deg, 60%, 65%);
+	--cyan1: hsl(210deg, 60%, 80%);
+	--cyan2: hsl(210deg, 60%, 30%);
+
+	--yellow0: hsl(45deg, 100%, 50%);
+	--orange0: hsl(25deg, 100%, 50%);
+	--blue0: hsl(250deg, 85%, 50%);
+	--purple0: hsl(280deg, 85%, 50%);
+	--red0: hsl(358deg, 85%, 50%);
+
+	--foreground: var(--white0);
+	--foreground-hc: var(--whitef);
+	--background: var(--black0);
+	--background-code: var(--black1);
+	--background-active: var(--cyan2);
+	--background-admonition: var(--black1);
+	--background-input: var(--black1);
+	--accent: var(--white1);
+	--links: var(--cyan0);
+
+	/* always dark */
+	--dark-foreground: var(--white0);
+	--dark-background: var(--black2);
+	--dark-links: var(--cyan0);
+}
+
+html, body {
+	font-family: sans-serif;
+	background-color: var(--background);
+	color: var(--foreground);
+}
+
+@media(prefers-color-scheme: light) {
+	:root {
+		--foreground: var(--black0);
+		--background: var(--white1);
+		--foreground-hc: var(--blackf);
+		--background-active: var(--cyan1);
+		--background-admonition: var(--white0);
+		--background-input: var(--white1);
+		--accent: var(--black1);
+		--links: var(--blue0);
+	}
+}
+
+pre {
+	margin: 0.5ch 1ch;
+}
+
+a {
+	color: var(--links);
+	text-decoration: none;
+}
+
+.listingblock {
+	width: 100%;
+	background-color: var(--background-code);
+	border-radius: 0.3em;
+	border: 1px var(--accent) solid;
+}
+
+.listingblock > .title {
+	width: 100%;
+	font-family: monospace;
+	font-size: 0.9em;
+	padding: 1px 1ch;
+	background-color: var(--accent);
+	color: var(--background);
+}
+.listingblock > .title::before {
+	content: "$ edit ";
+	text-decoration: italic;
+	opacity: 50%;
+}
+
+.literalblock pre,
+.listingblock > .content > pre {
+	overflow-x: auto;
+}
+
+.listingblock > .content {
+	position: relative;
+}
+
+.listingblock {
+	color: var(--dark-foreground);
+	background-color: var(--dark-background);
+}
+
+.listingblock code[data-lang]::before {
+	display: none;
+
+	content: attr(data-lang);
+	text-transform: uppercase;
+	font-size: 0.75em;
+
+	position: absolute;
+	top: 0.4em;
+	right: 0.4em;
+	line-height: 1;
+	opacity: 0.5;
+}
+
+.listingblock:hover code[data-lang]::before {
+	display: block;
+}
+
+/* these specific ul shouldn't have bullets or padding */
+#navbar ul,
+#toc ul {
+	list-style: none;
+	padding-left: 1ch;
+}
+
+a#forgebtn {
+	color: var(--foreground);
+}
+
+div#navbar, div#toc:not(.intentionallyEmpty) {
+	border-bottom: 2px solid var(--accent);
+}
+
+footer {
+	background-color: var(--dark-background);
+	color: var(--dark-foreground);
+	font-size: 0.75rem;
+}
+
+footer > a {
+	color: var(--dark-links);
+}
+
+/* admonitions */
+
+.admonitionblock {
+	margin: 1.4rem 0 0;
+	background-color: var(--background-admonition);
+	border-radius: 0.5em;
+}
+
+.admonitionblock > table {
+	table-layout: fixed;
+	position: relative;
+	width: 100%;
+}
+
+.admonitionblock td.icon {
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: translate(-0.5rem,-50%);
+	padding: 0.25em 0.25em;
+	text-transform: uppercase;
+	border-radius: 5px;
+
+	background-color: var(--cyan0);
+	color: var(--whitef);
+	font-size: 0.9em;
+}
+
+.admonitionblock td.content {
+	width: 100%;
+	padding: 1rem 1rem 0.75rem 1rem;
+}
+
+.admonitionblock.warning td.icon {
+	background-color: var(--yellow0);
+}
+
+.admonitionblock.caution td.icon {
+	background-color: var(--orange0);
+}
+
+.admonitionblock.tip td.icon {
+	background-color: var(--blue0);
+}
+
+.admonitionblock.note td.icon {
+	background-color: var(--purple0);
+}
+
+.admonitionblock.important td.icon {
+	background-color: var(--red0);
+}

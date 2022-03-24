@@ -1,3 +1,0 @@
-= Stivale
-
-include::partial$stivale.adoc[]
