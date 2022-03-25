@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 env:
-  STORK_VERSION: 1.4.0
+  STORK_VERSION: 1.4.1
 
 jobs:
   gen:
@@ -50,7 +50,7 @@ jobs:
           pip install --user -U Pygments
           nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
           nix-channel --update nixpkgs
-          nix-env -I nixpkgs-overlays="$(realpath wiki/generator/overlays/)" -i "stork-$STORK_VERSION"
+          nix-env -i "stork-$STORK_VERSION"
 
       - name: Build generator
         run: |
