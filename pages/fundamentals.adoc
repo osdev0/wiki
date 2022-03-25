@@ -1,39 +1,50 @@
 ---
-title: Computer Science Fundamentals
-description: Some guidance on learning fundamentals of Computer Science
+title: Computer science fundamentals
+tags: tutorial, theory
+category: Tutorial
+description: Some guidance on learning fundamentals of computer science
 ---
 
 The internet has many freely available resources for learning computer science
-fundamentals. 
-Given that this is the osdev wiki, the focus will be on those resources most useful for osdev.
+fundamentals.
+This is a list of those resources, that are most useful for OS development.
 
-== Open Source Siciety University
-https://github.com/ossu/computer-science
+== Open Source Society University
+The OSSU has a https://github.com/ossu/computer-science[complete CS curriculum]
+of currated online materials.
 
-The OSSU has a complete CS curriculum of currated online materials.
-
-Following prerequisits are recommened to make sure there is some familiarity
+Following prerequisites are recommended to make sure there is some familiarity
 with the material.
 They can be skimmed quickly if the material seems basic.
 
-Strongly recommended.  
-These subjects are very relevant to osdev.
+=== Strongly recommended
+These subjects are very relevant to OS development.
 
-* Core CS, all
-* Core math, Mathematics for Computer Science
-* CS Tools, all
-* Core systems, all
-* Core theory, Divide and Conquer, Sorting and Searching, and Randomized Algorithms, Graph Search, Shortest Paths, and Data Structures
-* Advanced programming, Software Debugging
+* Core programming
+** all
+* Core math
+** Mathematics for Computer Science
+* CS Tools
+** all
+* Core systems
+** all
+* Core theory
+** Divide and Conquer, Sorting and Searching, and Randomized Algorithms
+** Graph Search, Shortest Paths, and Data Structures
+* Advanced programming
+** Software Debugging
 
-Highly recommended.
-These teach you details of how the underlying hardware
-works
+=== Highly recommended
+These teach you details of how the underlying hardware works.
 
-* Advanced systems, all
+* Advanced systems
+** all
 
-== https://ocw.mit.edu/[MIT Open Courseware]
-Free course, many with lectures, from MIT!
+== MIT OpenCourseWare
+https://ocw.mit.edu/[MIT OpenCourseWare] publishes free courses from MIT online,
+many with lectures.
 
-https://ocw.mit.edu/courses/find-by-topic/#cat=engineering&subcat=computerscience[All computer science courses]
-https://ocw.mit.edu/courses/mit-curriculum-guide/#map[Interactive map of prerequisits for each class]
+* https://ocw.mit.edu/courses/find-by-topic/#cat=engineering&subcat=computerscience[All
+  computer science courses]
+* https://ocw.mit.edu/courses/mit-curriculum-guide/#map[Interactive map of
+  prerequisites for each class]
