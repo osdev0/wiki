@@ -1,0 +1,39 @@
+---
+title: Computer Science Fundamentals
+description: Some guidance on learning fundamentals of Computer Science
+---
+
+The internet has many freely available resources for learning computer science
+fundamentals. 
+Given that this is the osdev wiki, the focus will be on those resources most useful for osdev.
+
+== Open Source Siciety University
+https://github.com/ossu/computer-science
+
+The OSSU has a complete CS curriculum of currated online materials.
+
+Following prerequisits are recommened to make sure there is some familiarity
+with the material.
+They can be skimmed quickly if the material seems basic.
+
+Strongly recommended.  
+These subjects are very relevant to osdev.
+
+* Core CS, all
+* Core math, Mathematics for Computer Science
+* CS Tools, all
+* Core systems, all
+* Core theory, Divide and Conquer, Sorting and Searching, and Randomized Algorithms, Graph Search, Shortest Paths, and Data Structures
+* Advanced programming, Software Debugging
+
+Highly recommended.
+These teach you details of how the underlying hardware
+works
+
+* Advanced systems, all
+
+== https://ocw.mit.edu/[MIT Open Courseware]
+Free course, many with lectures, from MIT!
+
+https://ocw.mit.edu/courses/find-by-topic/#cat=engineering&subcat=computerscience[All computer science courses]
+https://ocw.mit.edu/courses/mit-curriculum-guide/#map[Interactive map of prerequisits for each class]
