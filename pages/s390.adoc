@@ -1,0 +1,133 @@
+---
+title: System/390
+tags: s390, zarch, z11, s360, s370
+category: Hardware
+description: A general overview of the System/390 architecture
+source-language: c
+---
+
+== Overview
++
+* Contrary to popular belief the S/3X0 supports ASCII, an example of this is z/Linux which
+uses it natively
+
+The S/390 is part of the S/3X0 family, however most of the S/390's capabilities and
+code can be reused on later and previous models such as the S/360, S/370, S/370-XA
+and z/Arch (using the ESA/390 compatibility mode). Through this article the collective
+family will be referred as S/3X0.
+
+S/360:: The first System/3X0 mainframe.
+S/370:: A 24-bit mainframe, sucessor and backwards compatible with S/360.
+S/370-XA:: An expanded 24-bit mainframe with support for DAT out-of-the-box; backwards
+compatible with S/370.
+S/390:: The 31-bit mainframe computer, most of the equipment of the original systems is
+absent on this new version, instead the equipment is emulated using generic ATA or SCSI
+hard-disks; backwards compatible with the S/370-XA.
+S/390X:: 64-bit mainframe, this mainframe operates entirely using LPARS and makes heavy
+usage of its virtualization capabilities; backwards compatible with the S/390.
+
+== Key Terms
+The mainframe has an extensive and unique history - and as such it doesn't commonly
+use terminology from the standard computer or embedded world.
+
+HFP (Hardware Floating Point):: The extension that allows native floating point support.
+DAT (Dynamic Address Translation):: Paging
+Channel:: Subsystem I/O, DMA I/O
+Storage:: Random Acess Memory (RAM)
+Facility:: Extensions
+DASD (Direct Access Storage Disk):: A hard disk.
+TAPE:: Typically a circular tape reel. On modern machines its an emulated TAPE reel, the TAPE
+is structurally different from a DASD and as such it can't be used interchangeably on older
+systems.
+Catalog:: A dataset containing an index of other datasets on the disks - mainly used to
+refer the dataset by their DSNAME rather than by their full path on MVS and DOS/VS.
+PU:: A physical CPU (Central Processing Unit).
+SVC:: Supervisor Call.
+Principles Of Operation:: is the main manual and "architecture-reference" document,
+often abbreviated as The POP.
+Recognized:: An interrupt being fired up and *recognized* by the CPU.
+Real Storage:: Physical memory.
+Virtual Storage:: Virtual memory.
+S390X:: An alternative name for z/Arch.
+Dataset:: A set of data, commonly referring to a file on the disk.
+DSNAME:: Dataset Name.
+VOLSER:: Volume Serial.
+
+== CKD Disk
+Similarly to CHS (Cylinder-Head-Sector) disks, the CKD (Count-Key-Data) can be
+addressed using 3 levels:
+Record:: A record is an unit for addressing a disk, typically, there are multiple
+records per track depending on the track's size and the size of the records themselves.
+Track:: A track contains various records, the size of a track is fixed and the last record
+is used to fill the remainder data (in the case where the track isn't divisible by whole
+records).
+Cylinder:: A cylinder can hold various tracks, this is the biggest unit for a CKD disk
+and has a fixed amount of tracks.
+
+== FBA Disk
+FBA (Fixed-Block-Addressing) disks operate on a similar fashion to their PC counterparts.
+
+== IPL
+The general procedure for running the mainframe is to IPL (Initial-Program-Loader) from a
+telephone-dial circle. Selecting the device number corresponding to the disk, typically
+its 1B9 on a lot of places. After that the operator will press the "IPL" button on the machine.
+
+Real mainframes can take from 30 seconds to 30 minutes to start, as they're not meant to
+shutdown/restart constantly.
+
+Under the hood, the mainframe will load the first cylinders of a disk onto the storage. For S/390
+and previous models the amount of loaded data from the disk is 4096 bytes, for z/Arch its 8192.
+
+From that point onwards, its the programmer's responsability to perform what it wishes to do,
+the IPL is always going to be smaller than a single record.
+
+== HLASM
+
++
+* The S/3X0 can be catalogued as a CISC architecture, it offers a wide repertoire of instructions
+each with a specific purpouse, mostly related to transactional operations.
+
+S/3X0 has various assemblers:
+z390:: An assembler written in Java.
+GNU AS:: Binutils implementation of S/3X0 assembly, not compatible with normal HLASM
+except on i370 targets.
+IF0X0:: Vanilla assembler provided by TK-4 and MVS3.8j.
+
+== Programming paradigms
+
+S/3X0 was commonly used along with procedular languages regularly, however they
+all shared common terminology, such as:
+
+Character:: 8-bits storage area.
+Halfword:: 16-bits storage area.
+Word:: 32-bits storage area.
+Double word:: 64-bits storage area.
+Define Storage (DS on HLASM):: Uninitialized data definition.
+Define Character (DC on HLASM):: Initialized data definition.
+Procedure:: A function.
+
+== Input/Output
+The Channel Subystem I/O is used instead of the PIO (Polling I/O) or MMIO (Memory-Mapped
+I/O); it operates based around batch processing and non-blocking I/O while keeping the
+transactional and reliability aspect.
+
+== Example OSes
+Many public domain Operating Systems exists for the mainframe, due to their publicly accessible
+nature, they're used as a reference and potential learning resources:
+
+MVS:: Multiple Virtual Storage. An Operating System that could isolate programs into different
+address spaces.
+DOS/VS:: Direct Operating System with Virtual Storage. An small operating system resembling
+MVS in functionality.
+TK-4:: A distrobution of MVS3.8j, includes the SPF editor (with support for lowercase characters
+and punch-card reordering).
+MTS:: Multi-Task System, self descriptive, one of the first instances of a multitasking OS in
+computer history.
+PDOS/3X0:: A public domain OS for S/390 mainframes, there is also z/PDOS with support for z/Arch.
+z/Linux:: Linux has native support for S/390X (and S/390) on the mainstream branch.
+
+== External links
+
+* https://www.ibm.com/docs/en/SSQ2R2_15.0.0/com.ibm.tpf.toolkit.hlasm.doc/dz9zr006.pdfe[z/Arch Principles of Operation Manual]
+* http://bitsavers.org/pdf/ibm/370/princOps/SA22-7085-1_370-XA_Principles_of_Operation_Jan87.pdf[S/370 Extended Principles Of Operation Manual]
+* https://www.kernel.org/doc/html/v5.3/s390/debugging390.html[Debugging z/Linux on the S/390]
