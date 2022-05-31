@@ -1,8 +1,8 @@
 ---
 title: Interrupt descriptor table
-tags: assembly, x86, x64, sysv, msvc
+tags: x86, x64
 category: Interrupts
-description: IDT spec and tutorial
+description: IDT specification
 ---
 :source-language: c
 
