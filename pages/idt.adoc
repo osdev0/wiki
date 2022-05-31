@@ -1,0 +1,171 @@
+---
+title: Interrupt descriptor table
+tags: assembly, x86, x64, sysv, msvc
+category: Interrupts
+description: IDT spec and tutorial
+---
+:source-language: c
+
+== Interrupt Descriptor Table
+
+// TODO: articles "GDT" and "Interrupts" are not written yet
+
+Interrupt Descriptor Table is a binary data structure specific to IA-32 (xref:x86[x86]) and x86_64 architectures.
+It is used by the CPU to lookup an Interrupt Service Routine (ISR) when an xref:interrupts[Interrupt] is issued.
+It is Protected Mode and Long Mode counterpart to Real Mode Interrupt Vector Table (IVT).
+
+IDT entries are called gates. There are three types of gates: 
+
+- Interrupt Gates
+- Task gates
+- Trap gates
+
+
+IMPORTANT: Before implementing IDT you must have a proper xref:gdt[GDT] working.
+
+=== IDTR
+IDTR is a register containing IDT's address and limit.
+
+[cols="1,3"]
+|===
+| Size
+| One less than the size of the IDT in bytes.
+
+| Offset
+| The linear address of the Interrupt Descriptor Table (not the physical address, paging applies).
+|===
+
+==== Layout
+
+[cols="1,1,1"]
+|===
+| Architecture
+| Size
+| Offset
+
+| IA-32
+| 16 (0 -- 15)
+| 31 (16 -- 48)
+
+| x86_64
+| 16 (0 -- 15)
+| 63 (16 -- 79)
+|===
+
+==== Things to know
+IDT can contain up to 256 (0..255) ISR vectors.
+The first entry in the contrast to GDT is used.
+And although IDT can contain more than 256 entries, they are ignored.
+
+=== IDT entry
+
+
+==== IA-32
+On 32-bit processors, IDT entries are 8-bytes long, therefore to access the particular entry the index must be scaled by 8 and added to the IDTR Offset.
+
+Example of an IDT
+
+[cols="1,4"]
+|===
+| Index
+| Address
+| 0
+| Offset + 0
+
+| 1
+| Offset + 8
+
+| 2
+| Offset + 16
+
+| ...
+| ...
+
+| 255
+| Offset + 2040
+|===
+
+
+===== Gate descriptor
+
+[cols="2,1"]
+|===
+| Name
+| Position (in bits)
+
+| Offset (0 -- 15)
+| 0 -- 15
+
+| Segment selector
+| 16 -- 31
+
+| Reserved
+| 32 -- 39
+
+| Gate Type
+| 40 -- 43
+
+| 0
+| 44
+
+| DPL
+| 45 -- 46
+
+| Present
+| 47
+
+| Offset (16 -- 31)
+| 48 -- 63
+|===
+
+- *Offset*: 32-bit value containing the entry point of ISR.
+- *Segment*: A GDT segment selector
+- *Gate Type*: A 4-bit value containing the type of the gate
+  * `0x5` (`0b0101`): Task Gate. *Offset* is unused and should be set to 0.
+  * `0x6` (`0b0110`): 16-bit Interrupt Gate
+  * `0x7` (`0b0111`): 16-bit Trap Gate
+  * `0xE` (`0b1110`): 32-bit Interrupt Gate
+  * `0xF` (`0b1111`): 32-bit Trap Gate
+- *DPL*: 2-bit value which specifies CPU Privilege Levels allowed to access this interrupt via `int` call. Hardware interrupts ignore this mechanism.
+- *Present*: Present bit. Must be set to *1* for the descriptor to be valid.
+
+===== Example
+[source,c]
+struct InterruptDescriptor {
+  uint16_t offset_lo;
+  uint16_t selector;
+  uint8_t zero;
+  uint8_t type_attr;
+  uint8_t offset_hi;
+}__attribute__((packed)); // __attribute__((packed)) is used to tell the compiler to not include the byte paddings, as they corrupt the binary structure of the entry.
+
+`type_attr` values  values that people are likely to use (DPL=0):
+
+* 32-bit Interrupt Gate: `0x8E` (present=`1` dpl=`0` type=`0b1110` => `0b1000_1110` => `0x8E`)
+
+* 32-bit Trap Gate: `0x8F` (present=`1` dpl=`0` type=`0b1111` => `0b1000_1111` => `0x8F`)
+
+* Task Gate: `0x85` (present=`1` dpl=`0` type=`0b0101` => `0b1000_0101` => `0x85`)
+
+
+==== x86_64
+
+
+=== Gate types
+
+==== Interrupt Gate
+An Interrupt Gate is used to specify Interrupt Service Routines (ISR).
+
+When an assembly interrupt call `int <interrupt>` is issued CPU looks up the specified ISR in the IDT, pushes necessary registers for `iret` to the stack and jumps to the entry point.
+
+If CPU was running in 32-bit mode, and the selector is a 16-bit gate, it will switch to 16-bit Protected Mode and jump to the entry point. To return back to 32-bit mode `o32 iret` instruction should be used, otherwise CPU would not know how to perform a 32-bit return (reading 32-bit instead of 16-bit values from the stack).
+
+==== Trap Gate
+Trap gate is similar to Interrupt Gate. It is commonly used for syscalls and exceptions. The difference is that for a Trap Gate CPU does not disable hardware interrupts, while upon entering Interrupt Gate CPU automatically disables hardware interrupts and reenables them on return.
+
+==== Task Gate
+Task Gate is a gate type specific to IA-32 that is used for hardware task switching.
+In a Task Gate the *Selector* value should refer to a position in the GDT which specifies a Task 
+State Segment rather than a code segment, and the *Offset* value is unused and should be set to zero.
+
+When processing this interrupt, the CPU it will perform a hardware task switch to the specified task, rather than jumping to an ISR. A pointer back to the task which was interrupted will be stored in the Task Link field in TSS.
