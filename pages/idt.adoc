@@ -46,14 +46,14 @@ IDTR is a register containing the IDT's address and limit.
 |===
 
 ==== Things to know
-* IDT can contain up to 256 (0..255) ISR vectors (entries above this limit will be ignored)
+* IDT can contain up to 256 (0..255) ISR vectors. Entries above this limit will be ignored.
 * In contrast to GDT, the first entry of the IDT is valid and used.
 
 === IDT entry
 
 
 ==== IA-32
-On 32-bit processors, IDT entries are 8-bytes long, therefore to access the particular entry the raw index must be multiplied by 8 and added to the IDTR Offset.
+On 32-bit processors, IDT entries are 8-bytes long, therefore to access a particular entry the raw index must be multiplied by 8 and added to the IDTR Offset.
 
 
 ===== Gate descriptor
@@ -78,7 +78,7 @@ On 32-bit processors, IDT entries are 8-bytes long, therefore to access the part
 
 | Gate Type
 | 40 -- 43
-| Type of the gate. Described below in detail.
+| Type of the gate. See below.
 
 | 0
 | 44
@@ -90,7 +90,7 @@ On 32-bit processors, IDT entries are 8-bytes long, therefore to access the part
 
 | Present
 | 47
-| Indicates whether entry is valid
+| Indicates whether the entry is valid
 
 | Offset (16 -- 31)
 | 48 -- 63
@@ -122,19 +122,19 @@ On 32-bit processors, IDT entries are 8-bytes long, therefore to access the part
 |===
 
 ==== Interrupt Gate
-An Interrupt Gate is used to indicate an interrupt service routine (ISR).
+An interrupt gate is used to indicate an interrupt service routine (ISR).
 
 When an assembly interrupt call is issued, the CPU looks up the ISR by specified index in the IDT, stores necessary registers in the stack and jumps to the entry point.
 
 IMPORTANT: Usage of 16-bit gates is highly unadvised, as the CPU cannot properly return to 32-bit mode using `iret`.
 
-If CPU was running in 32-bit mode, and the selector is a 16-bit gate, it will switch to 16-bit Protected Mode and jump to the entry point.
+If the CPU was running in 32-bit mode, and the specified selector is a 16-bit gate, it will switch to 16-bit Protected Mode and jump to the entry point.
 
 ==== Trap Gate
-Trap gate is sometimes used for syscalls and exceptions. It is very similar to interrupt gate, however, in contrast to interrupt gate it does not set/clear interrupt flag.
+Trap gate is sometimes used for syscalls and exceptions. It is very similar to interrupt gate, however, in contrast to interrupt gate, it does not set/clear interrupt flag.
 
 ==== Task Gate
-IMPORTANT: It is highly unadvised to use task gates and hardware task switching as a whole. Hardware task switching is very slow and partially dropped on x86_64 CPUs.
+IMPORTANT: It is highly unadvised to use task gates and hardware task switching as a whole. Hardware task switching is very slow and is removed on x86_64 CPUs.
 
 Task gate is used for hardware task switching and is specific to IA-32.
 
