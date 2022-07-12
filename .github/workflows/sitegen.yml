@@ -75,6 +75,7 @@ jobs:
           export PATH="$HOME/.nix-profile/bin:$PATH"
 
           cd wiki
+          export COMMIT_HASH="$(git rev-parse HEAD)"
           generator/result/bin/generator build
         env:
           WIKI_FORGE: ${{ format('https://github.com/{0}', github.repository) }}
