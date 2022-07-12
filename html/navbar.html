@@ -2,6 +2,9 @@
 	<li><a href="/">Main page</a></li>
 	<li><a href="/categories">Category list</a></li>
 	<li><a href="/tags">Tag list</a></li>
+$if(forge)$$if(path)$
+	<li><a href="$forge$/blob/$hash$/$path$">Edit this page</a></li>
+$endif$$endif$
 </ul>
 
 <div class="stork-wrapper">

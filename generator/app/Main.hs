@@ -6,6 +6,7 @@ import           System.Environment (lookupEnv)
 import           Control.Applicative ((<|>))
 import           Data.Maybe (fromMaybe, maybeToList)
 import           Data.Char (toLower)
+import           Data.List (stripPrefix)
 import           Data.Time.Clock (getCurrentTime, utctDay)
 import           Data.Time.Calendar (toGregorian)
 import           Data.Traversable (forM)
@@ -100,6 +101,9 @@ genericContext' gitHash year forge = constField "year" (show year)
           forgeField = fromMaybe (removeField "forge")
                 (fmap (constField "forge") forge)
 
+stripIfPrefixed :: Eq a => [a] -> [a] -> [a]
+stripIfPrefixed p xs = fromMaybe xs $ stripPrefix p xs
+
 hakyllConfig :: Configuration
 hakyllConfig = defaultConfiguration
     { destinationDirectory = "_site" -- hard code default
@@ -120,6 +124,7 @@ main = do
     hakyllWith hakyllConfig $ do
         let genericContext = let gc = genericContext' gitHash year wikiForge in
                              openGraphField "opengraph" gc <> gc
+        let pageContext path = constField "path" path <> genericContext
         let templatePath = fromGlob $ ("adoc/html5/*." ++ adocTemplates)
         adocTemplateDep <- makePatternDependency $ templatePath
         categoriesDep <- makePatternDependency "categories.yml"
@@ -159,20 +164,20 @@ main = do
             route idRoute
             compile $ copyFileCompiler
 
-        adocExtraDeps $ match "pages/*.adoc" $ do
-            route $ setExtension "html"
-            compile $ getResourceBody
-                >>= saveSnapshot "source"  -- needed for indexes
-                >>  pageCompiler categories
-                >>= loadAndApplyTemplate "html/wrapper.html" genericContext
-                >>= relativizeUrls
+        let pageHandler compiler = do
+                route $ setExtension "html"
+                compile $ do
+                    path' <- getResourceFilePath
+                    let path = stripIfPrefixed "./" path'
+                    let ctx = pageContext path
+                    getResourceBody
+                        >>= saveSnapshot "source" -- needed for indexes
+                        >>  compiler
+                        >>= loadAndApplyTemplate "html/wrapper.html" ctx
+                        >>= relativizeUrls
 
-        adocExtraDeps $ match "index.adoc" $ do
-            route $ setExtension "html"
-            compile $ getResourceBody
-                >>  itemCompiler
-                >>= loadAndApplyTemplate "html/wrapper.html" genericContext
-                >>= relativizeUrls
+        adocExtraDeps $ match "pages/*.adoc" $ pageHandler $ pageCompiler categories
+        adocExtraDeps $ match "index.adoc" $ pageHandler $ itemCompiler
 
         -- index pages with stork
         create ["searchidx.st"] $ do

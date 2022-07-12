@@ -25,7 +25,12 @@
                 Search provided by
                 <a href="https://stork-search.net/">Stork</a> under the
                 Apache-2.0 license.
-                $if(forge)$<a href="$forge$/tree/$hash$/">Source code</a>.$endif$
+                $if(forge)$$if(path)$
+                <a href="$forge$/blob/$hash$/$path$">Source code</a>.
+                $else$
+                <a href="$forge$/tree/$hash$/">Source code</a>.
+                $endif$
+                $endif$
             </footer>
         </div>
         <script src="https://files.stork-search.net/releases/v1.4.0/stork.js"
