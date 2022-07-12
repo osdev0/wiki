@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 
 env:
-  STORK_VERSION: 1.4.1
+  STORK_VERSION: 1.4.2
 
 jobs:
   gen:
