@@ -136,28 +136,31 @@ Remaining registers "belong" to the called function.
 
 ==== Stack
 The stack is always 16-byte aligned at function _call_: this requires the
-stack to be aligned to 16 bytes before the `CALL`.
-The push of the return address onto the stack by `CALL` is immediately succeeded
-by the push of RBP onto the stack by the callee function, thereby re-aligning
-the stack shortly after function entry.
+stack to be aligned to 16 bytes after the `CALL`.
+The call itself pushes the return address as an 8-byte value, so before the call, the stack must be 8-bytes unaligned from the 16-byte alignment. This may require pushing 8 bytes of unused space before the parameters. 
 
 ==== Parameters
-`RDI`, `RSI`, `RDX`, `RCX`, `R8`, `R9`, stack (`[RSP+0x00]`, `[RSP+0x08]` and so
-on).
+Integer parameters, and small structs or unions are passed in (up to 32-bytes): `RDI`, `RSI`, `RDX`, `RCX`, `R8`, `R9`, stack (`[RSP+0x00]`, `[RSP+0x08]` and so
+on). Large values (greater than 64-bits, but less than 256-bits) are passed in multiple successive registers (up to 4), but if any part of the value uses the stack, the whole value does (a value will never partially be passed in registers and memory). 
+
+For example, given `struct large{long long a; long long b;};`, `void foo(int a, int b, int c, int d, struct large bar);` passes bar in R8 and R9, but `void foo(int a, int b, int c, int d, int e, struct large bar);` passes bar on the stack (and R9 is unused as a parameter register for this function).
 
 If the parameter is of type `float` or `double`, it will be stored in the next
 available SSE register (`XMM0`-`XMM7`).
 
+`long double` and structs/unions larger than 32-bytes are passed by the caller allocating space, and passing a pointer to that space in place as an integer parameter
+
 For example, a function with the prototype
 `void do_something(int a, float b, int c, int d, int e, float f)` would pass
-parameters in `RDI`, `XMM0`, `R8`, `R9`, `[RSP+0x00]` and `XMM1` respectively.
-A function calling this needs to have at least 32 bytes of stack to store the
-parameters and align the stack upon call.
+parameters in `RDI`, `XMM0`, `RSI`, `RDX`, `RCX`, and `XMM1` respectively.
+As no parameters are passed on the stack, the caller would also have to push 8 bytes before calling the function (which will align the stack by pushing an additional 8 bytes),
 
 ==== Return value
 If the return value is an integer/struct/union whose size is less than or equal
-than 64 bits, it is returned in `RAX`; otherwise, the struct is allocated by the
-caller and a pointer to it is passed as the first parameter, similarly to the
+than 64 bits, it is returned in `RAX`; 
+integer/struct/unions between 64 and 128 bits are returned in both `RDX` (high bits) and `RAX` (low bits); 
+floating-point values are returned in `xmm0`, with `long double` instead using `st(0)` (which must be popped by the caller before it returns).
+Large structs are allocated by the caller and a pointer to it is passed as the first parameter, similarly to the
 Microsoft x64 ABI.
 Dissimilarly, the pointer is actually returned in `RAX` upon return.
 
