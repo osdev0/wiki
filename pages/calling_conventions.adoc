@@ -136,8 +136,10 @@ Remaining registers "belong" to the called function.
 
 ==== Stack
 The stack is always 16-byte aligned at function _call_: this requires the
-stack to be aligned to 16 bytes after the `CALL`.
-The call itself pushes the return address as an 8-byte value, so before the call, the stack must be 8-bytes unaligned from the 16-byte alignment. This may require pushing 8 bytes of unused space before the parameters. 
+stack to be aligned to 16 bytes before the call.
+
+The call instruction itself pushes 8 bytes, so the called routine will need to push an additional 8 bytes if it wants to benefit from 16-byte stack alignment (for example, caling any nested procedures, or storing a 16-byte SSE Type on the stack).
+
 
 ==== Parameters
 Integer parameters, and small structs or unions are passed in (up to 32-bytes): `RDI`, `RSI`, `RDX`, `RCX`, `R8`, `R9`, stack (`[RSP+0x00]`, `[RSP+0x08]` and so
