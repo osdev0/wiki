@@ -5,9 +5,8 @@ description: The place to start for operating system development in the 2020s.
 
 Welcome to *osdev.wiki*!
 
-The goal of this wiki is to modernize the information found in the long-standing
-OSDev wiki found at https://wiki.osdev.org[wiki.osdev.org] and to decentralize
-it.
+The goal of this wiki is to create a decentralized repository of accurate and
+up-to-date information on operating system development.
 This site is currently *WIP* and very incomplete, thus contributions are
 welcome!
 
