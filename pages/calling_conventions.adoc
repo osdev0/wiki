@@ -8,18 +8,18 @@ description: Examples of calling conventions on common platforms.
 
 A *calling convention* is the set of contracts that compiler-generated machine
 code respects and expects external functions to respect.
-The calling convention specifies, for example
+Among other things, the calling convention specifies:
 
-- how parameters are passed to functions
+- how parameters are passed to functions;
 - how the stack is handled and cleaned (for example if needs to be aligned at
-  function entry)
-- how structures are going to be laid out in memory
-- which registers need to be restored by the caller and which by the callee
+  function entry);
+- how structures are going to be laid out in memory;
+- which registers need to be restored by the caller and which by the callee.
 
 == x86-64 calling conventions
 The Windows (including UEFI) world and the UNIX (Linux, macOS, BSDs) world have
-adopted two different conventions. Note that MSVC can only generate code using
-the Windows calling convention.
+adopted two different conventions.
+Note that MSVC can only generate code using the Windows calling convention.
 
 === Microsoft x64
 The x64 Application Binary Interfacefootnote:[https://github.com/MicrosoftDocs/cpp-docs/blob/main/docs/build/x64-calling-convention.md]
@@ -34,13 +34,13 @@ be passed by reference.
 A single argument is never spread across multiple registers.
 
 The x87 register stack is unused.
-It may be used by the callee, but consider it volatile across function calls.
+It may be used by the callee, but is considered volatile across function calls.
 All floating point operations are done using the 16 XMM registers.
 
-Integer arguments are passed in registers RCX, RDX, R8, and R9. Floating point
+Integer arguments are passed in registers RCX, RDX, R8, and R9; floating point
 arguments are passed in XMM0L, XMM1L, XMM2L, and XMM3L.
-16-byte arguments are passed by reference. Parameter passing is described in
-detail in Parameter passing.
+16-byte arguments are passed by reference.
+Parameter passing is described in detail in the parameter section.
 These registers, and RAX, R10, R11, XMM4, and XMM5, are considered volatile.
 
 ==== Register allocation
@@ -87,9 +87,9 @@ A function calling this needs to have at least 56 bytes of stack to store the
 parameters and home space and ensure that the stack is aligned after the `CALL`.
 
 ==== Return value
-If the return value is an integer/struct/union whose size is less than or equal
-to 64 bits, it is returned in RAX; otherwise, the struct is allocated by the
-caller and a pointer to it is passed as the first parameter.
+If the return value is an integer, struct, or union whose size is less than or
+equal to 64 bits, it is returned in RAX; otherwise, the struct is allocated by
+the caller, and a pointer to it is passed as the first parameter.
 
 [source,c]
 ---
@@ -155,11 +155,11 @@ A function calling this needs to have at least 32 bytes of stack to store the
 parameters and align the stack upon call.
 
 ==== Return value
-If the return value is an integer/struct/union whose size is less than or equal
-than 64 bits, it is returned in `RAX`; otherwise, the struct is allocated by the
-caller and a pointer to it is passed as the first parameter, similarly to the
+If the return value is an integer, struct, or union whose size is less than or
+equal than 64 bits, it is returned in `RAX`; otherwise, the struct is allocated
+by the caller and a pointer to it is passed as the first parameter, like the
 Microsoft x64 ABI.
-Dissimilarly, the pointer is actually returned in `RAX` upon return.
+Unlike the Microsoft ABI, the pointer is actually returned in `RAX` upon return.
 
 [source,c]
 ---
