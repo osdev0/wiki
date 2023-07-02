@@ -160,7 +160,7 @@ SSE2.
 AVX is a 256-bit data extension. It performs a purpose similar to SSE, and
 implements a handful of 256-bit `YMM` registers.
 
-AVX was released alongside the Haswell microarchitecture in 2014.
+AVX was released alongside the Sandy Bridge microarchitecture in 2011.
 A not-insignificant number of operational computers today do not support AVX.
 
 ==== AVX-512
