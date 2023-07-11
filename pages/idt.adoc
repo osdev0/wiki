@@ -1,0 +1,142 @@
+---
+title: Interrupt descriptor table
+tags: x86, x64
+category: Interrupts
+description: IDT specification
+---
+:source-language: c
+
+== Interrupt Descriptor Table
+
+// TODO: articles "GDT" and "Interrupts" are not written yet
+
+Interrupt Descriptor Table is a binary data structure specific to IA-32 (xref:x86[x86]) and x86_64 architectures.
+It is used by the CPU to lookup an interrupt service routines (ISR) when an xref:interrupts[interrupt] is issued.
+It is protected mode and long mode counterpart to real mode interrupt vector table (IVT).
+
+IMPORTANT: IDT requires a working xref:gdt[GDT]
+
+=== IDTR
+IDTR is a register containing the IDT's address and limit.
+
+[cols="1,3"]
+|===
+| Size
+| One less than the size of the IDT in bytes
+
+| Offset
+| The linear address of the IDT
+|===
+
+==== Layout
+
+[cols="1,1,1"]
+|===
+| Architecture
+| Size
+| Offset
+
+| IA-32
+| 16 (0 -- 15)
+| 31 (16 -- 48)
+
+| x86_64
+| 16 (0 -- 15)
+| 63 (16 -- 79)
+|===
+
+==== Things to know
+* IDT can contain up to 256 (0..255) ISR vectors. Entries above this limit will be ignored.
+* In contrast to GDT, the first entry of the IDT is valid and used.
+
+=== IDT entry
+
+
+==== IA-32
+On 32-bit processors, IDT entries are 8-bytes long, therefore to access a particular entry the raw index must be multiplied by 8 and added to the IDTR Offset.
+
+
+===== Gate descriptor
+
+[cols="2,1,3"]
+|===
+| Name
+| Position (in bits)
+| Description
+
+| Offset (0 -- 15)
+| 0 -- 15
+| ISR entry point address. In trap gates should be set to zero.
+
+| Segment selector
+| 16 -- 31
+| GDT segment selector. In trap gates used to specify a TSS selector.
+
+| Reserved
+| 32 -- 39
+| --
+
+| Gate Type
+| 40 -- 43
+| Type of the gate. See below.
+
+| 0
+| 44
+| --
+
+| DPL
+| 45 -- 46
+| Descriptor privilege level. Ignored by hardware interrupts.
+
+| Present
+| 47
+| Indicates whether the entry is valid
+
+| Offset (16 -- 31)
+| 48 -- 63
+| --
+|===
+
+
+// TODO: x86_64
+
+
+=== Gate types
+
+[cols="1,3"]
+|===
+| `0x5`
+| Task gate
+
+| `0x6`
+| 16-bit interrupt gate
+
+| `0x7`
+| 16-bit trap gate
+
+| `0xE`
+|  32-bit interrupt gate
+
+| `0xF`
+| 32-bit trap gate
+|===
+
+==== Interrupt Gate
+An interrupt gate is used to indicate an interrupt service routine (ISR).
+
+When an assembly interrupt call is issued, the CPU looks up the ISR by specified index in the IDT, stores necessary registers in the stack and jumps to the entry point.
+
+IMPORTANT: Usage of 16-bit gates is highly unadvised, as the CPU cannot properly return to 32-bit mode using `iret`.
+
+If the CPU was running in 32-bit mode, and the specified selector is a 16-bit gate, it will switch to 16-bit Protected Mode and jump to the entry point.
+
+==== Trap Gate
+Trap gate is sometimes used for syscalls and exceptions. It is very similar to interrupt gate, however, in contrast to interrupt gate, it does not set/clear interrupt flag.
+
+==== Task Gate
+IMPORTANT: It is highly unadvised to use task gates and hardware task switching as a whole. Hardware task switching is very slow and is removed on x86_64 CPUs.
+
+Task gate is used for hardware task switching and is specific to IA-32.
+
+When processing a task gate interrupt, the CPU will perform a hardware task switch to the task specified by *Selector* field. The pointer to the interrupted task will be stored in the Link field of the new TSS.
+
